@@ -35,9 +35,11 @@ export class HomeScreen extends Component {
                         </Body>
                         <Right>
                             <Button bordered iconLeft small onPress={ () => this.props.navigation.navigate('ProductDetail', {
+                                product_id: item.id,
                                 name: item.name,
                                 image: item.image,
-                                price: item.price
+                                price: item.price,
+                                description: item.description
                             })}>
                                 <Text>View</Text>
                             </Button>
