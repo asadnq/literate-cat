@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { createDrawerNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
+import { Icon } from 'native-base';
 
+import Lato from '../components/UI/texts/Lato';
 import HomeScreen from '../screens/HomeScreen';
 import ProductDetail from '../screens/ProductDetail';
 import CartScreen from '../screens/CartScreen';
-import { Icon } from 'native-base';
+import PaymentScreen from '../screens/PaymentScreen';
+import { View } from 'react-native'; 
 
 const MainTab = createBottomTabNavigator(
     {
@@ -39,10 +42,28 @@ const MainTab = createBottomTabNavigator(
 const MainStack = createStackNavigator(
     {
         Main: {
-            screen: MainTab
+            screen: MainTab,
+            navigationOptions: {
+                title: 'Book Store',
+                headerLeft: (<View></View>), 
+                headerRight: (<View></View>),
+                headerStyle: {
+                    backgroundColor: '#006494'
+                },
+                headerTitleStyle: {
+                    fontSize: 24,
+                    fontFamily: 'Lato-Regular',
+                    color: '#FFF',
+                    textAlign: 'center',
+                    flex: 1
+                }
+            }
         },
         ProductDetail: {
             screen: ProductDetail
+        },
+        Payment: {
+            screen: PaymentScreen
         }
     },
     {

@@ -1,6 +1,9 @@
 import { ADD_TO_CART, DELETE_CART } from './types';
 
-export function addToCart(cart) {
+export function addToCart(cart, quantity) {
+    
+    const priceSum = cart.price * parseInt(quantity);
+    
     return {
         type: ADD_TO_CART,
         payload: {
@@ -8,14 +11,19 @@ export function addToCart(cart) {
             product_id: cart.product_id,
             name: cart.name,
             price: cart.price,
-            image: cart.image
+            image: cart.image,
+            quantity: quantity,
+            priceSum
         }
     }
 }
 
-export function deleteCart(id) {
+export function deleteCart(cart) {
     return {
         type: DELETE_CART,
-        id
+        payload: {
+            id: cart.id,
+            substract: cart.priceSum
+        }
     }
 }

@@ -3,9 +3,10 @@ import { StyleSheet,TextInput, Image, View, Dimensions } from 'react-native';
 import { Card, CardItem, Body, Container, Content, Text, Form, Item,
      Input,Footer, Button, Icon, FooterTab } from 'native-base';
 import { connect } from 'react-redux'
-import InputQuantity from '../components/UI/InputQuantity';
 
 import { addToCart } from '../store/actions/cart';
+import InputQuantity from '../components/UI/InputQuantity';
+import RupiahFormat from '../components/UI/texts/RupiahFormat';
 
 class ProductDetail extends Component {
     
@@ -23,7 +24,7 @@ class ProductDetail extends Component {
                 name,
                 description,
                 price,
-                image           
+                image,           
             }
         }
 
@@ -62,8 +63,8 @@ class ProductDetail extends Component {
     onAddCartHandler = () => {
         const {product, control} = this.state;
 
-        this.props.addToCart(this.state.product);
-        this.props.navigation.navigate('Cart', {...product, quantity: control.quantity});
+        this.props.addToCart(product, control.quantity);
+        this.props.navigation.navigate('Cart');
     }
 
     render() {
@@ -82,10 +83,9 @@ class ProductDetail extends Component {
                                 <Text style={styles.prName}>
                                     {name}
                                 </Text>
-                                <Text style={styles.prPrice} textBreakStrategy='balanced'>
-                                    {price}
-                                </Text>
-                                <Text style={styles.prDesc}>
+                                <RupiahFormat style={styles.prPrice} text={price}/>
+                                
+                                <Text style={styles.prDesc} textBreakStrategy='balanced'>
                                     {description}
                                 </Text>
                             </Body>
@@ -100,9 +100,9 @@ class ProductDetail extends Component {
                     </Card>
                 </Content>
                 <Footer>
-                    <FooterTab>
-                            <Button block transparent style={styles.buyButton} onPress={this.onAddCartHandler}>
-                                <Text style={{color: '#FFF', fontWeight: 'bold'}}>Buy</Text>
+                    <FooterTab style={{backgroundColor: '#FFF' }}>
+                            <Button block bordered style={styles.buyButton} onPress={this.onAddCartHandler}>
+                                <Text style={{ fontWeight: 'bold'}}>Buy</Text>
                             </Button>
                     </FooterTab>
                 </Footer>
@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.8,
         paddingBottom: 5,
         borderColor: '#c9c9c9',
-        marginBottom: 12
+        marginBottom: 12,
+        fontFamily: 'Lato-Regular'
     },
     prPrice: {
         fontSize: 13,
@@ -143,13 +144,15 @@ const styles = StyleSheet.create({
         fontSize: 11
     },
     buyButton: {
-        backgroundColor: '#006494'
+        borderColor: '#006494',
+        margin: 8,
+        height: '80%'
     }
 })
 
 mapDispatch = dispatch => {
     return {
-        addToCart: item => dispatch(addToCart(item))
+        addToCart: (item, qty) => dispatch(addToCart(item, qty))
     }
 }
 

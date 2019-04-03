@@ -1,6 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { ListItem, Icon, Text, Left, Thumbnail, Body, Right, Button } from 'native-base';
+import { ListItem, Icon, Left, Thumbnail, Body, Right, Button } from 'native-base';
+import Lato from '../UI/texts/Lato';
+
+import RupiahFormat from '../UI/texts/RupiahFormat';
+
 
 const ListCart = props => {
 
@@ -9,15 +13,13 @@ const ListCart = props => {
     return(
         <ListItem noIndent thumbnail>
             <Left>
-                <Thumbnail source={props.image} />
+                <Thumbnail square source={props.image} />
             </Left>
             <Body>
-                <Text style={prName}>
+                <Lato style={prName}>
                     { props.name }
-                </Text>
-                <Text style={prPrice}>
-                    { props.price }
-                </Text>
+                </Lato>
+                <RupiahFormat style={prPrice} text={props.price} />
             </Body>
             <Right>
                 <Button bordered danger onPress={props.actionDelete}>

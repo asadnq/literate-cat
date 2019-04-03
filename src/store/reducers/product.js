@@ -9,7 +9,7 @@ const initialState = {
         {
             id: 1,
             name: 'The Tipping Point',
-            price: 'Rp. 131.000',
+            price: 131000,
             description: `
             The tipping point is that magic moment when an idea, trend, or social behavior crosses a threshold, tips, and spreads like wildfire. Just as a single sick person can start an epidemic of the flu, so too can a small but precisely targeted push cause a fashion trend, the popularity of a new product, or a drop in the crime rate. This widely acclaimed bestseller, in which Malcolm Gladwell explores and brilliantly illuminates the tipping point phenomenon, is already changing the way people throughout the world think about selling products and disseminating ideas.
 
@@ -20,7 +20,7 @@ const initialState = {
         {
             id: 2,
             name: 'Blink',
-            price: 'Rp. 120.000',
+            price: 120000,
             description:`
             Drawing on cutting-edge neuroscience and psychology and displaying all of the brilliance that made The Tipping Point a classic, Blink changes the way you'll understand every decision you make. Never again will you think about thinking the same way.
 
@@ -33,7 +33,7 @@ const initialState = {
         {
             id: 3,
             name: 'Outliers',
-            price: 'Rp. 125.000',
+            price: 125000,
             description:`
             In this stunning new book, Malcolm Gladwell takes us on an intellectual journey through the world of "outliers"--the best and the brightest, the most famous and the most successful. He asks the question: what makes high-achievers different?
 
@@ -44,7 +44,7 @@ const initialState = {
         {
             id: 4,
             name: 'What The Dog Saw',
-            price: 'Rp. 145.000',
+            price: 145000,
             description: `
             What is the difference between choking and panicking? Why are there dozens of varieties of mustard but only one variety of ketchup? What do football players teach us about how to hire teachers? What does hair dye tell us about the history of the 20th century?
 
@@ -57,7 +57,7 @@ const initialState = {
         {
             id: 5,
             name: 'David and Goliath',
-            price: 'Rp. 122.000',
+            price: 122000,
             description: `
             In his #1 bestselling books The Tipping Point, Blink, and Outliers, Malcolm Gladwell has explored the ways we understand and change our world. Now he looks at the complex and surprising ways the weak can defeat the strong, the small can match up against the giant, and how our goals (often culturally determined) can make a huge difference in our ultimate sense of success. Drawing upon examples from the world of business, sports, culture, cutting-edge psychology, and an array of unforgettable characters around the world, David and Goliath is in many ways the most practical and provocative book Malcolm Gladwell has ever written.
             `,

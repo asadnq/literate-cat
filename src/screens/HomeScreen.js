@@ -3,6 +3,8 @@ import { StyleSheet, View, Image, FlatList } from 'react-native';
 import { Container, Card, CardItem, Text, Body, Button, Content, ListItem, Left, Right, Thumbnail, Icon } from 'native-base';
 import { connect } from 'react-redux';
 
+import RupiahFormat from '../components/UI/texts/RupiahFormat';
+
 export class HomeScreen extends Component {
     constructor() {
         super();
@@ -29,9 +31,7 @@ export class HomeScreen extends Component {
                             <Text style={prName} numberOfLines={1}>
                                 {item.name}
                             </Text>
-                            <Text style={prPrice}>
-                                {item.price}
-                            </Text>
+                            <RupiahFormat text={item.price} />
                         </Body>
                         <Right>
                             <Button bordered iconLeft small onPress={ () => this.props.navigation.navigate('ProductDetail', {
@@ -65,11 +65,13 @@ const styles = StyleSheet.create({
     prName: {
         borderBottomWidth: .8,
         fontSize: 16,
-        borderColor: '#c9c9c9'
+        borderColor: '#c9c9c9',
+        fontFamily: 'Lato-Regular'
     },
     prPrice: {
         fontSize: 10,
-        color: '#676C6E'
+        color: '#676C6E',
+        fontFamily: 'Lato-Regular'
     },
     prImg: {
         height: 78
