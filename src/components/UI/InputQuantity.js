@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View,TextInput } from 'react-native';
 import { Form, Button, Icon, Item, Input } from 'native-base';
 
 
@@ -10,18 +10,19 @@ const InputQuantity = props => {
     *onPlusPressed: function(increase val)
     *val: number
     */
-    const { inputContainer, buttonStyle,inputWrapper, inputStyle } = styles;
+    const { inputContainer, buttonStyle,inputWrapper, inputStyle, iconStyle } = styles;
 
     return(
         <View style={inputContainer}>
-            <Button style={buttonStyle} onPress={props.onMinPressed}>
-                <Icon name='minus' type="FontAwesome"/>
+            <Button style={buttonStyle} onPress={props.onMinPressed} bordered>
+                <Icon style={iconStyle}name='minus' type="FontAwesome"/>
             </Button>
             <Item style={inputWrapper}>
-                <Input style={inputStyle} placeholder='quantity' value={props.value}/>
+                <TextInput style={inputStyle} textAlign={'center'} keyboardType='number-pad'
+ value={props.value} onChangeText={props.onChangeText}/>
             </Item>
-            <Button style={buttonStyle} onPress={props.onPlusPressed}>
-                <Icon name='plus' type="FontAwesome"/>
+            <Button style={buttonStyle} onPress={props.onPlusPressed} bordered>
+                <Icon style={iconStyle} name='plus' type="FontAwesome"/>
             </Button>
         </View>
     )
@@ -29,18 +30,31 @@ const InputQuantity = props => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        alignItems: 'flex-start'
     },
     buttonStyle: {
-        width: 50,
-        backgroundColor: '#006494'
+        width: 35,
+        height: 35,
+        borderColor: '#006494',
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     inputWrapper: {
         width: 50,
-        textAlign: 'center'
+        height: 35
     },  
     inputStyle: {
-        width: 100
+        width: 50,
+        height: 35
+    },
+    iconStyle: {
+        fontSize: 16,
+        color: '#006494',
+        textAlign: 'center',
+        marginLeft: 0,
+        marginRight: 0
     }
 })
 export default InputQuantity;

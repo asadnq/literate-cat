@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Container, Content, Footer, FooterTab, Button, Text } from 'native-base';
+import { Container, Content, Footer, FooterTab, Button, Text, Icon } from 'native-base';
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation';
 
-import { deleteCart } from '../store/actions/cart';
+import { deleteCart, addQuantity, subQuantity } from '../store/actions/cart';
 import ListCart from '../components/UI/ListCart';
-import TextBlock from '../components/UI/texts/TextBlock';
+import BlockContent from '../components/UI/BlockContent';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
+import DefaultButton from '../components/UI/buttons/DefaultButton';
+
 
 class CartScreen extends Component {
     constructor(props) {
@@ -15,6 +17,32 @@ class CartScreen extends Component {
         this.state = {
         }
 
+    }
+
+    addQtyHandler = (cart) =>  {
+        this.props.addQty(cart);
+    }
+
+    subQtyHandler = (cart) =>  {
+        this.props.subQty(cart);
+    }
+
+    minQtyHandler = () => {
+
+        const { quantity } = this.state.control;
+        const decreasedVal = quantity > 1 ? parseInt(quantity) - 1 : parseInt(quantity);
+        const priceSum = this.state.product.price * decreasedVal
+
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                control: {
+                    quantity: decreasedVal.toString(),
+                    modalVisibility: prevState.control.modalVisibility,
+                    priceSum
+                }
+            }
+        })
     }
 
     onDeleteCart = (id) => {
@@ -42,6 +70,9 @@ class CartScreen extends Component {
                             <ListCart
                                 {...item}
                                 actionDelete={this.onDeleteCart.bind(this, item)}
+                                value={item.quantity.toString()}
+                                addQty={this.addQtyHandler.bind(this, item)}
+                                subQty={this.subQtyHandler.bind(this, item)}
                                 />
                         )}
                         />
@@ -61,7 +92,11 @@ class CartScreen extends Component {
             )
         }
         return(
-                <TextBlock text='Your cart is still empty.' />
+            <BlockContent>
+                <Icon type='FontAwesome' name='cart-arrow-down' />
+                <Text>Your cart is empty</Text>
+                <DefaultButton style={{alignSelf: 'center'}} title='shop now' onPress={() => this.props.navigation.navigate('Home')} />
+            </BlockContent>
 
         )
     }
@@ -76,7 +111,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
     return {
-        deleteCart: cart => dispatch(deleteCart(cart))
+        deleteCart: cart => dispatch(deleteCart(cart)),
+        addQty: (cart) => dispatch(addQuantity(cart)),
+        subQty: (cart) => dispatch(subQuantity(cart))
     }
 }
 

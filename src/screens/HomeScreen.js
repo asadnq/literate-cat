@@ -4,6 +4,7 @@ import { Container, Card, CardItem, Text, Body, Button, Content, ListItem, Left,
 import { connect } from 'react-redux';
 
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
+import OutlineButton from '../components/UI/buttons/OutlineButton';
 
 export class HomeScreen extends Component {
     constructor() {
@@ -34,15 +35,13 @@ export class HomeScreen extends Component {
                             <RupiahFormat text={item.price} />
                         </Body>
                         <Right>
-                            <Button bordered iconLeft small onPress={ () => this.props.navigation.navigate('ProductDetail', {
+                            <OutlineButton iconLeft small onPress={ () => this.props.navigation.navigate('ProductDetail', {
                                 product_id: item.id,
                                 name: item.name,
                                 image: item.image,
                                 price: item.price,
                                 description: item.description
-                            })}>
-                                <Text>View</Text>
-                            </Button>
+                            })} title='view'/>
                         </Right>
                     </ListItem>
                 )}

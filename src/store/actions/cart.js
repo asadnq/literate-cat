@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DELETE_CART } from './types';
+import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY, SUB_QUANTITY } from './types';
 
 export function addToCart(cart, quantity) {
     
@@ -12,7 +12,7 @@ export function addToCart(cart, quantity) {
             name: cart.name,
             price: cart.price,
             image: cart.image,
-            quantity: quantity,
+            quantity,
             priceSum
         }
     }
@@ -27,3 +27,29 @@ export function deleteCart(cart) {
         }
     }
 }
+
+export const addQuantity = (cart) => {
+    addedQuantity = parseInt(cart.quantity) + 1
+    return {
+        type: ADD_QUANTITY,
+        payload: {
+            id: cart.id,
+            quantity: addedQuantity.toString(),
+            price: cart.price,
+            priceSum: cart.price * addedQuantity
+        }
+    }
+}
+
+export const subQuantity = cart => {
+    subedQuantity = parseInt(cart.quantity) - 1
+    return {
+        type: SUB_QUANTITY,
+        payload: {
+            id: cart.id,
+            quantity: subedQuantity.toString(),
+            price: cart.price,
+            priceSum: cart.price * subedQuantity
+        }
+    }
+} 

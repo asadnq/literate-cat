@@ -1,21 +1,27 @@
 import React from 'react';
-import { View, Button, StyleSheet, TouchableNativeFeedback } from 'react-native';
+import { View, Button, StyleSheet, TouchableOpacity } from 'react-native';
 
 
 const CustomFAB = props => {
     return(
-        <TouchableNativeFeedback style={[styles.customFAB,{...props.style}]}>
+        <TouchableOpacity style={[styles.customFAB,{...props.style}]} {...props}>
             {props.children}
-        </TouchableNativeFeedback>
+        </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     customFAB: {
-        position: 'absolute',
-        bottom: 10,
+        alignItems:'center',
+        justifyContent:'center',
+        width:53,
+        height:53,
+        position: 'absolute',                                          
+        bottom: 10,                                                    
         right: 10,
-        borderRadius: 100,
+        backgroundColor:'#006494',
+        borderRadius:30,
+        elevation: 3
     }
 });
 
