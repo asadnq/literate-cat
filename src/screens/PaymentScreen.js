@@ -9,6 +9,7 @@ import RupiahFormat from '../components/UI/texts/RupiahFormat';
 import HalfBottomModal from '../components/UI/modals/HalfBottomModal';
 import OutlineButton from '../components/UI/buttons/OutlineButton';
 import ListCourier from '../components/UI/ListCourier';
+import DefaultButton from '../components/UI/buttons/DefaultButton';
 
 class PaymentScreen extends Component {
     constructor(props) {
@@ -159,9 +160,7 @@ class PaymentScreen extends Component {
                             </Body>
                         </CardItem>
                         <CardItem style={{flexDirection: 'row', justifyContent: 'flex-end', padding: 12}}>
-                            <Button small onPress={this.setAddressModalVisibility}>
-                                <Text>use another address</Text>
-                            </Button>
+                            <OutlineButton small title='use another address' onPress={this.setAddressModalVisibility} />
                         </CardItem>
                     </Card>
 
@@ -179,10 +178,11 @@ class PaymentScreen extends Component {
                                 />
                         </CardItem>
                         <CardItem style={{flexDirection: 'row', padding: 12}}>
-                            <Lato style={{flex: 1}}>choose a courier :</Lato>
-                            <Button style={{alignSelf: 'flex-end',width: '35%'}} small onPress={this.setCourierModalVisibility}>
-                                <Text>choose</Text>
-                            </Button>
+                            <Lato style={{flex: 1}}>
+                                {this.state.courier !== null ? this.state.courier.name :'choose a courier :'}
+                            </Lato>
+                            <OutlineButton style={{alignSelf: 'flex-end',width: '35%'}} small
+                                title={this.state.courier !== null ? 'choose another' : 'choose'} onPress={this.setCourierModalVisibility} />
                         </CardItem>
 
                         {courierComp}
@@ -206,10 +206,8 @@ class PaymentScreen extends Component {
                             <Lato style={{flex: 1}}>courier charge </Lato>
                             <RupiahFormat text={this.state.courier === null ? 0 : this.state.courier.charge} />
                         </CardItem>
-                        <CardItem style={{paddingLeft: 12,paddingRight: 12}}>
-                            <Button full bordered style={{flex: 1}}>
-                                <Text>pay now</Text>
-                            </Button>
+                        <CardItem style={{flexDirection: 'column', paddingLeft: 12,paddingRight: 12}}>
+                            <DefaultButton block title='pay now'/>
                         </CardItem>
                     </Card>
                 </Content>

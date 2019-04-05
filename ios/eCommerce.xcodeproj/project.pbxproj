@@ -60,6 +60,14 @@
 		258E6671C3D84863A92EDD2C /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BE9C5094BF4945C0AEA52D7E /* SimpleLineIcons.ttf */; };
 		3B627D8BB0EE47ACA6A241FC /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 400D7245946D49B3B0F7CCC6 /* Zocial.ttf */; };
 		3C679E75C4674E668DEDBCDC /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7B04B0F2BBF44D88B002955 /* Lato-Regular.ttf */; };
+		419FE233FE0C450386B2DD42 /* Dosis-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 329BC2FFC5BA4FB6A693D3F7 /* Dosis-Light.otf */; };
+		16C25B28778F42A2AE025176 /* Dosis-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4575F394541E4A60B25CEBA9 /* Dosis-Regular.otf */; };
+		A870C0004C644802B0E51A66 /* KaushanScript-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = FDD49C811CB543FDA97F9149 /* KaushanScript-Regular.otf */; };
+		8589D344FC1143FDA8F0F59B /* Philosopher-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B97A714A4E424DB6B828D662 /* Philosopher-Bold.ttf */; };
+		5CB013E9F79D43A383F59297 /* Philosopher-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D85D9E15B7B4D4EBA7EC1E4 /* Philosopher-Regular.ttf */; };
+		8CEF04CDF2E84C949E26EF0F /* Raleway-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CCD3C45814904692B92DA608 /* Raleway-Medium.ttf */; };
+		68CB60E964EB41B4BD031928 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3645D5D11BDC489B8039372B /* Raleway-Regular.ttf */; };
+		6BD04C4525F544D09AF1F391 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BF4E3B14E744EFD9AAE90E5 /* Rubik-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -389,6 +397,14 @@
 		BE9C5094BF4945C0AEA52D7E /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		400D7245946D49B3B0F7CCC6 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		A7B04B0F2BBF44D88B002955 /* Lato-Regular.ttf */ = {isa = PBXFileReference; name = "Lato-Regular.ttf"; path = "../assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		329BC2FFC5BA4FB6A693D3F7 /* Dosis-Light.otf */ = {isa = PBXFileReference; name = "Dosis-Light.otf"; path = "../assets/fonts/Dosis-Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4575F394541E4A60B25CEBA9 /* Dosis-Regular.otf */ = {isa = PBXFileReference; name = "Dosis-Regular.otf"; path = "../assets/fonts/Dosis-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		FDD49C811CB543FDA97F9149 /* KaushanScript-Regular.otf */ = {isa = PBXFileReference; name = "KaushanScript-Regular.otf"; path = "../assets/fonts/KaushanScript-Regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B97A714A4E424DB6B828D662 /* Philosopher-Bold.ttf */ = {isa = PBXFileReference; name = "Philosopher-Bold.ttf"; path = "../assets/fonts/Philosopher-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3D85D9E15B7B4D4EBA7EC1E4 /* Philosopher-Regular.ttf */ = {isa = PBXFileReference; name = "Philosopher-Regular.ttf"; path = "../assets/fonts/Philosopher-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CCD3C45814904692B92DA608 /* Raleway-Medium.ttf */ = {isa = PBXFileReference; name = "Raleway-Medium.ttf"; path = "../assets/fonts/Raleway-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3645D5D11BDC489B8039372B /* Raleway-Regular.ttf */ = {isa = PBXFileReference; name = "Raleway-Regular.ttf"; path = "../assets/fonts/Raleway-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8BF4E3B14E744EFD9AAE90E5 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; name = "Rubik-Regular.ttf"; path = "../assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -679,6 +695,14 @@
 				BE9C5094BF4945C0AEA52D7E /* SimpleLineIcons.ttf */,
 				400D7245946D49B3B0F7CCC6 /* Zocial.ttf */,
 				A7B04B0F2BBF44D88B002955 /* Lato-Regular.ttf */,
+				329BC2FFC5BA4FB6A693D3F7 /* Dosis-Light.otf */,
+				4575F394541E4A60B25CEBA9 /* Dosis-Regular.otf */,
+				FDD49C811CB543FDA97F9149 /* KaushanScript-Regular.otf */,
+				B97A714A4E424DB6B828D662 /* Philosopher-Bold.ttf */,
+				3D85D9E15B7B4D4EBA7EC1E4 /* Philosopher-Regular.ttf */,
+				CCD3C45814904692B92DA608 /* Raleway-Medium.ttf */,
+				3645D5D11BDC489B8039372B /* Raleway-Regular.ttf */,
+				8BF4E3B14E744EFD9AAE90E5 /* Rubik-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1149,6 +1173,14 @@
 				258E6671C3D84863A92EDD2C /* SimpleLineIcons.ttf in Resources */,
 				3B627D8BB0EE47ACA6A241FC /* Zocial.ttf in Resources */,
 				3C679E75C4674E668DEDBCDC /* Lato-Regular.ttf in Resources */,
+				419FE233FE0C450386B2DD42 /* Dosis-Light.otf in Resources */,
+				16C25B28778F42A2AE025176 /* Dosis-Regular.otf in Resources */,
+				A870C0004C644802B0E51A66 /* KaushanScript-Regular.otf in Resources */,
+				8589D344FC1143FDA8F0F59B /* Philosopher-Bold.ttf in Resources */,
+				5CB013E9F79D43A383F59297 /* Philosopher-Regular.ttf in Resources */,
+				8CEF04CDF2E84C949E26EF0F /* Raleway-Medium.ttf in Resources */,
+				68CB60E964EB41B4BD031928 /* Raleway-Regular.ttf in Resources */,
+				6BD04C4525F544D09AF1F391 /* Rubik-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

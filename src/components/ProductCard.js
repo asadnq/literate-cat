@@ -1,25 +1,19 @@
-import React, { Component } from 'react'
+import React from 'react';
+import { FlatList } from 'react-native';
 
-import ProductCard from './UI/ProductCard';
+import CardProduct from './UI/CardProduct';
 
-export class ProductCard extends Component {
-  render() {
+const ProductCard = (props) => {
     return (
-        <Content >
-            <FlatList
-                data={products}
-                renderItem={({item}) => (
-                    <View style={styles.cardWrapper} >
-                        <ProductCard 
-                            image={item.image}
-                            title={item.title}
-                            />
-                    </View>
-                )}
-                />
-        </Content>
-    )
-  }
+        <FlatList
+            data={props.data}
+            numColumns={2}
+            keyExtractor={(item, index) => 'key'+index}
+            renderItem={({item}) => (
+                        <CardProduct {...item}
+                        action={() => props.action(item)} />) }
+        />
+    );
 }
 
-export default ProductCard
+export default ProductCard;

@@ -8,10 +8,12 @@ import { addToCart } from '../store/actions/cart';
 import InputQuantity from '../components/UI/InputQuantity';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
 import HalfBottomModal from '../components/UI/modals/HalfBottomModal';
-import Lato from '../components/UI/texts/Lato';
 import OutlineButton from '../components/UI/buttons/OutlineButton';
 import CustomFAB from '../components/UI/buttons/CustomFAB';
-
+import Lato from '../components/UI/texts/Lato';
+import Rubik from '../components/UI/texts/Rubik';
+import Raleway from '../components/UI/texts/Raleway';
+import Philosopher from '../components/UI/texts/Philosopher'
 
 class ProductDetail extends Component {
     
@@ -129,7 +131,7 @@ class ProductDetail extends Component {
                             <Image resizeMode='contain' source={image} style={styles.img} />
                         </View>
                         <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 4}}>
-                            <Text>{name}</Text>
+                            <Philosopher style={{fontSize: 18,}}>{name}</Philosopher>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                                 <RupiahFormat text={price} />
                                 <Text>x</Text>
@@ -146,7 +148,9 @@ class ProductDetail extends Component {
                     <View style={{flex: 1,flexDirection: 'row', alignSelf: 'stretch',
                     alignItems: 'flex-end',justifyContent: 'space-between'}}>
                         <RupiahFormat text={this.state.control.priceSum} style={{color: '#705E49', fontSize: 20}}/>
-                        <OutlineButton style={{alignSelf: 'flex-end'}} onPress={this.onAddCartHandler} title='add'/>
+                        <OutlineButton buttonStyle={{alignSelf: 'flex-end',
+                                                        borderRadius: 20, height: 30}}
+                                    onPress={this.onAddCartHandler} title='add to cart'/>
                     </View>
                 </HalfBottomModal>
                 <Content>
@@ -156,14 +160,13 @@ class ProductDetail extends Component {
                         </CardItem>
                         <CardItem>
                             <Body>
-                                <Text style={styles.prName}>
+                                <Philosopher style={styles.prName}>
                                     {name}
-                                </Text>
+                                </Philosopher>
                                 <RupiahFormat style={styles.prPrice} text={price}/>
-                                
-                                <Text style={styles.prDesc} textBreakStrategy='balanced'>
+                                <Raleway style={styles.prDesc}>
                                     {description}
-                                </Text>
+                                </Raleway>
                             </Body>
                         </CardItem>
                         <CardItem>
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         borderColor: '#c9c9c9',
         marginBottom: 12,
-        fontFamily: 'Lato-Regular'
+        fontSize: 20
     },
     prPrice: {
         fontSize: 13,
@@ -208,7 +211,9 @@ const styles = StyleSheet.create({
     },
     prDesc: {
         color: '#666',
-        fontSize: 11
+        fontSize: 11,
+        margin: 2,
+        textAlign: 'justify'
     },
     buyButton: {
         borderColor: '#006494',
@@ -217,7 +222,7 @@ const styles = StyleSheet.create({
     }
 })
 
-mapDispatch = dispatch => {
+const mapDispatch = dispatch => {
     return {
         addToCart: (item, qty) => dispatch(addToCart(item, qty))
     }

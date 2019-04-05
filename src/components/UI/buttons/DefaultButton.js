@@ -4,7 +4,7 @@ import { Button, Text } from 'native-base';
 
 const DefaultButton = props => {
     return(
-    <Button style={[styles.buttonStyle, props.buttonStyle]} {...props}>
+    <Button  {...props} style={[styles.buttonStyle, props.style]}>
         {props.icon}
         <Text style={[styles.textStyle, props.titleStyle]}>{props.title}</Text>
     </Button>
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
         paddingRight: 16,
         fontSize: 14,
         backgroundColor: 'transparent',
-        color: '#FFF'
+        color: '#FFF',
+        textTransform: 'lowercase'
     }
 })
 

@@ -66,9 +66,10 @@ const styles = StyleSheet.create({
     modalHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingTop: 2,
+        alignItems: 'center',
+        paddingTop: 4,
         paddingRight: 4,
-        paddingLeft: 4,
+        paddingLeft: 8,
         paddingBottom: 2,
         borderBottomWidth: .75,
         borderColor: '#c9c9c9'
@@ -87,14 +88,16 @@ const styles = StyleSheet.create({
         width: 30
     },
     modalTitle: {
-        fontSize: 20,
-        textTransform: 'uppercase'
+        fontSize: 17,
+        textTransform: 'lowercase',
+        fontFamily: 'Rubik-Regular',
+        color: 'hsl(220, 10%, 78%)'
     },
     closeIcon: {
         fontSize: 30,
         marginRight: 0,
         marginLeft: 0,
-        color: '#333'
+        color: 'hsl(220, 10%, 78%)'
     }
 });
 

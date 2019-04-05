@@ -9,7 +9,7 @@ import ListCart from '../components/UI/ListCart';
 import BlockContent from '../components/UI/BlockContent';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
 import DefaultButton from '../components/UI/buttons/DefaultButton';
-
+import OutlineButton from '../components/UI/buttons/OutlineButton';
 
 class CartScreen extends Component {
     constructor(props) {
@@ -19,6 +19,13 @@ class CartScreen extends Component {
 
     }
 
+    static navigationOptions = {
+        title: 'cart',
+        tabBarOptions: {
+            showLabel: true,
+            activeTintColor: '#006494',
+        }
+    };
     addQtyHandler = (cart) =>  {
         this.props.addQty(cart);
     }
@@ -81,11 +88,11 @@ class CartScreen extends Component {
                     <FooterTab style={{flexDirection: 'row', backgroundColor: '#fff'}}>
                         <Container style={{width:'35%', alignItems: 'center', padding: 10}}>
                             <Text style={{textAlign: 'center', fontSize: 12, alignSelf: 'flex-start'}}>total :</Text>
-                            <RupiahFormat text={this.props.total} />
+                            <RupiahFormat style={{fontSize: 18}} text={this.props.total} />
                         </Container>
-                        <Button bordered block style={{margin: 8,marginLeft: 0, height: '80%'}} onPress={this.checkoutHandler}>
-                            <Text>checkout</Text>
-                        </Button>
+                        <Container style={{padding: 8}}>
+                            <OutlineButton block title='checkout' style={{height: 30,marginLeft: 0}} onPress={this.checkoutHandler} />
+                        </Container>
                     </FooterTab>
                 </Footer>
             </Container>
@@ -95,7 +102,7 @@ class CartScreen extends Component {
             <BlockContent>
                 <Icon type='FontAwesome' name='cart-arrow-down' />
                 <Text>Your cart is empty</Text>
-                <DefaultButton style={{alignSelf: 'center'}} title='shop now' onPress={() => this.props.navigation.navigate('Home')} />
+                <DefaultButton style={{alignSelf: 'center', marginTop: 5}} title='shop now' onPress={() => this.props.navigation.navigate('Home')} />
             </BlockContent>
 
         )

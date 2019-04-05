@@ -1,5 +1,4 @@
 import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY, SUB_QUANTITY } from "../actions/types";
-import dng from '../../../assets/dummy/david-and-goliath.jpg';
 
 const initialState = {
     cart:[],

@@ -4,9 +4,10 @@ import { Icon } from 'native-base';
 
 import Lato from '../components/UI/texts/Lato';
 import HomeScreen from '../screens/HomeScreen';
-import ProductDetail from '../screens/ProductDetail';
+import ProductDetail from '../screens/ProductsDetail';
 import CartScreen from '../screens/CartScreen';
 import PaymentScreen from '../screens/PaymentScreen';
+import ProductsScreen from '../screens/ProductsScreen';
 import { View } from 'react-native'; 
 
 const MainTab = createBottomTabNavigator(
@@ -21,22 +22,22 @@ const MainTab = createBottomTabNavigator(
     {
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ tintColor }) => {
-              const { routeName } = navigation.state;
-              let iconName;
-              if (routeName === 'Home') {
-                iconName = 'home'; 
-              } else if (routeName === 'Cart') {
-                iconName = 'shopping-cart';
-              }
-                return <Icon type='FontAwesome' name={iconName} size={25} style={{color: tintColor}} />;
-            },
-          }),
-        swipeEnabled: true,
-        tabBarOptions: {
-            showIcon: true,
-            activeTintColor: '#006494',
-            inactiveTintColor: '#AAA',
-          }
+                const { routeName } = navigation.state;
+                let iconName;
+                if (routeName === 'Home') {
+                    iconName = 'book'; 
+                } else if (routeName === 'Cart') {
+                    iconName = 'shopping-cart';
+                }
+                    return <Icon type='FontAwesome' name={iconName} size={25} style={{color: tintColor}} />;
+                },
+            }),
+            tabBarOptions: {
+                swipeEnabled: true,
+                showIcon: true,
+                activeTintColor: '#006494',
+                inactiveTintColor: '#AAA',
+            }
     }
 )
 const MainStack = createStackNavigator(
@@ -64,6 +65,9 @@ const MainStack = createStackNavigator(
         },
         Payment: {
             screen: PaymentScreen
+        },
+        Products: {
+            screen: ProductsScreen
         }
     },
     {

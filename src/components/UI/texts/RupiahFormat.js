@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'native-base';
+import { Text, StyleSheet } from 'react-native';
 
 const convertToRupiah = (val) => {
     var rupiah = '';		
@@ -11,8 +11,15 @@ const convertToRupiah = (val) => {
 const RupiahFormat = (props) => {
     
     return(
-        <Text style={props.style}>{convertToRupiah(props.text)}</Text>
+        <Text style={[styles.text,props.style]}>{convertToRupiah(props.text)}</Text>
     )
 }
+
+const styles = StyleSheet.create({
+    text:{ 
+        fontFamily: 'Dosis-Regular',
+        color: '#0081AF'
+    }
+})
 
 export default RupiahFormat;
