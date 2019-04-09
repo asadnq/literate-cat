@@ -10,7 +10,7 @@ const ProductsList = (props) => {
             keyExtractor={(item, index) => 'key'+index}
             renderItem={({item}) => (
                         <ListProduct {...item}
-                        action={() => props.action(item)} />) }
+                        action={() => props.action(item.id)} />) }
         />
     );
 }

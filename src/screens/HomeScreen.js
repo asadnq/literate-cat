@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import ProductList from '../components/ProductsList';
 import ProductCard from '../components/ProductCard';
-import DefaultButton from '../components/UI/buttons/DefaultButton';
 import OutlineButton from '../components/UI/buttons/OutlineButton';
-
+import { getBooks, getBook } from '../store/actions/book';
+import Loading from '../components/UI/loading/Loading';
 
 export class HomeScreen extends Component {
     constructor() {
@@ -20,17 +20,13 @@ export class HomeScreen extends Component {
     }
 
     static navigationOptions = {
-        title: 'products',
+        title: 'books',
       };
 
-    toProductDetail = (product) => {
-        this.props.navigation.navigate('ProductDetail', {
-            product_id: product.id,
-            name: product.name,
-            image: product.image,
-            price: product.price,
-            description: product.description
-        })
+
+      toProductDetail = (id) => {
+          this.props.getBook(id);
+          this.props.navigation.navigate('ProductDetail');
     }
 
     viewModeCardHandler = () => {
@@ -55,7 +51,16 @@ export class HomeScreen extends Component {
         })
     }
 
+    componentDidMount() {
+        this.props.getBooks();
+    }
+
     render() {
+
+        if(this.props.isLoading) {
+            return <Loading />;
+        }
+
         return(
             <Container>
                 <Content>
@@ -77,10 +82,10 @@ export class HomeScreen extends Component {
                     </Container>
                 {this.state.viewMode.card ?
                 (
-                    <ProductCard data={this.props.products}
+                    <ProductCard data={this.props.books}
                         action={this.toProductDetail.bind(this)} />
                 ) : (
-                    <ProductList data={this.props.products}
+                    <ProductList data={this.props.books}
                         action={this.toProductDetail.bind(this)} />
                 )
                 }
@@ -92,8 +97,16 @@ export class HomeScreen extends Component {
 
 const mapState = state => {
     return {
-        products: state.products.products
+        books: state.books.books,
+        isLoading: state.books.isLoading
     }
 }
 
-export default connect(mapState)(HomeScreen);
+const mapDispatch = dispatch => {
+    return {
+        getBooks: () => dispatch(getBooks()),
+        getBook: id => dispatch(getBook(id))
+    }
+}
+
+export default connect(mapState, mapDispatch)(HomeScreen);

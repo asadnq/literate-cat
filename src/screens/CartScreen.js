@@ -4,19 +4,21 @@ import { Container, Content, Footer, FooterTab, Button, Text, Icon } from 'nativ
 import { connect } from 'react-redux'
 import { NavigationActions } from 'react-navigation';
 
-import { deleteCart, addQuantity, subQuantity } from '../store/actions/cart';
+import { deleteCart, addQuantity, subQuantity, getCarts } from '../store/actions/cart';
 import ListCart from '../components/UI/ListCart';
 import BlockContent from '../components/UI/BlockContent';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
 import DefaultButton from '../components/UI/buttons/DefaultButton';
 import OutlineButton from '../components/UI/buttons/OutlineButton';
+import Loading from '../components/UI/loading/Loading';
+import ModalLoading from '../components/UI/loading/ModalLoading';
 
 class CartScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
+        
         }
-
     }
 
     static navigationOptions = {
@@ -26,6 +28,7 @@ class CartScreen extends Component {
             activeTintColor: '#006494',
         }
     };
+
     addQtyHandler = (cart) =>  {
         this.props.addQty(cart);
     }
@@ -33,6 +36,7 @@ class CartScreen extends Component {
     subQtyHandler = (cart) =>  {
         this.props.subQty(cart);
     }
+
 
     minQtyHandler = () => {
 
@@ -52,8 +56,8 @@ class CartScreen extends Component {
         })
     }
 
-    onDeleteCart = (id) => {
-        this.props.deleteCart(id)
+    onDeleteCart = (cart) => {
+        this.props.deleteCart(cart)
     }
 
     checkoutHandler = () => {
@@ -64,15 +68,24 @@ class CartScreen extends Component {
         this.props.navigation.dispatch(navigate);
     }
 
+    componentDidMount() {
+        this.props.getCarts();
+    }
+
     render() {
 
+        if(this.props.isLoading) {
+            return <Loading />;
+        }
+        
         if(this.props.cart.length > 0) {
         return(
             <Container>
+                <ModalLoading visible={this.props.isDeleteLoading} />
                 <Content>
                     <FlatList
-                        keyExtractor={(item, index) => 'key'+item.id}
                         data={this.props.cart}
+                        keyExtractor={(item, index) => 'key'+item.id}
                         renderItem={({item}) => (
                             <ListCart
                                 {...item}
@@ -112,7 +125,9 @@ class CartScreen extends Component {
 const mapState = state => {
     return {
         cart: state.cart.cart,
-        total: state.cart.total
+        total: state.cart.total,
+        isLoading: state.cart.isLoading,
+        isDeleteLoading: state.cart.isDeleteLoading
     }
 }
 
@@ -120,7 +135,8 @@ const mapDispatch = dispatch => {
     return {
         deleteCart: cart => dispatch(deleteCart(cart)),
         addQty: (cart) => dispatch(addQuantity(cart)),
-        subQty: (cart) => dispatch(subQuantity(cart))
+        subQty: (cart) => dispatch(subQuantity(cart)),
+        getCarts: () => dispatch(getCarts())
     }
 }
 

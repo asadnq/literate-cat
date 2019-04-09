@@ -29,6 +29,14 @@ const initialState = {
 
 const checkout = (state = initialState, action ) => {
     switch(action.type) {
+        case GET_CHECKOUTS:
+            return {
+                ...state,
+                checktout: {
+                    cart: action.payload.cart
+                }
+            }
+
         case ADD_COURIER:
             return {
                 checkout: {

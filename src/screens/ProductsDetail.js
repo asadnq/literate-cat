@@ -5,6 +5,7 @@ import { Card, CardItem, Body, Container, Content, Text, Form, Item,
 import { connect } from 'react-redux'
 
 import { addToCart } from '../store/actions/cart';
+import { API_URL } from '../store/config';
 import InputQuantity from '../components/UI/InputQuantity';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
 import HalfBottomModal from '../components/UI/modals/HalfBottomModal';
@@ -14,26 +15,19 @@ import Lato from '../components/UI/texts/Lato';
 import Rubik from '../components/UI/texts/Rubik';
 import Raleway from '../components/UI/texts/Raleway';
 import Philosopher from '../components/UI/texts/Philosopher'
+import Loading from '../components/UI/loading/Loading';
+import ModalLoading from '../components/UI/loading/ModalLoading';
 
 class ProductDetail extends Component {
     
     constructor(props) {
         super(props);
         
-        const { product_id, description, name, image, price } = props.navigation.state.params;
-
         this.state = {
             control: {
                 quantity: '1',
                 modalVisibility: false,
-                priceSum: 0
-            },
-            product: {
-                product_id,
-                name,
-                description,
-                price,
-                image,           
+                price_sum: 0
             }
         }
 
@@ -42,7 +36,7 @@ class ProductDetail extends Component {
     inputQtyHandler = (val) => {
 
         const qty = parseInt(val);
-        const priceSum = this.state.product.price * qty;
+        const price_sum = this.props.book.price * qty;
 
         this.setState(prevState => {
             return {
@@ -50,7 +44,7 @@ class ProductDetail extends Component {
                 control: {
                     quantity: val.replace(/[^0-9]/g, '').toString,
                     modalVisibility: prevState.control.modalVisibility,
-                    priceSum
+                    price_sum
                 }
             }
         });
@@ -59,7 +53,7 @@ class ProductDetail extends Component {
     addQtyHandler = () =>  {
 
         const increasedVal = parseInt(this.state.control.quantity) + 1
-        const priceSum = this.state.product.price * increasedVal;
+        const price_sum = this.props.book.price * increasedVal;
 
         this.setState(prevState => {
             return {
@@ -67,7 +61,7 @@ class ProductDetail extends Component {
                 control: {
                     quantity: increasedVal.toString(),
                     modalVisibility: prevState.control.modalVisibility,
-                    priceSum
+                    price_sum
                 }
             }
         })
@@ -77,7 +71,7 @@ class ProductDetail extends Component {
 
         const { quantity } = this.state.control;
         const decreasedVal = quantity > 1 ? parseInt(quantity) - 1 : parseInt(quantity);
-        const priceSum = this.state.product.price * decreasedVal
+        const price_sum = this.props.book.price * decreasedVal
 
         this.setState(prevState => {
             return {
@@ -85,24 +79,20 @@ class ProductDetail extends Component {
                 control: {
                     quantity: decreasedVal.toString(),
                     modalVisibility: prevState.control.modalVisibility,
-                    priceSum
+                    price_sum
                 }
             }
         })
     }
 
     onAddCartHandler = () => {
-        const {product, control} = this.state;
-
-        this.props.addToCart(product, control.quantity);
-        this.props.navigation.navigate('Cart');
+        this.props.addToCart(this.props.book, this.state.control.quantity);
+        this.setModalVisibility();
     }
 
     setModalVisibility = () => {
     
-        const { control, product } = this.state;
-
-        const priceSum = parseInt(control.quantity) * product.price;
+        const price_sum = parseInt(this.state.control.quantity) * this.props.book.price;
 
         this.setState((prevState) => {
             return {
@@ -110,53 +100,62 @@ class ProductDetail extends Component {
                 control: {
                     quantity: prevState.control.quantity,
                     modalVisibility: !prevState.control.modalVisibility,
-                    priceSum
+                    price_sum
                 }
             }
         })
     }
 
+
     render() {
 
-        const { name, image, price, description } = this.state.product;
+        const { name, cover_image, price, description } = this.props.book;
+
+        if(this.props.isLoading) {
+            return <Loading />;
+        }
 
         return(
             <Container>
+                <ModalLoading visible={this.props.isAddLoading ? true : false}/>
                 <HalfBottomModal
                     title='add to cart'
                     visible={this.state.control.modalVisibility}
                     visibilityHandler={this.setModalVisibility}>
-                    <View style={{flexDirection: 'row',flex: 2.5}}>
-                        <View style={{flex: 1}}>
-                            <Image resizeMode='contain' source={image} style={styles.img} />
-                        </View>
-                        <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 4}}>
-                            <Philosopher style={{fontSize: 18,}}>{name}</Philosopher>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                                <RupiahFormat text={price} />
-                                <Text>x</Text>
-                                <Text>{this.state.control.quantity}</Text>
+                    <View style={{height: 200, padding: 15}}>
+                        <View style={{flexDirection: 'row', height: 120}}>
+                            <View style={{flex: 1}}>
+                                <Image resizeMode='contain' source={{uri: API_URL + cover_image}} style={styles.img} />
                             </View>
-                            <InputQuantity 
-                                onMinPressed={this.minQtyHandler}
-                                onPlusPressed={this.addQtyHandler}
-                                onChangeText={this.inputQtyHandler}
-                                value={this.state.control.quantity}
-                                />
+                            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 4}}>
+                                <Philosopher style={{fontSize: 18,}}>{name}</Philosopher>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between',
+                                    alignItems: 'center', alignSelf: 'stretch'}}>
+                                    <RupiahFormat text={this.props.book.price} />
+                                    <Text>x</Text>
+                                    <Text>{this.state.control.quantity}</Text>
+                                </View>
+                                <InputQuantity 
+                                    onMinPressed={this.minQtyHandler}
+                                    onPlusPressed={this.addQtyHandler}
+                                    onChangeText={this.inputQtyHandler}
+                                    value={this.state.control.quantity}
+                                    />
+                            </View>
                         </View>
-                    </View>
-                    <View style={{flex: 1,flexDirection: 'row', alignSelf: 'stretch',
-                    alignItems: 'flex-end',justifyContent: 'space-between'}}>
-                        <RupiahFormat text={this.state.control.priceSum} style={{color: '#705E49', fontSize: 20}}/>
-                        <OutlineButton buttonStyle={{alignSelf: 'flex-end',
-                                                        borderRadius: 20, height: 30}}
-                                    onPress={this.onAddCartHandler} title='add to cart'/>
+                        <View style={{flex: 1,flexDirection: 'row', alignSelf: 'stretch',
+                        alignItems: 'flex-end',justifyContent: 'space-between'}}>
+                            <RupiahFormat text={this.state.control.price_sum} style={{color: '#705E49', fontSize: 20}}/>
+                            <OutlineButton style={{alignSelf: 'flex-end',
+                                                            borderRadius: 20, height: 30}}
+                                                            onPress={this.onAddCartHandler} title='add to cart'/>
+                        </View>
                     </View>
                 </HalfBottomModal>
                 <Content>
                     <Card style={{flex:1}}>
                         <CardItem style={styles.imgWrapper}>
-                            <Image resizeMode='contain' source={image} style={styles.img} />                            
+                            <Image resizeMode='contain' source={{uri: API_URL + cover_image}} style={styles.img} />                            
                         </CardItem>
                         <CardItem>
                             <Body>
@@ -222,10 +221,19 @@ const styles = StyleSheet.create({
     }
 })
 
+
+const mapState = state => {
+    return {
+        book: state.books.book,
+        isLoading: state.books.isLoading,
+        isAddLoading: state.cart.isAddLoading
+    }
+}
+
 const mapDispatch = dispatch => {
     return {
         addToCart: (item, qty) => dispatch(addToCart(item, qty))
     }
 }
 
-export default connect(null, mapDispatch)(ProductDetail);
+export default connect(mapState, mapDispatch)(ProductDetail);

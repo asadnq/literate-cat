@@ -3,26 +3,24 @@ import { StyleSheet, Image,View } from 'react-native';
 import { ListItem, Icon, Left, Thumbnail, Body, Right, Button, Card } from 'native-base';
 
 
-import Lato from '../UI/texts/Lato';
+import Philosopher from '../UI/texts/Philosopher';
 import RupiahFormat from '../UI/texts/RupiahFormat';
 import InputQuantity from './InputQuantity';
-import Hoc from '../Hoc';
+import { API_URL } from '../../store/config';
 
 const ListCart = props => {
-
-    const { prName, prPrice } = styles;
 
     return(
         <Card>
             <ListItem noIndent thumbnail>
                 <Left>
-                    <Thumbnail square source={props.image} />
+                    <Thumbnail style={styles.prThumb} square source={{uri: API_URL + props.cover_image}} resizeMode="contain" />
                 </Left>
                 <Body>
-                    <Lato style={prName}>
+                    <Philosopher style={styles.prName}>
                         { props.name }
-                    </Lato>
-                    <RupiahFormat style={prPrice} text={props.price} />
+                    </Philosopher>
+                    <RupiahFormat style={styles.prPrice} text={props.price} />
                 </Body>
                 <Right>
                     <Button style={styles.delButton} bordered danger onPress={props.actionDelete}>
@@ -32,7 +30,7 @@ const ListCart = props => {
             </ListItem>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 15}}>
                 <InputQuantity value={props.value} onMinPressed={props.subQty} onPlusPressed={props.addQty} />
-                <RupiahFormat text={props.priceSum} />
+                <RupiahFormat text={props.price_sum} />
             </View>
         </Card>
     )
@@ -61,6 +59,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginLeft: 0,
         marginRight: 0
+    },
+    prThumb: {
+        height: 70,
+        marginTop: 2
     }
 })
 

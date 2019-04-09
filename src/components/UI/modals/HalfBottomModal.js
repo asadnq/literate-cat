@@ -1,67 +1,47 @@
 import React from 'react';
-import { View, Modal, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { Icon, Button } from 'native-base';
-
-
-import Hoc from '../../Hoc';
+import Modal from 'react-native-modal';
 
 const HalfBottomModal = props => {
 
     return(
-        <Hoc>
-            <Modal
-                transparent={true}
-                visible={props.visible}
-                animationType='fade'>
-                <View style={styles.modalOverlay}>
+        <Modal
+        style={styles.modal} 
+        isVisible={props.visible}
+        animationInTiming={700}
+        animationOutTiming={500}
+        bationInTiming={700}
+        animaackdropTransitionInTiming={500}
+        backdropTransitionOutTiming={800}
+        onBackdropPress={props.visibilityHandler}
+        onBackButtonPress={props.visibilityHandler}>
+            <View style={styles.innerModal}>
+                <View style={styles.modalHeader}>
+                    <Text style={styles.modalTitle}>
+                        {props.title}
+                    </Text>
+                    <Button transparent style={styles.closeButton} onPress={props.visibilityHandler}>
+                        <Icon style={styles.closeIcon} type='MaterialIcons' name='close' />
+                    </Button>
                 </View>
-            </Modal>
-                <Modal
-                transparent={true}
-                visible={props.visible}
-                animationType='slide'>
-                 <View style={{flex: .5}}>
-                    </View>
-                    <View style={styles.innerModalWrapper}>
-                        <View style={styles.innerModal}>
-                            <View style={styles.modalHeader}>
-                                <Text style={styles.modalTitle}>
-                                    {props.title}
-                                </Text>
-                                <Button transparent style={styles.closeButton} onPress={props.visibilityHandler}>
-                                    <Icon style={styles.closeIcon} type='MaterialIcons' name='close' />
-                                </Button>
-                            </View>
-                            <View style={[styles.modalBody, props.bodyStyle]}>
-                                {props.children}
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-        </Hoc>
+                <View style={styles.modalBody}>
+                    {props.children}
+                </View>
+            </View>
+        </Modal>
     )
 }
 
 const styles = StyleSheet.create({
-    innerModalWrapper: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%'
+    modal: {
+        margin:0,
+        justifyContent: 'flex-end'
     },
     innerModal: {
-        width: '100%',
-        height: 330,
         backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column'
-    },
-    modalOverlay: {
-        backgroundColor: 'hsla(0, 0%, 0%, 0.75)',
-        height: '100%',
-        width: '100%'
     },
     modalHeader: {
         flexDirection: 'row',
@@ -75,10 +55,9 @@ const styles = StyleSheet.create({
         borderColor: '#c9c9c9'
     },
     modalBody: {
-        padding: 12,
         flexDirection: 'column',
         width: '100%',
-        height: 300,
+        alignSelf: 'stretch'
     },
     closeButton: {
         height: 30,

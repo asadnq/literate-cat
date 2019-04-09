@@ -4,20 +4,20 @@ import { ListItem, Icon, Text, Left, Thumbnail, Body, Right, Button } from 'nati
 
 import RupiahFormat from '../UI/texts/RupiahFormat';
 import Lato from '../UI/texts/Lato';
+import { API_URL } from '../../store/config';
 
 const ListPayment = props => {
 
-    const { prName, prPriceSum, prQty } = styles;
 
     return(
         <ListItem noIndent thumbnail>
             <Left>
-                <Thumbnail square source={props.image} />
+                <Thumbnail style={styles.prThumb} square source={{uri: API_URL + props.cover_image}} resizeMode='contain'/>
             </Left>
             <Body>
-                <Lato style={prName}>{ props.name }</Lato>
-                <Lato style={prQty}>{props.quantity} item</Lato>
-                <RupiahFormat text={props.priceSum} />
+                <Lato style={styles.prName}>{ props.name }</Lato>
+                <Lato style={styles.prQty}>{props.quantity} item</Lato>
+                <RupiahFormat text={props.price_sum} />
             </Body>
         </ListItem>
     )
@@ -30,15 +30,15 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderColor: '#c9c9c9'
     },
-    prPriceSum: {
-        fontSize: 14,
-        color: '#676C6E'
-    },
     prQty: {
         color: '#777'
     },
     prImg: {
         height: 78
+    },
+    prThumb: {
+        height: 70,
+        marginTop: 2
     }
 });
 

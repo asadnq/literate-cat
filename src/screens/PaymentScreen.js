@@ -95,10 +95,6 @@ class PaymentScreen extends Component {
         console.log(this.state.courier);
     }
 
-    componentDidUpdate() {
-        
-    }
-
     render() {
         
         let address = this.state.address;
@@ -120,15 +116,16 @@ class PaymentScreen extends Component {
         return(
             <Container>
                 <HalfBottomModal visible={this.state.modalVisible.address} title='input address' visibilityHandler={this.setAddressModalVisibility}>
-                    <View style={{flex: 1}}>
+                    <View style={{flexDirection: 'column', padding: 15, justifyContent: 'space-between'}}>
                         <Lato>address</Lato>
                         <Item>
                             <Input onChangeText={this.inputAddressHandler}/>
                         </Item>
-                    </View>
-                    <View style={{flex: 1,flexDirection: 'row', alignSelf: 'stretch',
-                    alignItems: 'flex-end',justifyContent: 'flex-end'}}>
-                        <OutlineButton style={{alignSelf: 'flex-end'}} onPress={this.onModalAddressSubmit} title='submit'/>
+                        <View style={{flex: 1,flexDirection: 'row', alignSelf: 'stretch',
+                        alignItems: 'flex-end',justifyContent: 'flex-end'}}>
+                            <OutlineButton style={{alignSelf: 'flex-end', height: 38,
+                            borderTopRightRadius: 20, borderBottomRightRadius: 20}} onPress={this.onModalAddressSubmit} title='submit'/>
+                        </View>
                     </View>
                 </HalfBottomModal>
 
@@ -181,7 +178,7 @@ class PaymentScreen extends Component {
                             <Lato style={{flex: 1}}>
                                 {this.state.courier !== null ? this.state.courier.name :'choose a courier :'}
                             </Lato>
-                            <OutlineButton style={{alignSelf: 'flex-end',width: '35%'}} small
+                            <OutlineButton style={{alignSelf: 'flex-end'}} small
                                 title={this.state.courier !== null ? 'choose another' : 'choose'} onPress={this.setCourierModalVisibility} />
                         </CardItem>
 
@@ -189,7 +186,7 @@ class PaymentScreen extends Component {
                         
                         <CardItem style={{flexDirection: 'row', padding: 12}}>
                             <Lato style={{flex: 1}}>Sub total</Lato>
-                            <RupiahFormat text={this.state.total} />
+                            <RupiahFormat text={this.props.total} />
                         </CardItem>
                     </Card>
                 

@@ -19,7 +19,7 @@ export class ProductsScreen extends Component {
   
     toProductDetail = (product) => {
         this.props.navigation.navigate('ProductDetail', {
-            product_id: product.id,
+            book_id: product.id,
             name: product.name,
             image: product.image,
             price: product.price,
@@ -33,7 +33,7 @@ export class ProductsScreen extends Component {
             <FlatList
                 numColumns={2}
                 keyExtractor={(item, index) => 'key'+index}
-                data={this.props.products}
+                data={this.props.book}
                 renderItem={({item}) => (
                     <CardProduct {...item}
                     action={this.toProductDetail.bind(this,item)}/>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 
 const mapState = state => {
     return {
-        products: state.products.products
+        book: state.book.book
     }
 }
 

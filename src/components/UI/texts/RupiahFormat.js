@@ -1,7 +1,10 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
-const convertToRupiah = (val) => {
+const convertToRupiah = (val = 0) => {
+    if(val === undefined) {
+        val = 0
+    }
     var rupiah = '';		
 	var valrev = val.toString().split('').reverse().join('');
 	for(var i = 0; i < valrev.length; i++) if(i%3 == 0) rupiah += valrev.substr(i,3)+'.';

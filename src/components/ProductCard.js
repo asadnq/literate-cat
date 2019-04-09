@@ -11,7 +11,7 @@ const ProductCard = (props) => {
             keyExtractor={(item, index) => 'key'+index}
             renderItem={({item}) => (
                         <CardProduct {...item}
-                        action={() => props.action(item)} />) }
+                        action={() => props.action(item.id)} />) }
         />
     );
 }
