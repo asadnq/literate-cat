@@ -4,12 +4,12 @@ import { Container, Card, CardItem, Text, Body, Button, Content, ListItem, Left,
 
 import RupiahFormat from './texts/RupiahFormat';
 import OutlineButton from './buttons/OutlineButton';
-import { API_URL } from '../../store/config'
+import { IMG_URL } from '../../config/api.config'
 
 const ListProduct = props => (
     <ListItem noIndent thumbnail button onPress={props.action} >
         <Left>
-            <Thumbnail style={styles.prImg} square source={{uri : API_URL + props.cover_image}} resizeMode="contain" />
+            <Thumbnail style={styles.prImg} square source={{uri : IMG_URL + props.cover_image}} resizeMode="contain" />
         </Left>
         <Body>
             <Text style={styles.prName} numberOfLines={1}>
@@ -25,12 +25,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: .8,
         fontSize: 16,
         borderColor: '#c9c9c9',
-        fontFamily: 'Lato-Regular'
+        fontFamily: 'Philosopher-Regular'
     },
     prPrice: {
         fontSize: 10,
-        color: '#676C6E',
-        fontFamily: 'Lato-Regular'
+        color: '#676C6E'
     },
     prImg: {
         height: 78

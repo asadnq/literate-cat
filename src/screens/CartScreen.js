@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { View, StyleSheet, FlatList } from 'react-native';
 import { Container, Content, Footer, FooterTab, Button, Text, Icon } from 'native-base';
 import { connect } from 'react-redux'
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, NavigationEvents } from 'react-navigation';
 
-import { deleteCart, addQuantity, subQuantity, getCarts } from '../store/actions/cart';
+import { deleteCart, addQuantity, subQuantity, getCarts, updateCarts } from '../store/actions/cart';
 import ListCart from '../components/UI/ListCart';
 import BlockContent from '../components/UI/BlockContent';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
@@ -67,7 +67,7 @@ class CartScreen extends Component {
 
         this.props.navigation.dispatch(navigate);
     }
-
+    
     componentDidMount() {
         this.props.getCarts();
     }
@@ -81,6 +81,9 @@ class CartScreen extends Component {
         if(this.props.cart.length > 0) {
         return(
             <Container>
+                <NavigationEvents
+                    onWillBlur={() => this.props.updateCarts(this.props.cart)}
+                />
                 <ModalLoading visible={this.props.isDeleteLoading} />
                 <Content>
                     <FlatList
@@ -136,7 +139,8 @@ const mapDispatch = dispatch => {
         deleteCart: cart => dispatch(deleteCart(cart)),
         addQty: (cart) => dispatch(addQuantity(cart)),
         subQty: (cart) => dispatch(subQuantity(cart)),
-        getCarts: () => dispatch(getCarts())
+        getCarts: () => dispatch(getCarts()),
+        updateCarts: carts => dispatch(updateCarts(carts))
     }
 }
 

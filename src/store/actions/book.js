@@ -1,5 +1,5 @@
 import { GET_BOOKS, GET_BOOK, IS_LOADING} from './types';
-import { API_URL } from '../config'
+import { API_URL } from '../../config/api.config';
 import axios from 'axios'
 
 export const getBooks = () => (dispatch) => {
@@ -11,7 +11,7 @@ export const getBooks = () => (dispatch) => {
                 dispatch( {
                     type: GET_BOOKS,
                     payload: {
-                        books: res.data
+                        books: res.data.data
                     }
                 })
             });
@@ -25,7 +25,7 @@ export const getBook = id => (dispatch) => {
             dispatch({
                 type: GET_BOOK,
                 payload: {
-                    book: res.data
+                    book: res.data.data
                 }
             })
         })

@@ -1,13 +1,15 @@
 import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY,
             SUB_QUANTITY, GET_CARTS, IS_LOADING,
-            CART_LOADED, CART_LOADING, IS_ADD_LOADING, IS_DELETE_LOADING } from "../actions/types";
+            CART_LOADED, CART_LOADING, IS_ADD_LOADING, IS_DELETE_LOADING,
+            ADDED_TO_CART } from "../actions/types";
 
 const initialState = {
     cart:[],
     total: 0,
     isLoading: false,
     isAddLoading: false,
-    isDeleteLoading: false
+    isDeleteLoading: false,
+    isAddedToCart: false
 }
 
 const cart = (state = initialState, action) => {
@@ -43,6 +45,11 @@ const cart = (state = initialState, action) => {
                 total: state.total + action.payload.price_sum,
                 isAddLoading: false
             };
+        case ADDED_TO_CART:
+            return{
+                ...state,
+                isAddedToCart: !state.isAddedToCart
+            }
         case DELETE_CART:
             return {
                 ...state,

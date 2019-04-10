@@ -6,6 +6,7 @@ export const SUB_QUANTITY = 'SUB_QUANTITY';
 export const DELETE_QUANTITY = 'DELETE_QUANTITY';
 export const CART_LOADED = 'CART_LOADED';
 export const CART_LOADING = 'CART_LOADING';
+export const ADDED_TO_CART = 'ADDED_TO_CART';
 
 export const GET_CHECKOUTS = 'GET_CHECKOUTS';
 export const ADD_COURIER = 'ADD_COURIER';

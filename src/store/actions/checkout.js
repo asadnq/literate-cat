@@ -1,6 +1,6 @@
 import { ADD_COURIER, GET_CHECKOUTS } from './types';
 import axios from 'axios';
-import { API_URL } from '../config';
+import { API_URL } from '../../config/api.config';
 
 export const getCheckouts = () => dispatch => {
     axios.get(`${API_URL}/carts`).

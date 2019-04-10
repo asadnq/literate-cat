@@ -1,6 +1,6 @@
 import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY, SUB_QUANTITY, GET_CARTS, CART_LOADED, CART_LOADING,
-            IS_ADD_LOADING, IS_DELETE_LOADING } from './types';
-import { API_URL } from '../config';
+            IS_ADD_LOADING, IS_DELETE_LOADING, ADDED_TO_CART } from './types';
+import { API_URL } from '../../config/api.config';
 import axios from 'axios';
 
 export const getCarts = () => dispatch => {
@@ -21,19 +21,25 @@ export const getCarts = () => dispatch => {
 export const addToCart = (book, quantity) => (dispatch) => {
     
     const price_sum = book.price * parseInt(quantity);
-        dispatch({type: IS_ADD_LOADING});
+    dispatch({type: IS_ADD_LOADING});
 
     axios.post(`${API_URL}/carts`, { book_id: book.id, quantity: parseInt(quantity), price_sum})
-    .then(res=> {
+    .then(res => {
             dispatch({
                 type: ADD_TO_CART,
                 payload: {
-                        cart: res.data.cart,
+                        cart: res.data.data,
                         quantity,
                         price_sum
                 }
             });
-    })
+    });
+}
+
+export const addedToCart = () => dispatch => {
+    dispatch({
+        type: ADDED_TO_CART
+    });
 }
 
 export const deleteCart = (cart) => dispatch => {
@@ -47,12 +53,21 @@ export const deleteCart = (cart) => dispatch => {
                     id: cart.id,
                     substract: cart.price_sum
                 }
-            })
+            });
         });
 }
 
+export const updateCarts = carts => dispatch => {
+    carts.map(cart => {
+        axios.patch(`${API_URL}/carts/${cart.id}`, cart)
+        }
+    );
+
+}
+
 export const addQuantity = (cart) => {
-    addedQuantity = parseInt(cart.quantity) + 1
+    addedQuantity = parseInt(cart.quantity) + 1;
+    
     return {
         type: ADD_QUANTITY,
         payload: {
@@ -61,7 +76,7 @@ export const addQuantity = (cart) => {
             price: cart.price,
             price_sum: cart.price * addedQuantity
         }
-    }
+    };
 }
 
 export const subQuantity = cart => {
@@ -74,5 +89,5 @@ export const subQuantity = cart => {
             price: cart.price,
             price_sum: cart.price * subedQuantity
         }
-    }
+    };
 } 

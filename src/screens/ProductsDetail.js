@@ -4,8 +4,8 @@ import { Card, CardItem, Body, Container, Content, Text, Form, Item,
      Input,Footer, Button, Icon, FooterTab } from 'native-base';
 import { connect } from 'react-redux'
 
-import { addToCart } from '../store/actions/cart';
-import { API_URL } from '../store/config';
+import { addToCart, addedToCart } from '../store/actions/cart';
+import { IMG_URL } from '../config/api.config';
 import InputQuantity from '../components/UI/InputQuantity';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
 import HalfBottomModal from '../components/UI/modals/HalfBottomModal';
@@ -17,6 +17,7 @@ import Raleway from '../components/UI/texts/Raleway';
 import Philosopher from '../components/UI/texts/Philosopher'
 import Loading from '../components/UI/loading/Loading';
 import ModalLoading from '../components/UI/loading/ModalLoading';
+import QuarterModal from '../components/UI/modals/QuarterModal';
 
 class ProductDetail extends Component {
     
@@ -26,7 +27,9 @@ class ProductDetail extends Component {
         this.state = {
             control: {
                 quantity: '1',
-                modalVisibility: false,
+                modalVisible:{
+                    addToCart: false
+                },
                 price_sum: 0
             }
         }
@@ -43,7 +46,9 @@ class ProductDetail extends Component {
                 ...prevState,
                 control: {
                     quantity: val.replace(/[^0-9]/g, '').toString,
-                    modalVisibility: prevState.control.modalVisibility,
+                    modalVisible:{
+                        addToCart: prevState.control.modalVisible.addToCart
+                    },
                     price_sum
                 }
             }
@@ -60,7 +65,9 @@ class ProductDetail extends Component {
                 ...prevState,
                 control: {
                     quantity: increasedVal.toString(),
-                    modalVisibility: prevState.control.modalVisibility,
+                    modalVisible:{
+                        addToCart: prevState.control.modalVisible.addToCart
+                    },
                     price_sum
                 }
             }
@@ -78,7 +85,9 @@ class ProductDetail extends Component {
                 ...prevState,
                 control: {
                     quantity: decreasedVal.toString(),
-                    modalVisibility: prevState.control.modalVisibility,
+                    modalVisible:{
+                        addToCart: prevState.control.modalVisible.addToCart
+                    },
                     price_sum
                 }
             }
@@ -88,6 +97,7 @@ class ProductDetail extends Component {
     onAddCartHandler = () => {
         this.props.addToCart(this.props.book, this.state.control.quantity);
         this.setModalVisibility();
+        this.props.addedToCart();
     }
 
     setModalVisibility = () => {
@@ -99,13 +109,19 @@ class ProductDetail extends Component {
                 ...prevState,
                 control: {
                     quantity: prevState.control.quantity,
-                    modalVisibility: !prevState.control.modalVisibility,
+                    modalVisible:{
+                        addToCart: !prevState.control.modalVisible.addToCart
+                    },
                     price_sum
                 }
             }
         })
     }
 
+    setQuarterModalVisibilty = () => {
+        this.props.addedToCart();
+
+    }
 
     render() {
 
@@ -117,15 +133,17 @@ class ProductDetail extends Component {
 
         return(
             <Container>
+                <QuarterModal visible={this.props.isAddedToCart} text="added to cart"
+                action={() => this.props.navigation.navigate('Cart')} visibilityHandler={this.setQuarterModalVisibilty}/>
                 <ModalLoading visible={this.props.isAddLoading ? true : false}/>
                 <HalfBottomModal
                     title='add to cart'
-                    visible={this.state.control.modalVisibility}
+                    visible={this.state.control.modalVisible.addToCart}
                     visibilityHandler={this.setModalVisibility}>
                     <View style={{height: 200, padding: 15}}>
                         <View style={{flexDirection: 'row', height: 120}}>
                             <View style={{flex: 1}}>
-                                <Image resizeMode='contain' source={{uri: API_URL + cover_image}} style={styles.img} />
+                                <Image resizeMode='contain' source={{uri: IMG_URL + cover_image}} style={styles.img} />
                             </View>
                             <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 4}}>
                                 <Philosopher style={{fontSize: 18,}}>{name}</Philosopher>
@@ -155,7 +173,7 @@ class ProductDetail extends Component {
                 <Content>
                     <Card style={{flex:1}}>
                         <CardItem style={styles.imgWrapper}>
-                            <Image resizeMode='contain' source={{uri: API_URL + cover_image}} style={styles.img} />                            
+                            <Image resizeMode='contain' source={{uri: IMG_URL + cover_image}} style={styles.img} />                            
                         </CardItem>
                         <CardItem>
                             <Body>
@@ -223,16 +241,22 @@ const styles = StyleSheet.create({
 
 
 const mapState = state => {
+
+    const { book, isLoading } = state.books;
+    const { isAddLoading, isAddedToCart } = state.cart;
+    
     return {
-        book: state.books.book,
-        isLoading: state.books.isLoading,
-        isAddLoading: state.cart.isAddLoading
+        book,
+        isLoading,
+        isAddLoading,
+        isAddedToCart
     }
 }
 
 const mapDispatch = dispatch => {
     return {
-        addToCart: (item, qty) => dispatch(addToCart(item, qty))
+        addToCart: (item, qty) => dispatch(addToCart(item, qty)),
+        addedToCart: () => dispatch(addedToCart())
     }
 }
 

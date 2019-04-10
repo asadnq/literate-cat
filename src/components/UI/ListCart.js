@@ -6,7 +6,7 @@ import { ListItem, Icon, Left, Thumbnail, Body, Right, Button, Card } from 'nati
 import Philosopher from '../UI/texts/Philosopher';
 import RupiahFormat from '../UI/texts/RupiahFormat';
 import InputQuantity from './InputQuantity';
-import { API_URL } from '../../store/config';
+import { IMG_URL } from '../../config/api.config'
 
 const ListCart = props => {
 
@@ -14,7 +14,7 @@ const ListCart = props => {
         <Card>
             <ListItem noIndent thumbnail>
                 <Left>
-                    <Thumbnail style={styles.prThumb} square source={{uri: API_URL + props.cover_image}} resizeMode="contain" />
+                    <Thumbnail style={styles.prThumb} square source={{uri: IMG_URL + props.cover_image}} resizeMode="contain" />
                 </Left>
                 <Body>
                     <Philosopher style={styles.prName}>

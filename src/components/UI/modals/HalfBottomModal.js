@@ -11,7 +11,6 @@ const HalfBottomModal = props => {
         isVisible={props.visible}
         animationInTiming={700}
         animationOutTiming={500}
-        bationInTiming={700}
         animaackdropTransitionInTiming={500}
         backdropTransitionOutTiming={800}
         onBackdropPress={props.visibilityHandler}

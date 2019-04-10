@@ -4,13 +4,13 @@ import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Rubik from './texts/Rubik';
 import Philosopher from './texts/Philosopher';
 import RupiahFormat from './texts/RupiahFormat';
-import { API_URL } from '../../store/config'
+import { IMG_URL } from '../../config/api.config'
 
 const CardProduct = props => {
     return (
     <TouchableOpacity style={styles.card} onPress={props.action}>
         <View style={styles.imgWrapper}>
-            <Image resizeMode='contain' style={styles.image} source={{uri: API_URL + props.cover_image}} />
+            <Image resizeMode='contain' style={styles.image} source={{uri: IMG_URL + props.cover_image}} />
         </View>
         <View style={styles.cardBody}>
             <View style={{flex: 1, height: 40}}>
