@@ -1,7 +1,7 @@
 import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY,
             SUB_QUANTITY, GET_CARTS, IS_LOADING,
             CART_LOADED, CART_LOADING, IS_ADD_LOADING, IS_DELETE_LOADING,
-            ADDED_TO_CART } from "../actions/types";
+            ADDED_TO_CART, IS_ITEM_DELETED } from "../actions/types";
 
 const initialState = {
     cart:[],
@@ -9,7 +9,8 @@ const initialState = {
     isLoading: false,
     isAddLoading: false,
     isDeleteLoading: false,
-    isAddedToCart: false
+    isAddedToCart: false,
+    isItemDeleted: false
 }
 
 const cart = (state = initialState, action) => {
@@ -59,6 +60,11 @@ const cart = (state = initialState, action) => {
                 isLoading: false,
                 isDeleteLoading: false
             };
+        case IS_ITEM_DELETED:
+            return {
+                ...state,
+                isItemDeleted: !state.isItemDeleted
+            }
         case SUB_QUANTITY:
                 return {
                     ...state,
@@ -67,7 +73,8 @@ const cart = (state = initialState, action) => {
                             price_sum: action.payload.price_sum } :
                         item
                         ),
-                    total: state.total - action.payload.price
+                    total: state.total - action.payload.price,
+                    isAddLoading: false
                 };
         case ADD_QUANTITY:
             return {
@@ -79,7 +86,9 @@ const cart = (state = initialState, action) => {
                     } :
                     item
                     ),
-                total: state.total + action.payload.price
+                total: state.total + action.payload.price_sum,
+                isAddLoading: false
+
             };
         default:
             return state

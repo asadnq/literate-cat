@@ -56,7 +56,7 @@ class ProductDetail extends Component {
 
     setQuarterModalVisibilty = () => {
         this.props.addedToCart();
-        
+
     }
 
     render() {
@@ -69,8 +69,10 @@ class ProductDetail extends Component {
 
         return(
             <Container>
-                <QuarterModal visible={this.props.isAddedToCart} text="added to cart"
-                action={() => this.props.navigation.navigate('Cart')} visibilityHandler={this.setQuarterModalVisibilty}/>
+                <QuarterModal visible={this.props.isAddedToCart}
+                text="added to cart" buttonText='go to cart'
+                action={() => this.props.navigation.navigate('Cart')}
+                visibilityHandler={this.setQuarterModalVisibilty}/>
                 <ModalLoading visible={this.props.isAddLoading ? true : false}/>
                 <AddToCartModal
                     visible={this.state.control.modalVisible.addToCart}

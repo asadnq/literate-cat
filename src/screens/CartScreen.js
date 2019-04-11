@@ -4,7 +4,8 @@ import { Container, Content, Footer, FooterTab, Button, Text, Icon } from 'nativ
 import { connect } from 'react-redux'
 import { NavigationActions, NavigationEvents } from 'react-navigation';
 
-import { deleteCart, addQuantity, subQuantity, getCarts, updateCarts } from '../store/actions/cart';
+import { deleteCart, addQuantity, subQuantity, getCarts,
+        updateCarts, itemDeleted } from '../store/actions/cart';
 import ListCart from '../components/UI/ListCart';
 import BlockContent from '../components/UI/BlockContent';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
@@ -12,6 +13,7 @@ import DefaultButton from '../components/UI/buttons/DefaultButton';
 import OutlineButton from '../components/UI/buttons/OutlineButton';
 import Loading from '../components/UI/loading/Loading';
 import ModalLoading from '../components/UI/loading/ModalLoading';
+import QuarterModal from '../components/UI/modals/QuarterModal';
 
 class CartScreen extends Component {
     constructor(props) {
@@ -58,6 +60,7 @@ class CartScreen extends Component {
 
     onDeleteCart = (cart) => {
         this.props.deleteCart(cart)
+        this.props.itemDeleted();
     }
 
     checkoutHandler = () => {
@@ -72,6 +75,10 @@ class CartScreen extends Component {
         this.props.getCarts();
     }
 
+    setQuarterModalVisibilty = () => {
+        this.props.itemDeleted()
+    }
+
     render() {
 
         if(this.props.isLoading) {
@@ -84,6 +91,11 @@ class CartScreen extends Component {
                 <NavigationEvents
                     onWillBlur={() => this.props.updateCarts(this.props.cart)}
                 />
+                
+                <QuarterModal visible={this.props.isItemDeleted} text="item deleted"
+                action={this.setQuarterModalVisibilty}
+                visibilityHandler={this.setQuarterModalVisibilty} buttonText='ok'/>
+
                 <ModalLoading visible={this.props.isDeleteLoading} />
                 <Content>
                     <FlatList
@@ -130,7 +142,8 @@ const mapState = state => {
         cart: state.cart.cart,
         total: state.cart.total,
         isLoading: state.cart.isLoading,
-        isDeleteLoading: state.cart.isDeleteLoading
+        isDeleteLoading: state.cart.isDeleteLoading,
+        isItemDeleted: state.cart.isItemDeleted
     }
 }
 
@@ -140,7 +153,8 @@ const mapDispatch = dispatch => {
         addQty: (cart) => dispatch(addQuantity(cart)),
         subQty: (cart) => dispatch(subQuantity(cart)),
         getCarts: () => dispatch(getCarts()),
-        updateCarts: carts => dispatch(updateCarts(carts))
+        updateCarts: carts => dispatch(updateCarts(carts)),
+        itemDeleted: () => dispatch(itemDeleted())
     }
 }
 

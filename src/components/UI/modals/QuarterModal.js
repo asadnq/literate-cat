@@ -20,7 +20,7 @@ class QuarterModal extends React.Component {
                 <View style={styles.modalContent}>
                     <Text style={styles.text}>{this.props.text}</Text>
                     <TouchableOpacity style={styles.button} onPress={this.props.action}>
-                        <Text style={styles.buttonText}>go to cart</Text>
+                        <Text style={styles.buttonText}>{this.props.buttonText}</Text>
                     </TouchableOpacity>
                 </View>
             </Modal>)

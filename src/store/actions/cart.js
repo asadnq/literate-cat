@@ -1,5 +1,6 @@
-import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY, SUB_QUANTITY, GET_CARTS, CART_LOADED, CART_LOADING,
-            IS_ADD_LOADING, IS_DELETE_LOADING, ADDED_TO_CART } from './types';
+import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY, SUB_QUANTITY, GET_CARTS,
+        CART_LOADED, CART_LOADING, IS_ITEM_DELETED,
+        IS_ADD_LOADING, IS_DELETE_LOADING, ADDED_TO_CART } from './types';
 import { API_URL } from '../../config/api.config';
 import axios from 'axios';
 
@@ -25,14 +26,28 @@ export const addToCart = (book, quantity) => (dispatch) => {
 
     axios.post(`${API_URL}/carts`, { book_id: book.id, quantity: parseInt(quantity), price_sum})
     .then(res => {
-            dispatch({
-                type: ADD_TO_CART,
-                payload: {
-                        cart: res.data.data,
-                        quantity,
-                        price_sum
-                }
-            });
+
+            const { data } = res.data;
+
+            if(res.data.message === 'Quantity added.') {
+                dispatch({
+                    type: ADD_QUANTITY,
+                    payload: {
+                        id: data.id,
+                        quantity: data.quantity,
+                        price_sum: data.price_sum
+                    }
+                });
+            } else {
+                dispatch({
+                    type: ADD_TO_CART,
+                    payload: {
+                            cart: res.data.data,
+                            quantity,
+                            price_sum
+                    }
+                });
+            }
     });
 }
 
@@ -55,6 +70,12 @@ export const deleteCart = (cart) => dispatch => {
                 }
             });
         });
+}
+
+export const itemDeleted = cart => dispatch => {
+    dispatch({
+        type: IS_ITEM_DELETED
+    });
 }
 
 export const updateCarts = carts => dispatch => {
