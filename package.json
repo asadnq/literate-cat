@@ -13,6 +13,7 @@
     "react": "16.8.3",
     "react-native": "0.59.2",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-linear-gradient": "^2.5.4",
     "react-native-modal": "^9.0.0",
     "react-native-spinkit": "^1.2.0",
     "react-navigation": "^3.5.1",

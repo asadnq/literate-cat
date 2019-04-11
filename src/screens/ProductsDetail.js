@@ -6,10 +6,7 @@ import { connect } from 'react-redux'
 
 import { addToCart, addedToCart } from '../store/actions/cart';
 import { IMG_URL } from '../config/api.config';
-import InputQuantity from '../components/UI/InputQuantity';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
-import HalfBottomModal from '../components/UI/modals/HalfBottomModal';
-import OutlineButton from '../components/UI/buttons/OutlineButton';
 import CustomFAB from '../components/UI/buttons/CustomFAB';
 import Lato from '../components/UI/texts/Lato';
 import Rubik from '../components/UI/texts/Rubik';
@@ -18,6 +15,8 @@ import Philosopher from '../components/UI/texts/Philosopher'
 import Loading from '../components/UI/loading/Loading';
 import ModalLoading from '../components/UI/loading/ModalLoading';
 import QuarterModal from '../components/UI/modals/QuarterModal';
+import AddToCartModal from '../components/AddToCartModal';
+
 
 class ProductDetail extends Component {
     
@@ -26,93 +25,30 @@ class ProductDetail extends Component {
         
         this.state = {
             control: {
-                quantity: '1',
                 modalVisible:{
                     addToCart: false
-                },
-                price_sum: 0
+                }
             }
         }
 
     }
 
-    inputQtyHandler = (val) => {
 
-        const qty = parseInt(val);
-        const price_sum = this.props.book.price * qty;
-
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                control: {
-                    quantity: val.replace(/[^0-9]/g, '').toString,
-                    modalVisible:{
-                        addToCart: prevState.control.modalVisible.addToCart
-                    },
-                    price_sum
-                }
-            }
-        });
-    }
-
-    addQtyHandler = () =>  {
-
-        const increasedVal = parseInt(this.state.control.quantity) + 1
-        const price_sum = this.props.book.price * increasedVal;
-
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                control: {
-                    quantity: increasedVal.toString(),
-                    modalVisible:{
-                        addToCart: prevState.control.modalVisible.addToCart
-                    },
-                    price_sum
-                }
-            }
-        })
-    }
-
-    minQtyHandler = () => {
-
-        const { quantity } = this.state.control;
-        const decreasedVal = quantity > 1 ? parseInt(quantity) - 1 : parseInt(quantity);
-        const price_sum = this.props.book.price * decreasedVal
-
-        this.setState(prevState => {
-            return {
-                ...prevState,
-                control: {
-                    quantity: decreasedVal.toString(),
-                    modalVisible:{
-                        addToCart: prevState.control.modalVisible.addToCart
-                    },
-                    price_sum
-                }
-            }
-        })
-    }
-
-    onAddCartHandler = () => {
-        this.props.addToCart(this.props.book, this.state.control.quantity);
+    onAddCartHandler = (book, qty) => {
+        this.props.addToCart(book, qty);
         this.setModalVisibility();
         this.props.addedToCart();
     }
 
     setModalVisibility = () => {
     
-        const price_sum = parseInt(this.state.control.quantity) * this.props.book.price;
-
         this.setState((prevState) => {
             return {
                 ...prevState,
                 control: {
-                    quantity: prevState.control.quantity,
                     modalVisible:{
                         addToCart: !prevState.control.modalVisible.addToCart
-                    },
-                    price_sum
+                    }
                 }
             }
         })
@@ -120,7 +56,7 @@ class ProductDetail extends Component {
 
     setQuarterModalVisibilty = () => {
         this.props.addedToCart();
-
+        
     }
 
     render() {
@@ -136,40 +72,13 @@ class ProductDetail extends Component {
                 <QuarterModal visible={this.props.isAddedToCart} text="added to cart"
                 action={() => this.props.navigation.navigate('Cart')} visibilityHandler={this.setQuarterModalVisibilty}/>
                 <ModalLoading visible={this.props.isAddLoading ? true : false}/>
-                <HalfBottomModal
-                    title='add to cart'
+                <AddToCartModal
                     visible={this.state.control.modalVisible.addToCart}
-                    visibilityHandler={this.setModalVisibility}>
-                    <View style={{height: 200, padding: 15}}>
-                        <View style={{flexDirection: 'row', height: 120}}>
-                            <View style={{flex: 1}}>
-                                <Image resizeMode='contain' source={{uri: IMG_URL + cover_image}} style={styles.img} />
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'column', justifyContent: 'space-around', paddingLeft: 4}}>
-                                <Philosopher style={{fontSize: 18,}}>{name}</Philosopher>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between',
-                                    alignItems: 'center', alignSelf: 'stretch'}}>
-                                    <RupiahFormat text={this.props.book.price} />
-                                    <Text>x</Text>
-                                    <Text>{this.state.control.quantity}</Text>
-                                </View>
-                                <InputQuantity 
-                                    onMinPressed={this.minQtyHandler}
-                                    onPlusPressed={this.addQtyHandler}
-                                    onChangeText={this.inputQtyHandler}
-                                    value={this.state.control.quantity}
-                                    />
-                            </View>
-                        </View>
-                        <View style={{flex: 1,flexDirection: 'row', alignSelf: 'stretch',
-                        alignItems: 'flex-end',justifyContent: 'space-between'}}>
-                            <RupiahFormat text={this.state.control.price_sum} style={{color: '#705E49', fontSize: 20}}/>
-                            <OutlineButton style={{alignSelf: 'flex-end',
-                                                            borderRadius: 20, height: 30}}
-                                                            onPress={this.onAddCartHandler} title='add to cart'/>
-                        </View>
-                    </View>
-                </HalfBottomModal>
+                    visibilityHandler={this.setModalVisibility}
+                    data={this.props.book}
+                    addToCart={this.onAddCartHandler}
+                    addedToCart={this.setQuarterModalVisibilty}
+                    />
                 <Content>
                     <Card style={{flex:1}}>
                         <CardItem style={styles.imgWrapper}>
