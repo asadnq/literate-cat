@@ -4,7 +4,7 @@ import { Button, Text } from 'native-base';
 
 const DefaultButton = props => {
     return(
-    <Button  {...props} style={[styles.buttonStyle, props.style]}>
+    <Button  {...props} style={[styles.buttonStyle, props.style]} transparent>
         {props.icon}
         <Text style={[styles.textStyle, props.titleStyle]}>{props.title}</Text>
     </Button>

@@ -29,11 +29,11 @@ const MainTab = createBottomTabNavigator(
                 const { routeName } = navigation.state;
                 let iconName;
                 if (routeName === 'Home') {
-                    iconName = 'book'; 
+                    iconName = 'library-books'; 
                 } else if (routeName === 'Cart') {
                     iconName = 'shopping-cart';
                 }
-                    return <Icon type='FontAwesome' name={iconName} size={25} style={{color: tintColor}} />;
+                    return <Icon type='MaterialIcons' name={iconName} size={25} style={{color: tintColor}} />;
                 },
                 animationEnabled: true,
                 swipeEnabled: true

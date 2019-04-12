@@ -15,7 +15,7 @@ class QuarterModal extends React.Component {
             backdropOpacity={0}
             onBackdropPress={this.props.visibilityHandler}
             animationInTiming={700}
-            animationOutTiming={500}
+            animationOutTiming={550}
             >
                 <View style={styles.modalContent}>
                     <Text style={styles.text}>{this.props.text}</Text>

@@ -1,6 +1,6 @@
 import { GET_BOOKS, GET_BOOK, IS_LOADING} from './types';
 import { API_URL } from '../../config/api.config';
-import axios from 'axios'
+import axios from 'axios';
 
 export const getBooks = () => (dispatch) => {
 
@@ -16,6 +16,7 @@ export const getBooks = () => (dispatch) => {
                 })
             });
 }
+
 export const getBook = id => (dispatch) => {
     
     dispatch({type: IS_LOADING });
@@ -29,4 +30,17 @@ export const getBook = id => (dispatch) => {
                 }
             })
         })
+}
+
+export const searchBook = val => dispatch => {
+    dispatch({type: IS_LOADING});
+    axios.get(`${API_URL}/books/name/${val}`)
+        .then(res => {
+            dispatch({
+                type: GET_BOOKS,
+                payload: {
+                    books: res.data.data
+                }
+            })
+        });
 }

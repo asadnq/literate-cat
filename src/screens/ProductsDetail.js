@@ -4,7 +4,7 @@ import { Card, CardItem, Body, Container, Content, Text, Form, Item,
      Input,Footer, Button, Icon, FooterTab } from 'native-base';
 import { connect } from 'react-redux'
 
-import { addToCart, addedToCart } from '../store/actions/cart';
+import { addToCart, addedToCart, hideModal } from '../store/actions/cart';
 import { IMG_URL } from '../config/api.config';
 import RupiahFormat from '../components/UI/texts/RupiahFormat';
 import CustomFAB from '../components/UI/buttons/CustomFAB';
@@ -38,6 +38,7 @@ class ProductDetail extends Component {
         this.props.addToCart(book, qty);
         this.setModalVisibility();
         this.props.addedToCart();
+        setTimeout(() => {this.props.hideModal()}, 5000);
     }
 
     setModalVisibility = () => {
@@ -56,7 +57,6 @@ class ProductDetail extends Component {
 
     setQuarterModalVisibilty = () => {
         this.props.addedToCart();
-
     }
 
     render() {
@@ -167,7 +167,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
     return {
         addToCart: (item, qty) => dispatch(addToCart(item, qty)),
-        addedToCart: () => dispatch(addedToCart())
+        addedToCart: () => dispatch(addedToCart()),
+        hideModal: () => dispatch(hideModal())
     }
 }
 

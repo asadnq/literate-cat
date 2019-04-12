@@ -14,12 +14,17 @@ import OutlineButton from '../components/UI/buttons/OutlineButton';
 import Loading from '../components/UI/loading/Loading';
 import ModalLoading from '../components/UI/loading/ModalLoading';
 import QuarterModal from '../components/UI/modals/QuarterModal';
+import HalfBottomModal from '../components/UI/modals/HalfBottomModal';
+import TransparentButton from '../components/UI/buttons/TransparentButton';
 
 class CartScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        
+            modalVisible:{
+                deleteCart: false
+            },
+            selectedItem: null
         }
     }
 
@@ -60,6 +65,7 @@ class CartScreen extends Component {
 
     onDeleteCart = (cart) => {
         this.props.deleteCart(cart)
+        this.setDeleteModalVisibility();
         this.props.itemDeleted();
     }
 
@@ -73,6 +79,18 @@ class CartScreen extends Component {
     
     componentDidMount() {
         this.props.getCarts();
+    }
+
+    setDeleteModalVisibility = (item = null) => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                modalVisible: {
+                    deleteCart: !prevState.modalVisible.deleteCart
+                },
+                selectedItem: item
+            }
+        });
     }
 
     setQuarterModalVisibilty = () => {
@@ -91,20 +109,35 @@ class CartScreen extends Component {
                 <NavigationEvents
                     onWillBlur={() => this.props.updateCarts(this.props.cart)}
                 />
-                
+                <ModalLoading visible={this.props.isDeleteLoading} />
+                <HalfBottomModal
+                    visible={this.state.modalVisible.deleteCart}
+                    visibilityHandler={this.setDeleteModalVisibility}
+                >
+                    <View style={{flexDirection: 'row', justifyContent: 'center',
+                                    marginTop: 5, marginBottom: 5}}>
+                        <Text style={{textAlign: 'center'}}>delete this item?</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                        <TransparentButton
+                        onPress={this.onDeleteCart.bind(this, this.state.selectedItem)}
+                        style={{width: '50%'}} titleStyle={{color: '#D11935'}} title='delete'/>
+                        <TransparentButton
+                        onPress={this.setDeleteModalVisibility} style={{width: '50%'}}
+                        titleStyle={{color: '#aaa'}} title='cancel'/>
+                    </View>
+                </HalfBottomModal>
                 <QuarterModal visible={this.props.isItemDeleted} text="item deleted"
                 action={this.setQuarterModalVisibilty}
                 visibilityHandler={this.setQuarterModalVisibilty} buttonText='ok'/>
-
-                <ModalLoading visible={this.props.isDeleteLoading} />
                 <Content>
                     <FlatList
                         data={this.props.cart}
-                        keyExtractor={(item, index) => 'key'+item.id}
+                        keyExtractor={(item, index) => 'key '+item.id}
                         renderItem={({item}) => (
                             <ListCart
                                 {...item}
-                                actionDelete={this.onDeleteCart.bind(this, item)}
+                                actionDelete={this.setDeleteModalVisibility.bind(this, item)}
                                 value={item.quantity.toString()}
                                 addQty={this.addQtyHandler.bind(this, item)}
                                 subQty={this.subQtyHandler.bind(this, item)}

@@ -1,7 +1,7 @@
 import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY,
             SUB_QUANTITY, GET_CARTS, IS_LOADING,
             CART_LOADED, CART_LOADING, IS_ADD_LOADING, IS_DELETE_LOADING,
-            ADDED_TO_CART, IS_ITEM_DELETED } from "../actions/types";
+            ADDED_TO_CART, IS_ITEM_DELETED, HIDE_MODAL } from "../actions/types";
 
 const initialState = {
     cart:[],
@@ -20,17 +20,17 @@ const cart = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: true
-            }
+            };
         case IS_ADD_LOADING:
             return {
                 ...state,
                 isAddLoading: true
-            }
+            };
         case IS_DELETE_LOADING:
             return {
                 ...state,
                 isDeleteLoading: true
-            }
+            };
         case GET_CARTS:
             return {
                 ...state,
@@ -38,7 +38,7 @@ const cart = (state = initialState, action) => {
                 total: action.payload.total,
                 isLoading: false,
                 isAddLoading: false
-            }
+            };
         case ADD_TO_CART:
             return {
                 ...state,
@@ -50,7 +50,12 @@ const cart = (state = initialState, action) => {
             return{
                 ...state,
                 isAddedToCart: !state.isAddedToCart
-            }
+            };
+        case HIDE_MODAL: 
+            return {
+                ...state,
+                isAddedTocart: false
+            };
         case DELETE_CART:
             return {
                 ...state,
@@ -64,7 +69,7 @@ const cart = (state = initialState, action) => {
             return {
                 ...state,
                 isItemDeleted: !state.isItemDeleted
-            }
+            };
         case SUB_QUANTITY:
                 return {
                     ...state,
@@ -86,8 +91,8 @@ const cart = (state = initialState, action) => {
                     } :
                     item
                     ),
-                total: state.total + action.payload.price_sum,
-                isAddLoading: false
+                total: state.total + action.payload.price,
+                isAddLoading: false,
 
             };
         default:

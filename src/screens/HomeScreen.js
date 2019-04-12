@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import ProductList from '../components/ProductsList';
 import ProductCard from '../components/ProductCard';
 import OutlineButton from '../components/UI/buttons/OutlineButton';
-import { getBooks, getBook } from '../store/actions/book';
+import { getBooks, getBook, searchBook } from '../store/actions/book';
 import Loading from '../components/UI/loading/Loading';
+import SearchForm from '../components/SearchForm';
+import ViewMode from '../components/UI/buttons/ViewMode';
 
 export class HomeScreen extends Component {
     constructor() {
@@ -15,6 +17,9 @@ export class HomeScreen extends Component {
             viewMode: {
                 card: true,
                 list: false
+            },
+            control: {
+                search: ''
             }
         }
     }
@@ -51,36 +56,53 @@ export class HomeScreen extends Component {
         })
     }
 
+    viewModeHandler = () => {
+        this.setState(prevState => {
+            return {
+                viewMode: {
+                    card: !prevState.viewMode.card,
+                    list: !prevState.viewMode.list
+                }
+            }
+        })
+    }
+
+    searchHandler = (val) => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                control: {
+                    search: val
+                }
+            }
+        });
+        if(val !== '') {
+            this.props.searchBook(val);
+        } else {
+            this.props.getBooks();
+        }
+    }
+
     componentDidMount() {
         this.props.getBooks();
     }
 
     render() {
 
-        if(this.props.isLoading) {
-            return <Loading />;
-        }
-
         return(
             <Container>
                 <Content>
-                    <Container style={{flexDirection: 'row', justifyContent: 'center',marginTop: 5, height: 45}}>
-                        <OutlineButton block transparent onPress={this.viewModeCardHandler}
-                                disabled={this.state.viewMode.card ? true : false} title='card view'
-                                style={{borderBottomLeftRadius: 30, borderTopLeftRadius: 30,
-                                borderBottomRightRadius: 0, borderTopRightRadius: 0,
-                                backgroundColor: this.state.viewMode.list ? 'transparent' : '#006494'}}
-                                titleStyle={{color: this.state.viewMode.list ? '#006494' : '#FFF'}}/>
-                        <OutlineButton block transparent onPress={this.viewModeListHandler}
-                                disabled={this.state.viewMode.list ? true : false}
-                                title='list view'
-                                style={{borderBottomRightRadius: 30, borderTopRightRadius: 30,
-                                    borderBottomLeftRadius: 0, borderTopLeftRadius: 0,
-                                    backgroundColor: this.state.viewMode.card ? 'transparent' : '#006494'}}
-                                    titleStyle={{color: this.state.viewMode.card ? '#006494' : '#FFF'}}
-                                />
+                    <SearchForm onChangeText={this.searchHandler} value={this.state.control.search} />
+                    <Container style={{flexDirection: 'row', justifyContent: 'space-between',
+                                    marginTop: 2, height: 40, alignItems: 'center',
+                                    paddingLeft: 12, paddingRight: 12}}>
+                        <Text>view mode: {this.state.viewMode.card ? 'card' : 'list'}</Text>
+                        <ViewMode
+                        onPress={this.viewModeHandler}
+                        icon={this.state.viewMode.card ? 'view-array' : 'view-list'}/>
                     </Container>
-                {this.state.viewMode.card ?
+                {this.props.isLoading ? <Loading /> :
+                    this.state.viewMode.card ?
                 (
                     <ProductCard data={this.props.books}
                         action={this.toProductDetail.bind(this)} />
@@ -88,7 +110,7 @@ export class HomeScreen extends Component {
                     <ProductList data={this.props.books}
                         action={this.toProductDetail.bind(this)} />
                 )
-                }
+                 }
                 </Content>
             </Container>
         )
@@ -109,4 +131,4 @@ const mapDispatch = dispatch => {
     }
 }
 
-export default connect(mapState, mapDispatch)(HomeScreen);
+export default connect(mapState, { getBooks, getBook, searchBook })(HomeScreen);

@@ -26,7 +26,7 @@ class PaymentScreen extends Component {
             },
             address: null,
             courier: null,
-            total: 0
+            total: this.props.total
         }
     }
 
@@ -186,7 +186,7 @@ class PaymentScreen extends Component {
                         
                         <CardItem style={{flexDirection: 'row', padding: 12}}>
                             <Lato style={{flex: 1}}>Sub total</Lato>
-                            <RupiahFormat text={this.props.total} />
+                            <RupiahFormat text={this.state.total} />
                         </CardItem>
                     </Card>
                 

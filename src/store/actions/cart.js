@@ -1,6 +1,6 @@
 import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY, SUB_QUANTITY, GET_CARTS,
         CART_LOADED, CART_LOADING, IS_ITEM_DELETED,
-        IS_ADD_LOADING, IS_DELETE_LOADING, ADDED_TO_CART } from './types';
+        IS_ADD_LOADING, IS_DELETE_LOADING, ADDED_TO_CART, HIDE_MODAL } from './types';
 import { API_URL } from '../../config/api.config';
 import axios from 'axios';
 
@@ -54,6 +54,12 @@ export const addToCart = (book, quantity) => (dispatch) => {
 export const addedToCart = () => dispatch => {
     dispatch({
         type: ADDED_TO_CART
+    });
+}
+
+export const hideModal = () => dispatch => {
+    dispatch({
+        type: HIDE_MODAL
     });
 }
 
