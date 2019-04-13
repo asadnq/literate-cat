@@ -20,7 +20,8 @@ export class HomeScreen extends Component {
             },
             control: {
                 search: ''
-            }
+            },
+            typingTimeout: 0
         }
     }
 
@@ -32,28 +33,6 @@ export class HomeScreen extends Component {
       toProductDetail = (id) => {
           this.props.getBook(id);
           this.props.navigation.navigate('ProductDetail');
-    }
-
-    viewModeCardHandler = () => {
-        this.setState(prevState => {
-            return {
-                viewMode: {
-                    card: true,
-                    list: false
-                }
-            }
-        })
-    }
-
-    viewModeListHandler = () => {
-        this.setState(prevState => {
-            return {
-                viewMode: {
-                    card: false,
-                    list: true
-                }
-            }
-        })
     }
 
     viewModeHandler = () => {
@@ -68,19 +47,29 @@ export class HomeScreen extends Component {
     }
 
     searchHandler = (val) => {
+
+        if(this.state.typingTimeout) {
+            clearTimeout(this.state.typingTimeout);
+        }
+
         this.setState(prevState => {
             return {
                 ...prevState,
                 control: {
                     search: val
-                }
+                },
+                typingTimeout: setTimeout(() => {
+                    if(val === '') {
+                        this.props.getBooks();
+                    } else {
+                    this.props.searchBook(val)
+                    }
+                }, 500)
             }
         });
-        if(val !== '') {
-            this.props.searchBook(val);
-        } else {
-            this.props.getBooks();
-        }
+
+        
+
     }
 
     componentDidMount() {
