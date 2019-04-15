@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     books: booksReducer,
     cart: cartReducer,
     courier: courierReducer
-})
+});
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

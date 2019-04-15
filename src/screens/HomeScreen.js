@@ -72,6 +72,10 @@ export class HomeScreen extends Component {
 
     }
 
+    refreshHandler() {
+        this.props.getBooks();
+    }
+
     componentDidMount() {
         this.props.getBooks();
     }
@@ -94,9 +98,13 @@ export class HomeScreen extends Component {
                     this.state.viewMode.card ?
                 (
                     <ProductCard data={this.props.books}
+                        refreshing={this.props.isLoading}
+                        onRefresh={this.refreshHandler.bind(this)}
                         action={this.toProductDetail.bind(this)} />
                 ) : (
                     <ProductList data={this.props.books}
+                    refreshing={this.props.isLoading}
+                    onRefresh={this.refreshHandler.bind(this)}
                         action={this.toProductDetail.bind(this)} />
                 )
                  }

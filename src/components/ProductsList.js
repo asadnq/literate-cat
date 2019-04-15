@@ -6,6 +6,8 @@ import ListProduct from './UI/ListProduct';
 const ProductsList = (props) => {
     return (
         <FlatList
+            refreshing={props.refreshing}
+            onRefresh={props.onRefresh}
             data={props.data}
             keyExtractor={(item, index) => 'key'+index}
             renderItem={({item}) => (

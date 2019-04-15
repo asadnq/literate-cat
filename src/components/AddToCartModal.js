@@ -99,7 +99,7 @@ class AddToCartModal extends React.Component {
                             <Image resizeMode='contain' source={{uri: IMG_URL + data.cover_image}} style={styles.img} />
                         </View>
                         <View style={styles.summary}>
-                            <Philosopher style={{fontSize: 18,}}>{data.name}</Philosopher>
+                            <Philosopher numberOfLines={2} style={{fontSize: 18,}}>{data.name}</Philosopher>
                             <View style={styles.detail}>
                                 <RupiahFormat text={data.price} />
                                 <Text>x</Text>

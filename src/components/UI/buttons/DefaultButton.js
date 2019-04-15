@@ -13,7 +13,9 @@ const DefaultButton = props => {
 
 const styles = StyleSheet.create({
     buttonStyle: {
-        backgroundColor: '#006494'
+        backgroundColor: '#006494',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     textStyle: {
         paddingLeft: 16,

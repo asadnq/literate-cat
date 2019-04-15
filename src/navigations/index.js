@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import { createDrawerNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
 import { Icon } from 'native-base';
 
+import Login from '../screens/Login';
+import Register from '../screens/Register';
+import AuthLoading from '../screens/AuthLoading';
 import HomeScreen from '../screens/HomeScreen';
 import ProductDetail from '../screens/ProductsDetail';
 import CartScreen from '../screens/CartScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import ProductsScreen from '../screens/ProductsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import { View } from 'react-native'; 
 import StackHeader from '../components/UI/headers/StackHeader';
 
+//disable warning
+console.disableYellowBox = true;
 
 const MainTab = createBottomTabNavigator(
     {
@@ -18,11 +24,12 @@ const MainTab = createBottomTabNavigator(
         },
         Cart: {
             screen: CartScreen
+        },
+        Settings: {
+            screen: SettingsScreen
         }
     },
     {
-
-        
         initialRouteName: 'Home',
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ tintColor }) => {
@@ -32,6 +39,8 @@ const MainTab = createBottomTabNavigator(
                     iconName = 'library-books'; 
                 } else if (routeName === 'Cart') {
                     iconName = 'shopping-cart';
+                } else if (routeName === 'Settings') {
+                    iconName = 'tune';
                 }
                     return <Icon type='MaterialIcons' name={iconName} size={25} style={{color: tintColor}} />;
                 },
@@ -77,8 +86,39 @@ const MainStack = createStackNavigator(
     }
 );
 
+const AuthStack = createStackNavigator(
+    {
+        Login: {
+            screen: Login
+        },
+        Register: {
+            screen: Register
+        }
+    },
+    {
+        initialRouteName: 'Login'
+    }
+)
 
-const AppNavigator = createAppContainer(MainStack)
+const MainSwitch = createSwitchNavigator(
+    {
+        AuthStack: {
+            screen: AuthStack
+        },
+        MainStack: {
+            screen: MainStack
+        },
+        AuthLoading: {
+            screen: AuthLoading
+        }
+    },
+    {
+        initialRouteName: 'AuthLoading'
+    }
+)
+
+
+const AppNavigator = createAppContainer(MainSwitch)
 
 
 export default AppNavigator;
