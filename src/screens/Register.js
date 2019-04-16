@@ -8,9 +8,23 @@ import {
 } from "react-native";
 import { Form, Label, Item, Input } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
+import { connect } from 'react-redux';
+
+import { register } from '../store/actions/user';
 import DefaultButton from '../components/UI/buttons/DefaultButton';
 
 class Register extends Component {
+
+    constructor() {
+      super();
+      this.state = {
+        control: {
+          username: '',
+          email: '',
+          password: ''
+        }
+      }
+    }
 
     static navigationOptions = {
         title: 'register',
@@ -20,7 +34,49 @@ class Register extends Component {
         }
     }
 
+    emailInputHandler = val => {
+      this.setState( state => {
+        return {
+          ...state,
+          control: {
+            ...state.control,
+            email: val
+          }
+        }
+      })
+    }
+
+    passwordInputHandler = val => {
+      this.setState( state => {
+        return {
+          ...state,
+          control: {
+            ...state.control,
+            password: val
+          }
+        }
+      })
+    }
+
+    usernameInputHandler = val => {
+      this.setState( state => {
+        return {
+          ...state,
+          control: {
+            ...state.control,
+            username: val
+          }
+        }
+      })
+    }
+
+    _register = () => {
+      this.props.register(this.state.control);
+      this.props.navigation.navigate('MainStack');
+    }
+
   render() {
+    const { control } = this.state;
     return (
       <LinearGradient
         style={styles.linearGradient}
@@ -30,21 +86,30 @@ class Register extends Component {
           <View style={styles.inputWrapper}>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>username</Label>
-              <Input underlineColorAndroid="transparent" />
+              <Input underlineColorAndroid="transparent" onChange={this.usernameInputHandler}
+                value={control.username}
+                autoCapitalize = 'none'/>
             </Item>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>email</Label>
-              <Input underlineColorAndroid="transparent" />
+              <Input underlineColorAndroid="transparent" onChange={this.emailInputHandler}
+                keyboardType='email-address'
+                autoCapitalize = 'none'
+                value={control.email} />
             </Item>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>password</Label>
-              <Input underlineColorAndroid="transparent" />
+              <Input underlineColorAndroid="transparent" onChange={this.passwordInputHandler}
+                secureTextEntry={true}
+                autoCapitalize = 'none'
+                value={control.password} />
             </Item>
           </View>
           <DefaultButton
             style={styles.button}
             titleStyle={styles.titleButton}
             title="sign up"
+            onPress={this._register}
           />
           <View style={styles.signUpContainer}>
             <Text style={styles.signupText}>already have an acount? </Text>
@@ -57,6 +122,8 @@ class Register extends Component {
     );
   }
 }
+
+export default connect(null, { register })(Register);
 
 const styles = StyleSheet.create({
   linearGradient: {
@@ -110,5 +177,3 @@ const styles = StyleSheet.create({
     fontSize: 12
   }
 });
-
-export default Register;

@@ -19,3 +19,6 @@ export const HAS_ERRORED = 'HAS_ERRORED';
 export const GET_BOOKS = 'GET_BOOKS';
 export const GET_BOOK = 'GET_BOOK';
 export const IS_ITEM_DELETED = 'IS_ITEM_DELETED';
+
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';

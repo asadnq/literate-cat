@@ -8,24 +8,61 @@ import {
   AsyncStorage
 } from "react-native";
 import { Form, Label, Item, Input } from "native-base";
+import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 
 import DefaultButton from "../components/UI/buttons/DefaultButton";
+import { login } from '../store/actions/user';
 
 class Login extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      control: {
+        email: '',
+        password: ''
+      }
+    }
+  }
+
   static navigationOptions = {
     header: null
   };
+  //
+  // _signInAsync = async () => {
+  //   await AsyncStorage.setItem('userToken', 'xaxaxa');
+  //   this.props.navigation.navigate('MainStack');
+  // };
 
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'xaxaxa');
+  _singIn = () => {
+    this.props.login(this.state.control);
     this.props.navigation.navigate('MainStack');
-  };
+  }
 
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('AuthStack');
-  };
+emailInputHandler = val => {
+  this.setState( state => {
+    return {
+      ...state,
+      control: {
+        ...state.control,
+        email: val
+      }
+    }
+  })
+}
+
+passwordInputHandler = val => {
+  this.setState( state => {
+    return {
+      ...state,
+      control: {
+        ...state.control,
+        password: val
+      }
+    }
+  })
+}
 
   render() {
     return (
@@ -41,18 +78,22 @@ class Login extends Component {
           <View style={styles.inputWrapper}>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>email</Label>
-              <Input underlineColorAndroid="transparent" />
+              <Input underlineColorAndroid="transparent"
+                onChange={this.emailInputHandler}
+                keyboardType='email-address' value={this.state.control.email}/>
             </Item>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>password</Label>
-              <Input underlineColorAndroid="transparent" />
+              <Input underlineColorAndroid="transparent"
+                onChange={this.passwordInputHandler} value={this.state.control.password}
+                secureTextEntry={true}/>
             </Item>
           </View>
           <DefaultButton
             style={styles.button}
             titleStyle={styles.titleButton}
             title="sign in"
-            onPress={this._signInAsync}
+            onPress={this._singIn}
           />
           <View style={styles.signUpContainer}>
             <Text style={styles.signupText}>
@@ -138,4 +179,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Login;
+export default connect(null, { login })(Login);
