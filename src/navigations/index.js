@@ -14,8 +14,8 @@ import SettingsScreen from '../screens/SettingsScreen';
 import { View } from 'react-native'; 
 import StackHeader from '../components/UI/headers/StackHeader';
 
-//disable warning
-console.disableYellowBox = true;
+// //disable warning
+// console.disableYellowBox = true;
 
 const MainTab = createBottomTabNavigator(
     {
@@ -113,7 +113,7 @@ const MainSwitch = createSwitchNavigator(
         }
     },
     {
-        initialRouteName: 'AuthLoading'
+        initialRouteName: 'MainStack'
     }
 )
 

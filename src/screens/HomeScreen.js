@@ -121,11 +121,4 @@ const mapState = state => {
     }
 }
 
-const mapDispatch = dispatch => {
-    return {
-        getBooks: () => dispatch(getBooks()),
-        getBook: id => dispatch(getBook(id))
-    }
-}
-
 export default connect(mapState, { getBooks, getBook, searchBook })(HomeScreen);

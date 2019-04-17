@@ -43,7 +43,7 @@ class Register extends Component {
             email: val
           }
         }
-      })
+      });
     }
 
     passwordInputHandler = val => {
@@ -55,7 +55,7 @@ class Register extends Component {
             password: val
           }
         }
-      })
+      });
     }
 
     usernameInputHandler = val => {
@@ -67,12 +67,13 @@ class Register extends Component {
             username: val
           }
         }
-      })
+      });
+      console.log(this.state);
     }
 
     _register = () => {
       this.props.register(this.state.control);
-      this.props.navigation.navigate('MainStack');
+      this.props.navigation.navigate('AuthLoading');
     }
 
   render() {
@@ -86,20 +87,20 @@ class Register extends Component {
           <View style={styles.inputWrapper}>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>username</Label>
-              <Input underlineColorAndroid="transparent" onChange={this.usernameInputHandler}
+              <Input underlineColorAndroid="transparent" onChangeText={this.usernameInputHandler}
                 value={control.username}
                 autoCapitalize = 'none'/>
             </Item>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>email</Label>
-              <Input underlineColorAndroid="transparent" onChange={this.emailInputHandler}
+              <Input underlineColorAndroid="transparent" onChangeText={this.emailInputHandler}
                 keyboardType='email-address'
                 autoCapitalize = 'none'
                 value={control.email} />
             </Item>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>password</Label>
-              <Input underlineColorAndroid="transparent" onChange={this.passwordInputHandler}
+              <Input underlineColorAndroid="transparent" onChangeText={this.passwordInputHandler}
                 secureTextEntry={true}
                 autoCapitalize = 'none'
                 value={control.password} />

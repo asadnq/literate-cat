@@ -78,7 +78,9 @@ class CartScreen extends Component {
     }
     
     componentDidMount() {
-        this.props.getCarts();
+        if(this.props.isLoggedIn) {
+            this.props.getCarts();
+        }
     }
 
     setDeleteModalVisibility = (item = null) => {
@@ -102,8 +104,17 @@ class CartScreen extends Component {
         if(this.props.isLoading) {
             return <Loading />;
         }
+
+        if(!this.props.isLoggedIn) {
+            return(
+            <BlockContent>
+                <Text>You have to sign in</Text>
+                <DefaultButton style={{alignSelf: 'center', marginTop: 5}} title='sign in' onPress={() => this.props.navigation.navigate('AuthStack')} />
+            </BlockContent>
+            )
+        } 
         
-        if(this.props.cart.length > 0) {
+        if(this.props.cart.length > 0 && this.props.isLoggedIn) {
         return(
             <Container>
                 <NavigationEvents
@@ -159,6 +170,7 @@ class CartScreen extends Component {
             </Container>
             )
         }
+
         return(
             <BlockContent>
                 <Icon type='FontAwesome' name='cart-arrow-down' />
@@ -176,7 +188,8 @@ const mapState = state => {
         total: state.cart.total,
         isLoading: state.cart.isLoading,
         isDeleteLoading: state.cart.isDeleteLoading,
-        isItemDeleted: state.cart.isItemDeleted
+        isItemDeleted: state.cart.isItemDeleted,
+        isLoggedIn: state.user.isLoggedIn
     }
 }
 

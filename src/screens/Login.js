@@ -37,7 +37,7 @@ class Login extends Component {
 
   _singIn = () => {
     this.props.login(this.state.control);
-    this.props.navigation.navigate('MainStack');
+    this.props.navigation.navigate('AuthLoading');
   }
 
 emailInputHandler = val => {
@@ -65,6 +65,7 @@ passwordInputHandler = val => {
 }
 
   render() {
+
     return (
       <LinearGradient
         style={styles.linearGradient}
@@ -79,14 +80,14 @@ passwordInputHandler = val => {
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>email</Label>
               <Input underlineColorAndroid="transparent"
-                onChange={this.emailInputHandler}
+                Text={this.emailInputHandler}
                 keyboardType='email-address' value={this.state.control.email}/>
             </Item>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>password</Label>
               <Input underlineColorAndroid="transparent"
-                onChange={this.passwordInputHandler} value={this.state.control.password}
-                secureTextEntry={true}/>
+                onChangeText={this.passwordInputHandler} value={this.state.control.password}
+                secureTextEntryonChange={true}/>
             </Item>
           </View>
           <DefaultButton
@@ -110,6 +111,20 @@ passwordInputHandler = val => {
     );
   }
 }
+
+const mapState = state => {
+  return {
+    isLoggedIn: state.user.isLoggedIn
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    login: user => dispatch(login(user))
+  }
+}
+
+export default connect(mapState, mapDispatch)(Login);
 
 const styles = StyleSheet.create({
   linearGradient: {
@@ -179,4 +194,3 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect(null, { login })(Login);
