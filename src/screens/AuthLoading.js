@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
-
+import { NavigationEvents } from 'react-navigation';
 
 class AuthLoading extends React.Component {
   constructor(props) {
@@ -17,13 +17,20 @@ class AuthLoading extends React.Component {
 
   _bootstrapAsync = async () => {
     const { user } = this.props;
-    // await user.isLoggedIn ? alert('loged in') : alert('awkwkwk')
-    await this.props.navigation.navigate(user.isLoggedIn ? 'MainStack' : 'AuthStack');
+    this.props.navigation.navigate(user.isLoggedIn ? 'MainStack' : 'AuthStack');
   };
 
+  _toMainStack = () => {
+    this.props.navigation.navigate('MainStack');
+  }
+
   render() {
+    const { user } = this.props;
     return (
       <View>
+        <NavigationEvents
+              onDidFocus={() => user.isLoggedIn ? this._toMainStack : alert('Authentication error') }
+          />
         <ActivityIndicator />
         <StatusBar barStyle="default" />
       </View>

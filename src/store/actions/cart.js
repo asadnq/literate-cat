@@ -2,29 +2,37 @@ import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY, SUB_QUANTITY, GET_CARTS,
         CART_LOADED, CART_LOADING, IS_ITEM_DELETED,
         IS_ADD_LOADING, IS_DELETE_LOADING, ADDED_TO_CART, HIDE_MODAL } from './types';
 import { API_URL } from '../../config/api.config';
+import { tokenConfig } from './user';
+
 import axios from 'axios';
 
-export const getCarts = () => dispatch => {
+export const getCarts = () => (dispatch, getState) => {
     dispatch({type: CART_LOADING});
-
-    axios.get(`${API_URL}/carts`)
+ 
+    axios.get(`${API_URL}/carts`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: GET_CARTS,
                 payload: {
-                    data: res.data.data,
-                    total: res.data.total
+                    carts: res.data.data.carts,
+                    total: res.data.data.total
                 }
             });
         });
 }
 
-export const addToCart = (book, quantity) => (dispatch) => {
+export const addToCart = (book, quantity) => (dispatch ,getState) => {
     
     const price_sum = book.price * parseInt(quantity);
     dispatch({type: IS_ADD_LOADING});
 
-    axios.post(`${API_URL}/carts`, { book_id: book.id, quantity: parseInt(quantity), price_sum})
+    const body = {
+        book_id: book.id,
+        quantity: parseInt(quantity),
+        price_sum
+    }
+
+    axios.post(`${API_URL}/carts`, body, tokenConfig(getState))
     .then(res => {
 
             const { data } = res.data;
@@ -63,10 +71,10 @@ export const hideModal = () => dispatch => {
     });
 }
 
-export const deleteCart = (cart) => dispatch => {
+export const deleteCart = (cart) => (dispatch, getState) => {
     dispatch({type: IS_DELETE_LOADING});
 
-    axios.delete(`${API_URL}/carts/${cart.id}`)
+    axios.delete(`${API_URL}/carts/${cart.id}`, tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: DELETE_CART,
@@ -84,9 +92,9 @@ export const itemDeleted = cart => dispatch => {
     });
 }
 
-export const updateCarts = carts => dispatch => {
+export const updateCarts = carts => (dispatch, getState) => {
     carts.map(cart => {
-        axios.patch(`${API_URL}/carts/${cart.id}`, cart)
+        axios.patch(`${API_URL}/carts/${cart.id}`, cart, tokenConfig(getState))
         }
     );
 

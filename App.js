@@ -7,8 +7,8 @@ export class App extends Component {
   render() {
     return (
       <Provider store={store} >
-        <AppNavigator />      
-      </Provider>     
+        <AppNavigator />
+      </Provider>
     )
   }
 }

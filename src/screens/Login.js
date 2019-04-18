@@ -37,7 +37,7 @@ class Login extends Component {
 
   _singIn = () => {
     this.props.login(this.state.control);
-    this.props.navigation.navigate('AuthLoading');
+    setTimeout(() => { this.props.navigation.navigate('AuthLoading')}, 500);
   }
 
 emailInputHandler = val => {
@@ -66,6 +66,7 @@ passwordInputHandler = val => {
 
   render() {
 
+    const { control } = this.state;
     return (
       <LinearGradient
         style={styles.linearGradient}
@@ -80,13 +81,16 @@ passwordInputHandler = val => {
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>email</Label>
               <Input underlineColorAndroid="transparent"
-                Text={this.emailInputHandler}
-                keyboardType='email-address' value={this.state.control.email}/>
+                onChangeText={this.emailInputHandler}
+                keyboardType='email-address'
+                autoCapitalize = 'none'
+                value={control.email} />
             </Item>
             <Item floatingLabel style={styles.input}>
               <Label style={styles.label}>password</Label>
               <Input underlineColorAndroid="transparent"
-                onChangeText={this.passwordInputHandler} value={this.state.control.password}
+                onChangeText={this.passwordInputHandler}
+                value={control.password}
                 secureTextEntryonChange={true}/>
             </Item>
           </View>

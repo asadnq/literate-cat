@@ -34,7 +34,7 @@ const cart = (state = initialState, action) => {
         case GET_CARTS:
             return {
                 ...state,
-                cart: action.payload.data,
+                cart: action.payload.carts,
                 total: action.payload.total,
                 isLoading: false,
                 isAddLoading: false

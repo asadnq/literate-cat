@@ -1,18 +1,43 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, AsyncStorage } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { ListItem, Text } from 'native-base';
+import { connect } from 'react-redux';
 
 class SettingsScreen extends React.Component {
 
-    _signOutAsync = async () => {
-        await AsyncStorage.clear();
+    _signOut = () => {
         this.props.navigation.navigate('AuthStack');
       };
 
     render() {
+
+        const { user, isLoggedIn } = this.props.user;
+
+        if(!isLoggedIn) {
+            return(
+                <ScrollView>
+                    <ListItem button onPress={this._signOut} noIndent>
+                        <Text>
+                            sign in
+                        </Text>
+                    </ListItem>
+                </ScrollView>
+            )
+        }
+
         return(
             <ScrollView>
-                <ListItem button onPress={this._signOutAsync} noIndent>
+                <ListItem noIndent>
+                    <Text>
+                        {user.username}
+                    </Text>
+                </ListItem>
+                <ListItem noIndent>
+                    <Text>
+                        {user.email}
+                    </Text>
+                </ListItem>
+                <ListItem button onPress={this._signOut} noIndent>
                     <Text>
                         sign out
                     </Text>
@@ -22,4 +47,10 @@ class SettingsScreen extends React.Component {
     }
 }
 
-export default SettingsScreen;
+const mapState = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapState)(SettingsScreen);
