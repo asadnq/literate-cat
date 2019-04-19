@@ -31,11 +31,13 @@ export const login = user => dispatch => {
 
 export const register = user => dispatch => {
   axios.post(`${API_URL}/users/register`, user).then(res => {
-    alert("asdasd");
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data
-    });
+    })
+    .catch(err => {
+      console.log(err)
+    })
   });
 };
 

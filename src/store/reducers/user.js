@@ -20,12 +20,6 @@ const user = (state = initialState, action) => {
         user: action.payload
       };
     case LOGIN_SUCCESS:
-      return {
-        ...state,
-        user: action.payload.user,
-        access_token: action.payload.access_token,
-        isLoggedIn: true
-      };
     case REGISTER_SUCCESS:
       return {
         ...state,

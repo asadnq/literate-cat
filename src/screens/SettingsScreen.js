@@ -22,7 +22,7 @@ class SettingsScreen extends React.Component {
                         </Text>
                     </ListItem>
                 </ScrollView>
-            )
+            );
         }
 
         return(

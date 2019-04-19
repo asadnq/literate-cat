@@ -30,15 +30,18 @@ class ProductDetail extends Component {
                 }
             }
         }
-
     }
 
 
     onAddCartHandler = (book, qty) => {
-        this.props.addToCart(book, qty);
-        this.setModalVisibility();
-        this.props.addedToCart();
-        setTimeout(() => {this.props.hideModal()}, 5000);
+        if(!this.props.isLoggedIn) {
+            this.props.navigation.navigate('Login')
+        } else {
+            this.props.addToCart(book, qty);
+            this.setModalVisibility();
+            this.props.addedToCart();
+            setTimeout(() => {this.props.hideModal()}, 5000);
+        }
     }
 
     setModalVisibility = () => {
@@ -110,6 +113,32 @@ class ProductDetail extends Component {
 }
 
 
+
+const mapState = state => {
+    
+    const { book, isLoading } = state.books;
+    const { isAddLoading, isAddedToCart } = state.cart;
+    const { isLoggedIn } = state.user;
+
+    return {
+        book,
+        isLoading,
+        isAddLoading,
+        isAddedToCart,
+        isLoggedIn
+    }
+}
+
+const mapDispatch = dispatch => {
+    return {
+        addToCart: (item, qty) => dispatch(addToCart(item, qty)),
+        addedToCart: () => dispatch(addedToCart()),
+        hideModal: () => dispatch(hideModal())
+    }
+}
+
+export default connect(mapState, mapDispatch)(ProductDetail);
+
 const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -149,27 +178,3 @@ const styles = StyleSheet.create({
         height: '80%'
     }
 })
-
-
-const mapState = state => {
-
-    const { book, isLoading } = state.books;
-    const { isAddLoading, isAddedToCart } = state.cart;
-    
-    return {
-        book,
-        isLoading,
-        isAddLoading,
-        isAddedToCart
-    }
-}
-
-const mapDispatch = dispatch => {
-    return {
-        addToCart: (item, qty) => dispatch(addToCart(item, qty)),
-        addedToCart: () => dispatch(addedToCart()),
-        hideModal: () => dispatch(hideModal())
-    }
-}
-
-export default connect(mapState, mapDispatch)(ProductDetail);

@@ -6,7 +6,7 @@ import Login from '../screens/Login';
 import Register from '../screens/Register';
 import AuthLoading from '../screens/AuthLoading';
 import HomeScreen from '../screens/HomeScreen';
-import ProductDetail from '../screens/ProductsDetail';
+import ProductDetail from '../screens/ProductDetail';
 import CartScreen from '../screens/CartScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import ProductsScreen from '../screens/ProductsScreen';

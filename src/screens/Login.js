@@ -91,7 +91,8 @@ passwordInputHandler = val => {
               <Input underlineColorAndroid="transparent"
                 onChangeText={this.passwordInputHandler}
                 value={control.password}
-                secureTextEntryonChange={true}/>
+                secureTextEntry={true}
+                autoCapitalize = 'none'/>
             </Item>
           </View>
           <DefaultButton
