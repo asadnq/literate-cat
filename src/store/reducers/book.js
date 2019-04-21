@@ -1,4 +1,5 @@
-import { GET_BOOKS, GET_BOOK, IS_LOADING } from '../actions/types'
+import { GET_BOOKS_PENDING, GET_BOOKS_FULFILLED, GET_BOOKS_REJECTED,
+        GET_BOOK_PENDING, GET_BOOK_FULFILLED, GET_BOOK_REJECTED } from '../actions/types'
 
 const initialState = {
     book: {
@@ -15,21 +16,22 @@ const initialState = {
 function books( state = initialState, action ) {
 
     switch(action.type) {
-        case IS_LOADING:
+        case GET_BOOKS_PENDING:
+        case GET_BOOK_PENDING:
             return {
                 ...state,
                 isLoading: true
             }
-        case GET_BOOKS:
+        case GET_BOOKS_FULFILLED:
             return {
                 ...state,
-                books: action.payload.books,
+                books: action.payload.data.data,
                 isLoading: false
             }
-        case GET_BOOK:
+        case GET_BOOK_FULFILLED:
             return {
                 ...state,
-                book: action.payload.book,
+                book: action.payload.data.data,
                 isLoading: false
             }
         default:

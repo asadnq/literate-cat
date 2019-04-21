@@ -1,46 +1,24 @@
 import { GET_BOOKS, GET_BOOK, IS_LOADING} from './types';
 import { API_URL } from '../../config/api.config';
-import axios from 'axios';
+import instance from './axios.config';
 
-export const getBooks = () => (dispatch) => {
-
-    dispatch({type: IS_LOADING });
-    
-    axios.get(`${API_URL}/books`)
-        .then(res => {
-                dispatch( {
-                    type: GET_BOOKS,
-                    payload: {
-                        books: res.data.data
-                    }
-                })
-            });
+export const getBooks = () => {
+    return {
+        type: GET_BOOKS,
+        payload: instance.get('/books')
+    }
 }
 
-export const getBook = id => (dispatch) => {
-    
-    dispatch({type: IS_LOADING });
-
-    axios.get(`${API_URL}/books/${id}`)
-        .then(res => {
-            dispatch({
-                type: GET_BOOK,
-                payload: {
-                    book: res.data.data
-                }
-            })
-        })
+export const getBook = id => {
+    return {
+        type: GET_BOOK,
+        payload: instance.get('/books/'+id)
+    }
 }
 
-export const searchBook = val => dispatch => {
-    dispatch({type: IS_LOADING});
-    axios.get(`${API_URL}/books/name/${val}`)
-        .then(res => {
-            dispatch({
-                type: GET_BOOKS,
-                payload: {
-                    books: res.data.data
-                }
-            })
-        });
+export const searchBook = val => {
+    return {
+      type: GET_BOOKS,
+      payload: instance.get('/books/name/'+val)
+    }
 }

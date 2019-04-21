@@ -118,11 +118,11 @@ class CartScreen extends Component {
     }
 
 
-    if (this.props.cart.length > 0 && this.props.isLoggedIn) {
+    if (this.props.carts.length > 0 && this.props.isLoggedIn) {
       return (
         <Container>
           <NavigationEvents
-            onWillBlur={() => this.props.updateCarts(this.props.cart)}
+            onWillBlur={() => this.props.updateCarts(this.props.carts)}
           />
           <ModalLoading visible={this.props.isDeleteLoading} />
           <HalfBottomModal
@@ -163,7 +163,7 @@ class CartScreen extends Component {
           />
           <Content>
             <FlatList
-              data={this.props.cart}
+              data={this.props.carts}
               keyExtractor={(item, index) => "key " + item.id}
               renderItem={({ item }) => (
                 <ListCart
@@ -227,7 +227,7 @@ class CartScreen extends Component {
 
 const mapState = state => {
   return {
-    cart: state.cart.cart,
+    carts: state.cart.carts,
     total: state.cart.total,
     isLoading: state.cart.isLoading,
     isDeleteLoading: state.cart.isDeleteLoading,

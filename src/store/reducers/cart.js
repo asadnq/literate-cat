@@ -1,10 +1,11 @@
-import { ADD_TO_CART, DELETE_CART, ADD_QUANTITY,
-            SUB_QUANTITY, GET_CARTS, IS_LOADING,
-            CART_LOADED, CART_LOADING, IS_ADD_LOADING, IS_DELETE_LOADING,
-            ADDED_TO_CART, IS_ITEM_DELETED, HIDE_MODAL } from "../actions/types";
+import {GET_CARTS, GET_CARTS_FULFILLED, GET_CARTS_PENDING, GET_CARTS_REJECTED ,
+        ADD_TO_CART_PENDING, ADD_TO_CART_FULFILLED,
+        ADD_TO_CART_REJECTED, ADDED_TO_CART,
+        DELETE_CART_PENDING, DELETE_CART_FULFILLED, DELETE_CART_REJECTED, CART_DELETED,
+        SUB_QUANTITY, ADD_QUANTITY } from "../actions/types";
 
 const initialState = {
-    cart:[],
+    carts:[],
     total: 0,
     isLoading: false,
     isAddLoading: false,
@@ -16,56 +17,54 @@ const initialState = {
 const cart = (state = initialState, action) => {
 
     switch(action.type) {
-        case CART_LOADING:
-            return {
-                ...state,
-                isLoading: true
-            };
-        case IS_ADD_LOADING:
+        case ADD_TO_CART_PENDING:
             return {
                 ...state,
                 isAddLoading: true
             };
-        case IS_DELETE_LOADING:
+        case ADD_TO_CART_FULFILLED:
+            return {
+                ...state,
+                carts: state.carts.concat(action.payload.cart),
+                total: state.total + action.payload.price_sum,
+                isAddLoading: false
+            };
+        case DELETE_CART_PENDING:
             return {
                 ...state,
                 isDeleteLoading: true
             };
-        case GET_CARTS:
+        case DELETE_CART_FULFILLED:
             return {
                 ...state,
-                cart: action.payload.carts,
-                total: action.payload.total,
+                carts: state.carts.filter(item => {
+                    return item.id !== action.payload.data.cart.id }),
+                total: state.total - action.payload.data.cart.price_sum,
+                isLoading: false,
+                isDeleteLoading: false
+            };
+
+        case GET_CARTS_PENDING:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case GET_CARTS_FULFILLED:
+            return {
+                ...state,
+                carts: action.payload.data.data.carts,
+                total: action.payload.data.data.total,
                 isLoading: false,
                 isAddLoading: false
             };
-        case ADD_TO_CART:
-            return {
-                ...state,
-                cart: state.cart.concat(action.payload.cart),
-                total: state.total + action.payload.price_sum,
-                isAddLoading: false
-            };
+
         case ADDED_TO_CART:
             return{
                 ...state,
                 isAddedToCart: !state.isAddedToCart
             };
-        case HIDE_MODAL: 
-            return {
-                ...state,
-                isAddedTocart: false
-            };
-        case DELETE_CART:
-            return {
-                ...state,
-                cart: state.cart.filter(item => {
-                    return item.id !== action.payload.id }),
-                total: state.total - action.payload.substract,
-                isLoading: false,
-                isDeleteLoading: false
-            };
-        case IS_ITEM_DELETED:
+
+        case CART_DELETED:
             return {
                 ...state,
                 isItemDeleted: !state.isItemDeleted
@@ -73,7 +72,7 @@ const cart = (state = initialState, action) => {
         case SUB_QUANTITY:
                 return {
                     ...state,
-                    cart: state.cart.map(item => item.id === action.payload.id ?
+                    carts: state.carts.map(item => item.id === action.payload.id ?
                         {...item, quantity: action.payload.quantity,
                             price_sum: action.payload.price_sum } :
                         item
@@ -84,7 +83,7 @@ const cart = (state = initialState, action) => {
         case ADD_QUANTITY:
             return {
                 ...state,
-                cart: state.cart.map(item => item.id === action.payload.id ?
+                carts: state.carts.map(item => item.id === action.payload.id ?
                     {...item,
                         quantity: action.payload.quantity,
                         price_sum: action.payload.price_sum

@@ -1,8 +1,9 @@
 import {
-  LOGIN_SUCCESS,
-  REGISTER_SUCCESS,
-  LOGIN_FAIL,
-  USER_LOADED
+  LOGIN_PENDING,
+  LOGIN_FULFILLED,
+  LOGIN_REJECTED,
+  REGISTER_FULFILLED,
+  REGISTER_REJECTED
 } from "../actions/types";
 
 const initialState = {
@@ -13,21 +14,20 @@ const initialState = {
 
 const user = (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOADED:
+    case REGISTER_FULFILLED:
+    case LOGIN_FULFILLED:
+      alert('login fulfilled');
+      console.log(action.payload);
       return {
         ...state,
-        isLoggedIn: true,
-        user: action.payload
-      };
-    case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
-      return {
-        ...state,
-        user: action.payload.user,
-        access_token: action.payload.access_token,
+        user: action.payload.data.user,
+        access_token: action.payload.data.access_token,
         isLoggedIn: true
       };
-    case LOGIN_FAIL:
+    case REGISTER_REJECTED:
+    case LOGIN_REJECTED:
+    alert('rejected');
+    console.log(action.payload);
       return {
         ...state,
         isLoggedIn: false

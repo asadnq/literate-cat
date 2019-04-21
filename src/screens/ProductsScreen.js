@@ -16,7 +16,7 @@ export class ProductsScreen extends Component {
     static navigationOptions = {
         title: 'Product Card',
       };
-  
+
     toProductDetail = (product) => {
         this.props.navigation.navigate('ProductDetail', {
             book_id: product.id,
@@ -36,7 +36,7 @@ export class ProductsScreen extends Component {
                 data={this.props.book}
                 renderItem={({item}) => (
                     <CardProduct {...item}
-                    action={this.toProductDetail.bind(this,item)}/>
+                    action={this.toProductDetail.bind(this,item.id)}/>
                 )}
             />
         </Container>
