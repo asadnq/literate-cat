@@ -30,16 +30,19 @@ const cart = (state = initialState, action) => {
                 isAddLoading: false
             };
         case DELETE_CART_PENDING:
+            console.log(action.payload )
             return {
                 ...state,
                 isDeleteLoading: true
             };
         case DELETE_CART_FULFILLED:
+            alert('delete fulfilled')
+            console.log(action.payload )
             return {
                 ...state,
-                carts: state.carts.filter(item => {
-                    return item.id !== action.payload.data.cart.id }),
-                total: state.total - action.payload.data.cart.price_sum,
+                carts: state.carts.filter(cart => {
+                    return cart.id !== action.payload.data.data.cart.id }),
+                total: state.total - action.payload.data.data.cart.price_sum,
                 isLoading: false,
                 isDeleteLoading: false
             };

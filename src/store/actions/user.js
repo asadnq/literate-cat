@@ -1,7 +1,6 @@
 import axios from "axios";
 
 import { LOGIN, REGISTER } from "./types";
-import { API_URL } from "../../config/api.config";
 
 import instance from './axios.config.js';
 

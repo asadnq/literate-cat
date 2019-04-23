@@ -11,7 +11,7 @@ import CartScreen from '../screens/CartScreen';
 import PaymentScreen from '../screens/PaymentScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import { View } from 'react-native'; 
+import { View } from 'react-native';
 import StackHeader from '../components/UI/headers/StackHeader';
 
 // //disable warning
@@ -36,7 +36,7 @@ const MainTab = createBottomTabNavigator(
                 const { routeName } = navigation.state;
                 let iconName;
                 if (routeName === 'Home') {
-                    iconName = 'library-books'; 
+                    iconName = 'library-books';
                 } else if (routeName === 'Cart') {
                     iconName = 'shopping-cart';
                 } else if (routeName === 'Settings') {

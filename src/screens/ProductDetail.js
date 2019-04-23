@@ -95,6 +95,18 @@ class ProductDetail extends Component {
                                     {name}
                                 </Philosopher>
                                 <RupiahFormat style={styles.prPrice} text={price}/>
+                                <View style={{flexDirection:'row',flexWrap:'wrap', justifyContent:'flex-start', alignItems: 'flex-start', marginVertical: 15}}>
+                                    <Lato style={{paddingVertical: 1.5,paddingHorizontal:12, marginRight: 5, marginTop: 5}}>genre: </Lato>
+                                    {this.props.book.genre.map((item, index) => {
+                                        return(
+                                        <View key={'key '+index} style={{borderRadius: 30,borderWidth: .7, borderColor: '#eee',backgroundColor: '#FFF', paddingVertical: 1.5,paddingHorizontal:12, marginRight: 5, marginTop: 5}}>
+                                            <Text style={{fontSize: 12, color:'#778', fontFamily:'Lato-Regular'}}>
+                                                {item}
+                                            </Text>
+                                        </View>
+                                        )
+                                    })}
+                                </View>
                                 <Raleway style={styles.prDesc}>
                                     {description}
                                 </Raleway>
