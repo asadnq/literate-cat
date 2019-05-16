@@ -1,37 +1,27 @@
 import React, { Component } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import {
   Container,
   Content,
   Footer,
   FooterTab,
-  Button,
   Text,
   Icon
 } from "native-base";
-import { connect } from "react-redux";
 import { NavigationActions, NavigationEvents } from "react-navigation";
 
-import {
-  deleteCart,
-  addQuantity,
-  subQuantity,
-  getCarts,
-  updateCarts,
-  itemDeleted
-} from "../store/actions/cart";
-import ListCart from "../components/UI/ListCart";
-import BlockContent from "../components/UI/BlockContent";
-import RupiahFormat from "../components/UI/texts/RupiahFormat";
-import DefaultButton from "../components/UI/buttons/DefaultButton";
-import OutlineButton from "../components/UI/buttons/OutlineButton";
-import Loading from "../components/UI/loading/Loading";
-import ModalLoading from "../components/UI/loading/ModalLoading";
-import QuarterModal from "../components/UI/modals/QuarterModal";
-import HalfBottomModal from "../components/UI/modals/HalfBottomModal";
-import TransparentButton from "../components/UI/buttons/TransparentButton";
+import ListCart from "../../components/UI/ListCart";
+import BlockContent from "../../components/UI/BlockContent";
+import RupiahFormat from "../../components/UI/texts/RupiahFormat";
+import DefaultButton from "../../components/UI/buttons/DefaultButton";
+import OutlineButton from "../../components/UI/buttons/OutlineButton";
+import Loading from "../../components/UI/loading/Loading";
+import ModalLoading from "../../components/UI/loading/ModalLoading";
+import QuarterModal from "../../components/UI/modals/QuarterModal";
+import HalfBottomModal from "../../components/UI/modals/HalfBottomModal";
+import TransparentButton from "../../components/UI/buttons/TransparentButton";
 
-class CartScreen extends Component {
+export default class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -224,30 +214,3 @@ class CartScreen extends Component {
     );
   }
 }
-
-const mapState = state => {
-  return {
-    carts: state.cart.carts,
-    total: state.cart.total,
-    isLoading: state.cart.isLoading,
-    isDeleteLoading: state.cart.isDeleteLoading,
-    isItemDeleted: state.cart.isItemDeleted,
-    isLoggedIn: state.user.isLoggedIn
-  };
-};
-
-const mapDispatch = dispatch => {
-  return {
-    deleteCart: cart => dispatch(deleteCart(cart)),
-    addQty: cart => dispatch(addQuantity(cart)),
-    subQty: cart => dispatch(subQuantity(cart)),
-    getCarts: () => dispatch(getCarts()),
-    updateCarts: carts => dispatch(updateCarts(carts)),
-    itemDeleted: () => dispatch(itemDeleted())
-  };
-};
-
-export default connect(
-  mapState,
-  mapDispatch
-)(CartScreen);

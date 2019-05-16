@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text } from 'native-base';
-import { connect } from 'react-redux';
+import { Container, Content, Text } from 'native-base';
 
-import { getBooks, getBook, searchBook } from '../store/actions/book';
-import { getGenres } from '../store/actions/genre';
-import ProductList from '../components/ProductsList';
-import ProductCard from '../components/ProductCard';
-import GenreView from '../components/GenreView';
-import OutlineButton from '../components/UI/buttons/OutlineButton';
-import Loading from '../components/UI/loading/Loading';
-import SearchForm from '../components/SearchForm';
-import ViewMode from '../components/UI/buttons/ViewMode';
+import ProductList from '../../components/ProductsList';
+import ProductCard from '../../components/ProductCard';
+import GenreView from '../../components/GenreView';
+import Loading from '../../components/UI/loading/Loading';
+import SearchForm from '../../components/SearchForm';
+import ViewMode from '../../components/UI/buttons/ViewMode';
 
-export class HomeScreen extends Component {
+export default class Books extends Component {
   constructor() {
     super();
     this.state = {
@@ -33,7 +29,7 @@ export class HomeScreen extends Component {
 
   toProductDetail = id => {
     this.props.getBook(id);
-    this.props.navigation.navigate('ProductDetail');
+    this.props.navigation.navigate('BooksDetail');
   };
 
   viewModeHandler = () => {
@@ -79,13 +75,11 @@ export class HomeScreen extends Component {
   }
 
   render() {
-
     let genreComponent;
-    if(this.props.isGenresLoading) {
-      genreComponent = <Loading />
+    if (this.props.isGenresLoading) {
+      genreComponent = <Loading />;
     } else {
-      genreComponent = <GenreView data={this.props.genres} />
-
+      genreComponent = <GenreView data={this.props.genres} />;
     }
 
     return (
@@ -137,17 +131,3 @@ export class HomeScreen extends Component {
     );
   }
 }
-
-const mapState = state => {
-  return {
-    books: state.books.books,
-    isLoading: state.books.isLoading,
-    genres: state.genre.genres,
-    isGenresLoading: state.genre.isLoading
-  };
-};
-
-export default connect(
-  mapState,
-  { getBooks, getBook, searchBook, getGenres }
-)(HomeScreen);

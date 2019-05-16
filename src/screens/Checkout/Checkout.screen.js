@@ -11,17 +11,17 @@ import {
   Item
 } from "native-base";
 import { FlatList, StyleSheet, View, Modal } from "react-native";
-import ListPayment from "../components/UI/ListPayment";
-import { connect } from "react-redux";
 
-import Lato from "../components/UI/texts/Lato";
-import RupiahFormat from "../components/UI/texts/RupiahFormat";
-import HalfBottomModal from "../components/UI/modals/HalfBottomModal";
-import OutlineButton from "../components/UI/buttons/OutlineButton";
-import ListCourier from "../components/UI/ListCourier";
-import DefaultButton from "../components/UI/buttons/DefaultButton";
+import styles from './Checkout.style'
+import Lato from "../../components/UI/texts/Lato";
+import RupiahFormat from "../../components/UI/texts/RupiahFormat";
+import HalfBottomModal from "../../components/UI/modals/HalfBottomModal";
+import OutlineButton from "../../components/UI/buttons/OutlineButton";
+import ListCourier from "../../components/UI/ListCourier";
+import ListPayment from "../../components/UI/ListPayment";
+import DefaultButton from "../../components/UI/buttons/DefaultButton";
 
-class PaymentScreen extends Component {
+export default class CheckoutScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -278,28 +278,3 @@ class PaymentScreen extends Component {
     );
   }
 }
-
-const mapState = state => {
-  return {
-    cart: state.cart.cart,
-    total: state.cart.total,
-    couriers: state.courier.courier
-  };
-};
-
-export default connect(mapState)(PaymentScreen);
-
-const styles = StyleSheet.create({
-    addressSubmitButton: {
-        alignSelf: "flex-end",
-        height: 38,
-        borderTopRightRadius: 20,
-        borderBottomRightRadius: 20
-      },
-    content: {
-        padding: "3%"
-    },
-    card: {
-        marginBottom: 5
-    }
-});

@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import {
   View,
-  StyleSheet,
-  TextInput,
   TouchableOpacity,
   Text
 } from "react-native";
 import { Form, Label, Item, Input } from "native-base";
 import LinearGradient from "react-native-linear-gradient";
-import { connect } from 'react-redux';
 
-import { register } from '../store/actions/user';
-import DefaultButton from '../components/UI/buttons/DefaultButton';
+import DefaultButton from '../../components/UI/buttons/DefaultButton';
+import styles from './Register.style'
 
-class Register extends Component {
+export default class Register extends Component {
 
     constructor() {
       super();
@@ -123,58 +120,3 @@ class Register extends Component {
     );
   }
 }
-
-export default connect(null, { register })(Register);
-
-const styles = StyleSheet.create({
-  linearGradient: {
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    height: "100%"
-  },
-  headerWrapper: {
-    flexDirection: "column",
-    height: "5%",
-    width: "85%"
-  },
-  form: {
-    flexDirection: "column",
-    justifyContent: "space-evenly",
-    width: "85%",
-    padding: 5,
-    height: "90%"
-  },
-  label: {
-    color: "#999",
-    fontSize: 12
-  },
-  inputWrapper: {
-    flex: 1
-  },
-  input: {},
-  button: {
-    alignSelf: "flex-end",
-    width: "100%",
-    borderRadius: 30,
-    backgroundColor: "#FFF",
-    elevation: 2
-  },
-  titleButton: {
-    color: "#004363"
-  },
-  signUpContainer: {
-    flexDirection: "row",
-    marginTop: 8,
-    justifyContent: "center"
-  },
-  signupText: {
-    fontSize: 12,
-    color: "#98B9BA"
-  },
-  signUpLink: {
-    textDecorationLine: "underline",
-    color: "#006494",
-    fontSize: 12
-  }
-});

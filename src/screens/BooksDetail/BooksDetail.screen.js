@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet,TextInput, Image, View, Dimensions } from 'react-native';
+import { Image, View, Dimensions } from 'react-native';
 import { Card, CardItem, Body, Container, Content, Text, Form, Item,
      Input,Footer, Button, Icon, FooterTab } from 'native-base';
-import { connect } from 'react-redux'
 
-import { addToCart, addedToCart, hideModal } from '../store/actions/cart';
-import { IMG_URL } from '../config/api.config';
-import RupiahFormat from '../components/UI/texts/RupiahFormat';
-import CustomFAB from '../components/UI/buttons/CustomFAB';
-import Lato from '../components/UI/texts/Lato';
-import Rubik from '../components/UI/texts/Rubik';
-import Raleway from '../components/UI/texts/Raleway';
-import Philosopher from '../components/UI/texts/Philosopher'
-import Loading from '../components/UI/loading/Loading';
-import ModalLoading from '../components/UI/loading/ModalLoading';
-import QuarterModal from '../components/UI/modals/QuarterModal';
-import AddToCartModal from '../components/AddToCartModal';
+import { IMG_URL } from '../../config/api.config';
+import RupiahFormat from '../../components/UI/texts/RupiahFormat';
+import CustomFAB from '../../components/UI/buttons/CustomFAB';
+import Lato from '../../components/UI/texts/Lato';
+import Raleway from '../../components/UI/texts/Raleway';
+import Philosopher from '../../components/UI/texts/Philosopher'
+import Loading from '../../components/UI/loading/Loading';
+import ModalLoading from '../../components/UI/loading/ModalLoading';
+import QuarterModal from '../../components/UI/modals/QuarterModal';
+import AddToCartModal from '../../components/AddToCartModal';
+import styles from './BooksDetail.style'
 
-
-class ProductDetail extends Component {
+export default class BooksDetail extends Component {
     
     constructor(props) {
         super(props);
@@ -123,70 +120,3 @@ class ProductDetail extends Component {
         )
     }
 }
-
-
-
-const mapState = state => {
-    
-    const { book, isLoading } = state.books;
-    const { isAddLoading, isAddedToCart } = state.cart;
-    const { isLoggedIn } = state.user;
-
-    return {
-        book,
-        isLoading,
-        isAddLoading,
-        isAddedToCart,
-        isLoggedIn
-    }
-}
-
-const mapDispatch = dispatch => {
-    return {
-        addToCart: (item, qty) => dispatch(addToCart(item, qty)),
-        addedToCart: () => dispatch(addedToCart()),
-        hideModal: () => dispatch(hideModal())
-    }
-}
-
-export default connect(mapState, mapDispatch)(ProductDetail);
-
-const { height, width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-    imgWrapper: {
-        flexDirection: 'row',
-        marginBottom: 12,
-        width: width,
-        height: 300
-    },
-    img: {
-        flex: 1,
-        alignSelf: 'stretch',
-        width: undefined,
-        height: undefined
-    },
-    prName: {
-        textTransform: 'capitalize',
-        borderBottomWidth: 0.8,
-        paddingBottom: 5,
-        borderColor: '#c9c9c9',
-        marginBottom: 12,
-        fontSize: 20
-    },
-    prPrice: {
-        fontSize: 13,
-        color: '#676C6E'
-    },
-    prDesc: {
-        color: '#666',
-        fontSize: 11,
-        margin: 2,
-        textAlign: 'justify'
-    },
-    buyButton: {
-        borderColor: '#006494',
-        margin: 8,
-        height: '80%'
-    }
-})
