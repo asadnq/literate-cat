@@ -1,19 +1,19 @@
-import axios from "axios";
-
 import { LOGIN, REGISTER } from "./types";
 
 import instance from './axios.config.js';
+import NavigationService from '../../navigations/NavigationService'
 
 export const login = user => dispatch => {
 
   return {
     type: LOGIN,
-    payload: instance.post('/users/login', user)
+    payload: instance.post('/auth/login', user)
           .then(res => {
                 dispatch({
                   type: 'LOGIN_FULFILLED',
                   payload: res
                 });
+                NavigationService.navigate('Books')
               })
               .catch(err => {
                 dispatch({
@@ -21,26 +21,12 @@ export const login = user => dispatch => {
                 });
               })
   }
-
-  // instance
-  //   .post(`${API_URL}/users/login`, user)
-  //   .then(res => {
-  //     dispatch({
-  //       type: 'LOGIN_FULFILLED',
-  //       payload: res
-  //     });
-  //   })
-  //   .catch(err => {
-  //     dispatch({
-  //       type: 'LOGIN_REJECTED'
-  //     });
-  //   });
 };
 
 export const register = user => {
   return {
     type: REGISTER,
-    payload: instance.post('/users/register', user)
+    payload: instance.post('/auth/register', user)
   }
   
   // axios.post(`${API_URL}/users/register`, user).then(res => {

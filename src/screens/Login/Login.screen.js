@@ -30,7 +30,6 @@ export default class Login extends Component {
 
   _singIn = () => {
     this.props.login(this.state.control);
-    setTimeout(() => { this.props.navigation.navigate('AuthLoading')}, 500);
   }
 
 emailInputHandler = val => {
