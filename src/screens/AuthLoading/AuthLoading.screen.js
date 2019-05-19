@@ -3,22 +3,20 @@ import {
   ActivityIndicator,
   StatusBar,
   View,
+  Text
 } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationEvents } from 'react-navigation';
+import { bootstrapAsync } from '../../store/actions/user'
 
 class AuthLoading extends React.Component {
   constructor(props) {
     super(props);
+    this.props.bootstrapAsync()
   }
 
   render() {
-    const { user } = this.props;
     return (
       <View>
-        <NavigationEvents
-              onDidFocus={() => user.isLoggedIn ? this._toMainStack : alert('Authentication error') }
-          />
         <ActivityIndicator />
         <StatusBar barStyle="default" />
       </View>
@@ -32,4 +30,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(AuthLoading);
+export default connect(mapState, { bootstrapAsync })(AuthLoading);

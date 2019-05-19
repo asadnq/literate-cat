@@ -1,60 +1,76 @@
-import { LOGIN, REGISTER } from "./types";
+import AsyncStorage from '@react-native-community/async-storage';
 
+import { LOGIN, REGISTER, BOOTSTRAP_ASYNC_FULFILLED, LOGOUT } from './types';
 import instance from './axios.config.js';
-import NavigationService from '../../navigations/NavigationService'
+import NavigationService from '../../navigations/NavigationService';
+
+const storeUserData = async data => {
+  try {
+    await AsyncStorage.setItem('userData', data);
+    const test = await AsyncStorage.getItem('userData');
+    console.log(JSON.parse(test));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const bootstrapAsync = () => async dispatch => {
+  try {
+    const retrievedItem = await AsyncStorage.getItem('userData');
+    const userData = JSON.parse(retrievedItem);
+    if (userData !== null) {
+      NavigationService.navigate('Books');
+      dispatch({
+        type: BOOTSTRAP_ASYNC_FULFILLED,
+        payload: userData
+      });
+    } else {
+      NavigationService.navigate('Login');
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const login = user => dispatch => {
-
   return {
     type: LOGIN,
-    payload: instance.post('/auth/login', user)
-          .then(res => {
-                dispatch({
-                  type: 'LOGIN_FULFILLED',
-                  payload: res
-                });
-                NavigationService.navigate('Books')
-              })
-              .catch(err => {
-                dispatch({
-                  type: 'LOGIN_REJECTED'
-                });
-              })
-  }
+    payload: instance
+      .post('/auth/login', user)
+      .then(res => {
+        dispatch({
+          type: 'LOGIN_FULFILLED',
+          payload: res
+        });
+        storeUserData(JSON.stringify(res.data));
+        NavigationService.navigate('Books');
+      })
+      .catch(err => {
+        dispatch({
+          type: 'LOGIN_REJECTED'
+        });
+      })
+  };
 };
 
 export const register = user => {
   return {
     type: REGISTER,
     payload: instance.post('/auth/register', user)
-  }
-  
-  // axios.post(`${API_URL}/users/register`, user).then(res => {
-  //   dispatch({
-  //     type: REGISTER_SUCCESS,
-  //     payload: res.data
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //   })
-  // });
+  };
 };
 
-// export const loadUser = () => (dispatch, getState) => {
-//   axios
-//     .get(`${API_URL}/user`, tokenConfig(getState))
-//     .then(res => {
-//       dispatch({
-//         type: USER_LOADED,
-//         payload: res.data.data
-//       });
-//     })
-//     .catch(err => {
-//       dispatch({
-//         type: AUTH_ERROR
-//       });
-//     });
-// };
+export const logout = () => {
+  return {
+    type: LOGOUT,
+    payload: new Promise((resolve, reject) => {
+      AsyncStorage.clear().then(() => {
+        NavigationService.navigate('AuthLoading')
+        resolve()
+      });
+    })
+  };
+};
 
 export const tokenConfig = getState => {
   //get token from previous state
@@ -63,12 +79,12 @@ export const tokenConfig = getState => {
   //headers
   const config = {
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     }
   };
 
   if (token) {
-    config.headers["Authorization"] = `bearer ${token}`;
+    config.headers['Authorization'] = `bearer ${token}`;
   }
   console.log(config);
   return config;

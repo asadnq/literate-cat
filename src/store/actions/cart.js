@@ -79,13 +79,13 @@ export const deleteCart = cart => dispatch => {
         payload: instance.delete('/carts/'+cart.id)
             .then(res => {
                 dispatch({
-                type: 'LOGIN_FULFILLED',
+                type: 'DELETE_CART_FULFILLED',
                 payload: res
                 });
             })
             .catch(err => {
                 dispatch({
-                type: 'LOGIN_REJECTED'
+                type: 'DELTE_CART_REJECTED'
                 });
             })
     }
