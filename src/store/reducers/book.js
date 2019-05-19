@@ -1,5 +1,5 @@
 import { GET_BOOKS_PENDING, GET_BOOKS_FULFILLED, GET_BOOKS_REJECTED,
-        GET_BOOK_PENDING, GET_BOOK_FULFILLED, GET_BOOK_REJECTED } from '../actions/types'
+        GET_BOOK_PENDING, GET_BOOK_FULFILLED, GET_BOOK_REJECTED, GET_MORE_BOOKS_FULFILLED } from '../actions/types'
 
 const initialState = {
     book: {
@@ -33,6 +33,11 @@ function books( state = initialState, action ) {
                 ...state,
                 book: action.payload.data.data,
                 isLoading: false
+            }
+        case GET_MORE_BOOKS_FULFILLED:
+            return {
+                ...state,
+                books: state.books.concat(action.payload.data.data)
             }
         default:
             return state

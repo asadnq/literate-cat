@@ -17,9 +17,6 @@ import CheckoutScreen from '../screens/Checkout/Checkout.container';
 import SettingsScreen from '../screens/Settings/Settings.container';
 import StackHeader from '../components/UI/headers/StackHeader';
 
-// //disable warning
-// console.disableYellowBox = true;
-
 const MainTab = createBottomTabNavigator(
   {
     Books: {
@@ -100,10 +97,13 @@ const AuthStack = createStackNavigator(
     },
     Register: {
       screen: Register
+    },
+    AuthLoading: {
+      screen: AuthLoading  
     }
   },
   {
-    initialRouteName: 'Login'
+    initialRouteName: 'AuthLoading'
   }
 );
 
@@ -120,7 +120,7 @@ const MainSwitch = createSwitchNavigator(
     }
   },
   {
-    initialRouteName: 'MainStack'
+    initialRouteName: 'AuthLoading'
   }
 );
 

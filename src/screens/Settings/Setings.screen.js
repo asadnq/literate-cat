@@ -4,7 +4,7 @@ import { ListItem, Text } from 'native-base';
 
 export default class SettingsScreen extends React.Component {
   _signOut = () => {
-    this.props.navigation.navigate('AuthStack');
+    this.props.logout()
   };
 
   render() {

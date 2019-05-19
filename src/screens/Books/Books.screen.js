@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { Container, Content, Text } from 'native-base';
 
 import ProductList from '../../components/ProductsList';
@@ -19,7 +20,11 @@ export default class Books extends Component {
       control: {
         search: ''
       },
-      typingTimeout: 0
+      typingTimeout: 0,
+      pagination: {
+        page: 1,
+        limit: 10
+      }
     };
   }
 
@@ -51,14 +56,19 @@ export default class Books extends Component {
     this.setState(prevState => {
       return {
         ...prevState,
+        pagination: {
+          page: 1,
+          limit: 10
+        },
         control: {
           search: val
         },
         typingTimeout: setTimeout(() => {
+          const { page, limit } = this.state.pagination;
           if (val === '') {
             this.props.getBooks();
           } else {
-            this.props.searchBook(val);
+            this.props.searchBook(page,limit,val);
           }
         }, 500)
       };
@@ -66,8 +76,40 @@ export default class Books extends Component {
   };
 
   refreshHandler() {
-    this.props.getBooks();
+    this.setState(
+      {
+        pagination: {
+          page: 1,
+          limit: 10
+        },
+        control: {
+          search: ''
+        }
+      },
+      () => this.props.getBooks()
+    );
   }
+
+  getMoreBooks = () => {
+    const { page, limit } = this.state.pagination;
+    const { search } = this.state.control;
+
+    if (search) {
+      this.props.getMoreSearch(page, limit, search)
+    } else {
+      this.props.getMoreBooks(page, limit);
+    }
+  };
+
+  onEndReachedHandler = () => {
+    const { page, limit } = this.state.pagination;
+    this.setState(
+      {
+        pagination: { page: page + 1, limit }
+      },
+      () => this.getMoreBooks()
+    );
+  };
 
   componentDidMount() {
     this.props.getBooks();
@@ -83,8 +125,8 @@ export default class Books extends Component {
     }
 
     return (
-      <Container>
-        <Content>
+      <View>
+        <View style={{ flexDirection: 'column', height: '100%' }}>
           <SearchForm
             onChangeText={this.searchHandler}
             value={this.state.control.search}
@@ -92,7 +134,7 @@ export default class Books extends Component {
           {/* start: genre view */}
           {genreComponent}
           {/* end: genre view */}
-          <Container
+          <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -108,7 +150,7 @@ export default class Books extends Component {
               onPress={this.viewModeHandler}
               icon={this.state.viewMode.card ? 'view-array' : 'view-list'}
             />
-          </Container>
+          </View>
           {this.props.isLoading ? (
             <Loading />
           ) : this.state.viewMode.card ? (
@@ -117,6 +159,7 @@ export default class Books extends Component {
               refreshing={this.props.isLoading}
               onRefresh={this.refreshHandler.bind(this)}
               action={this.toProductDetail.bind(this)}
+              onEndReached={this.onEndReachedHandler.bind(this)}
             />
           ) : (
             <ProductList
@@ -124,10 +167,11 @@ export default class Books extends Component {
               refreshing={this.props.isLoading}
               onRefresh={this.refreshHandler.bind(this)}
               action={this.toProductDetail.bind(this)}
+              onEndReached={this.onEndReachedHandler.bind(this)}
             />
           )}
-        </Content>
-      </Container>
+        </View>
+      </View>
     );
   }
 }

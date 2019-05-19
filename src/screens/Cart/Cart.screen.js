@@ -10,6 +10,7 @@ import {
 } from "native-base";
 import { NavigationActions, NavigationEvents } from "react-navigation";
 
+import styles from './Cart.style'
 import ListCart from "../../components/UI/ListCart";
 import BlockContent from "../../components/UI/BlockContent";
 import RupiahFormat from "../../components/UI/texts/RupiahFormat";
@@ -73,11 +74,7 @@ export default class Cart extends Component {
   };
 
   checkoutHandler = () => {
-    const navigate = NavigationActions.navigate({
-      routeName: "Payment"
-    });
-
-    this.props.navigation.dispatch(navigate);
+    this.props.navigation.navigate('Checkout')
   };
 
   componentDidMount() {
@@ -174,11 +171,7 @@ export default class Cart extends Component {
                 style={{ width: "35%", alignItems: "center", padding: 10 }}
               >
                 <Text
-                  style={{
-                    textAlign: "center",
-                    fontSize: 12,
-                    alignSelf: "flex-start"
-                  }}
+                  style={styles.totalText}
                 >
                   total :
                 </Text>
