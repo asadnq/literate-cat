@@ -6,9 +6,9 @@ import ProductList from '../../components/ProductsList';
 import ProductCard from '../../components/ProductCard';
 import GenreView from '../../components/GenreView';
 import Loading from '../../components/UI/loading/Loading';
-import SearchForm from '../../components/SearchForm';
 import ViewMode from '../../components/UI/buttons/ViewMode';
 import HeaderSearch from '../../components/headers/HeaderSearch';
+import styles from './Books.style';
 
 export default class Books extends Component {
   constructor() {
@@ -126,58 +126,41 @@ export default class Books extends Component {
     }
 
     return (
-      
-        <View style={{ flexDirection: 'column', height: '100%' }}>
-          <HeaderSearch
-            onChangeText={this.searchHandler}
-            value={this.state.control.search}
+      <View style={styles.container}>
+        <HeaderSearch
+          onChangeText={this.searchHandler}
+          value={this.state.control.search}
+        />
+        {/* start: genre view */}
+        {genreComponent}
+        {/* end: genre view */}
+        <View style={styles.viewModeContainer}>
+          <Text>view mode: {this.state.viewMode.card ? 'card' : 'list'}</Text>
+          <ViewMode
+            onPress={this.viewModeHandler}
+            icon={this.state.viewMode.card ? 'view-array' : 'view-list'}
           />
-
-          {/*<SearchForm
-            onChangeText={this.searchHandler}
-            value={this.state.control.search}
-          /> */}
-          {/* start: genre view */}
-          { genreComponent }
-          {/* end: genre view */}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              marginTop: 2,
-              height: 40,
-              alignItems: 'center',
-              paddingLeft: 12,
-              paddingRight: 12
-            }}
-          >
-            <Text>view mode: {this.state.viewMode.card ? 'card' : 'list'}</Text>
-            <ViewMode
-              onPress={this.viewModeHandler}
-              icon={this.state.viewMode.card ? 'view-array' : 'view-list'}
-            />
-          </View>
-          {this.props.isLoading ? (
-            <Loading />
-          ) : this.state.viewMode.card ? (
-            <ProductCard
-              data={this.props.books}
-              refreshing={this.props.isLoading}
-              onRefresh={this.refreshHandler.bind(this)}
-              action={this.toProductDetail.bind(this)}
-              onEndReached={this.onEndReachedHandler.bind(this)}
-            />
-          ) : (
-            <ProductList
-              data={this.props.books}
-              refreshing={this.props.isLoading}
-              onRefresh={this.refreshHandler.bind(this)}
-              action={this.toProductDetail.bind(this)}
-              onEndReached={this.onEndReachedHandler.bind(this)}
-            />
-          )}
         </View>
-      
+        {this.props.isLoading ? (
+          <Loading />
+        ) : this.state.viewMode.card ? (
+          <ProductCard
+            data={this.props.books}
+            refreshing={this.props.isLoading}
+            onRefresh={this.refreshHandler.bind(this)}
+            action={this.toProductDetail.bind(this)}
+            onEndReached={this.onEndReachedHandler.bind(this)}
+          />
+        ) : (
+          <ProductList
+            data={this.props.books}
+            refreshing={this.props.isLoading}
+            onRefresh={this.refreshHandler.bind(this)}
+            action={this.toProductDetail.bind(this)}
+            onEndReached={this.onEndReachedHandler.bind(this)}
+          />
+        )}
+      </View>
     );
   }
 }

@@ -12,10 +12,10 @@ const ListPayment = props => {
     return(
         <ListItem noIndent thumbnail>
             <Left>
-                <Thumbnail style={styles.prThumb} square source={{uri: IMG_URL + props.cover_image}} resizeMode='contain'/>
+                <Thumbnail style={styles.prThumb} square source={{uri: IMG_URL + props.book.cover_image}} resizeMode='contain'/>
             </Left>
             <Body>
-                <Lato style={styles.prName}>{ props.name }</Lato>
+                <Lato style={styles.prName}>{ props.book.name }</Lato>
                 <Lato style={styles.prQty}>{props.quantity} item</Lato>
                 <RupiahFormat text={props.price_sum} />
             </Body>

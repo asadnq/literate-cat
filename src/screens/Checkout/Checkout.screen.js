@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Container,
   Content,
@@ -6,20 +6,19 @@ import {
   Card,
   CardItem,
   Body,
-  Button,
   Input,
   Item
-} from "native-base";
-import { FlatList, StyleSheet, View, Modal } from "react-native";
+} from 'native-base';
+import { FlatList, StyleSheet, View, Modal } from 'react-native';
 
-import styles from './Checkout.style'
-import Lato from "../../components/UI/texts/Lato";
-import RupiahFormat from "../../components/UI/texts/RupiahFormat";
-import HalfBottomModal from "../../components/UI/modals/HalfBottomModal";
-import OutlineButton from "../../components/UI/buttons/OutlineButton";
-import ListCourier from "../../components/UI/ListCourier";
-import ListPayment from "../../components/UI/ListPayment";
-import DefaultButton from "../../components/UI/buttons/DefaultButton";
+import styles from './Checkout.style';
+import Lato from '../../components/UI/texts/Lato';
+import RupiahFormat from '../../components/UI/texts/RupiahFormat';
+import HalfBottomModal from '../../components/UI/modals/HalfBottomModal';
+import OutlineButton from '../../components/UI/buttons/OutlineButton';
+import ListCourier from '../../components/UI/ListCourier';
+import ListPayment from '../../components/UI/ListPayment';
+import DefaultButton from '../../components/UI/buttons/DefaultButton';
 
 export default class CheckoutScreen extends Component {
   constructor(props) {
@@ -31,7 +30,7 @@ export default class CheckoutScreen extends Component {
         courier: false
       },
       control: {
-        address: "",
+        address: '',
         courier: {}
       },
       address: null,
@@ -107,7 +106,7 @@ export default class CheckoutScreen extends Component {
   render() {
     let address = this.state.address;
     if (address === null) {
-      address = "Jl.Elang III no.200";
+      address = 'Jl.Elang III no.200';
     } else {
       address = this.state.address;
     }
@@ -115,7 +114,7 @@ export default class CheckoutScreen extends Component {
     let courier = this.state.courier;
     if (courier !== null) {
       var courierComp = (
-        <CardItem style={{ flexDirection: "row", padding: 12 }}>
+        <CardItem style={{ flexDirection: 'row', padding: 12 }}>
           <Lato style={{ flex: 1 }}>Courier charge</Lato>
           <RupiahFormat text={this.state.courier.charge} />
         </CardItem>
@@ -129,26 +128,12 @@ export default class CheckoutScreen extends Component {
           title="input address"
           visibilityHandler={this.setAddressModalVisibility}
         >
-          <View
-            style={{
-              flexDirection: "column",
-              padding: 15,
-              justifyContent: "space-between"
-            }}
-          >
+          <View style={styles.inputAddressModal}>
             <Lato>address</Lato>
             <Item>
               <Input onChangeText={this.inputAddressHandler} />
             </Item>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                alignSelf: "stretch",
-                alignItems: "flex-end",
-                justifyContent: "flex-end"
-              }}
-            >
+            <View style={styles.actionAddressModal}>
               <OutlineButton
                 style={styles.addressSubmitButton}
                 onPress={this.onModalAddressSubmit}
@@ -164,18 +149,12 @@ export default class CheckoutScreen extends Component {
           visibilityHandler={this.setCourierModalVisibility}
           bodyStyle={{ padding: 0 }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              padding: 12
-            }}
-          >
+          <View style={styles.pickCourierModal}>
             <Lato>courier</Lato>
             <Lato>charge</Lato>
           </View>
           <FlatList
-            keyExtractor={(item, index) => "key" + index}
+            keyExtractor={(item, index) => 'key' + index}
             data={this.props.couriers}
             renderItem={({ item }) => (
               <ListCourier
@@ -189,21 +168,15 @@ export default class CheckoutScreen extends Component {
         <Content style={styles.content}>
           <Card style={styles.card}>
             <CardItem header>
-              <Lato style={{ fontWeight: "bold" }}>Where to send</Lato>
+              <Lato style={styles.cardHeaderText}>Where to send</Lato>
             </CardItem>
-            <CardItem style={{ padding: 12 }}>
+            <CardItem style={styles.cardSection}>
               <Body>
                 <Lato>Naufal asad alhaq</Lato>
                 <Lato>{address}</Lato>
               </Body>
             </CardItem>
-            <CardItem
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                padding: 12
-              }}
-            >
+            <CardItem style={styles.actionAddressCard}>
               <OutlineButton
                 small
                 title="use another address"
@@ -214,26 +187,26 @@ export default class CheckoutScreen extends Component {
 
           <Card style={styles.card}>
             <CardItem header>
-              <Lato style={{ fontWeight: "bold" }}>Checkout</Lato>
+              <Lato style={styles.cardHeaderText}>Checkout</Lato>
             </CardItem>
             <CardItem>
               <FlatList
-                keyExtractor={(item, index) => "key" + item.id}
-                data={this.props.cart}
+                keyExtractor={(item, index) => 'key' + item.id}
+                data={this.props.carts}
                 renderItem={({ item }) => <ListPayment {...item} />}
               />
             </CardItem>
-            <CardItem style={{ flexDirection: "row", padding: 12 }}>
+            <CardItem style={styles.cardSection}>
               <Lato style={{ flex: 1 }}>
                 {this.state.courier !== null
                   ? this.state.courier.name
-                  : "choose a courier :"}
+                  : 'choose a courier :'}
               </Lato>
               <OutlineButton
-                style={{ alignSelf: "flex-end" }}
+                style={{ alignSelf: 'flex-end' }}
                 small
                 title={
-                  this.state.courier !== null ? "choose another" : "choose"
+                  this.state.courier !== null ? 'choose another' : 'choose'
                 }
                 onPress={this.setCourierModalVisibility}
               />
@@ -241,7 +214,7 @@ export default class CheckoutScreen extends Component {
 
             {courierComp}
 
-            <CardItem style={{ flexDirection: "row", padding: 12 }}>
+            <CardItem style={styles.cardSection}>
               <Lato style={{ flex: 1 }}>Sub total</Lato>
               <RupiahFormat text={this.state.total} />
             </CardItem>
@@ -249,13 +222,13 @@ export default class CheckoutScreen extends Component {
 
           <Card style={styles.card}>
             <CardItem header>
-              <Text>summary</Text>
+              <Text style={styles.cardHeaderText}>summary</Text>
             </CardItem>
-            <CardItem style={{ flexDirection: "row", padding: 12 }}>
+            <CardItem style={styles.cardSection}>
               <Lato style={{ flex: 1 }}>total </Lato>
               <RupiahFormat text={this.props.total} />
             </CardItem>
-            <CardItem style={{ flexDirection: "row", padding: 12 }}>
+            <CardItem style={styles.cardSection}>
               <Lato style={{ flex: 1 }}>courier charge </Lato>
               <RupiahFormat
                 text={
@@ -263,13 +236,7 @@ export default class CheckoutScreen extends Component {
                 }
               />
             </CardItem>
-            <CardItem
-              style={{
-                flexDirection: "column",
-                paddingLeft: 12,
-                paddingRight: 12
-              }}
-            >
+            <CardItem style={styles.cardSectionVertical}>
               <DefaultButton block title="pay now" />
             </CardItem>
           </Card>

@@ -7,13 +7,7 @@ import {
   Container,
   Content,
   Text,
-  Form,
-  Item,
-  Input,
-  Footer,
-  Button,
-  Icon,
-  FooterTab
+  Icon
 } from 'native-base';
 
 import { IMG_URL } from '../../config/api.config';
@@ -27,6 +21,7 @@ import ModalLoading from '../../components/UI/loading/ModalLoading';
 import QuarterModal from '../../components/UI/modals/QuarterModal';
 import AddToCartModal from '../../components/AddToCartModal';
 import styles from './BooksDetail.style';
+import GenreBadge from '../../components/badges/GenreBadge';
 
 export default class BooksDetail extends Component {
   constructor(props) {
@@ -77,7 +72,6 @@ export default class BooksDetail extends Component {
     if (this.props.isLoading) {
       return <Loading />;
     }
-
     return (
       <Container>
         <QuarterModal
@@ -108,51 +102,10 @@ export default class BooksDetail extends Component {
               <Body>
                 <Philosopher style={styles.prName}>{name}</Philosopher>
                 <RupiahFormat style={styles.prPrice} text={price} />
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    justifyContent: 'flex-start',
-                    alignItems: 'flex-start',
-                    marginVertical: 15
-                  }}
-                >
-                  <Lato
-                    style={{
-                      paddingVertical: 1.5,
-                      paddingHorizontal: 12,
-                      marginRight: 5,
-                      marginTop: 5
-                    }}
-                  >
-                    genre:{' '}
-                  </Lato>
+                <View style={styles.genreContainer}>
+                  <Lato style={styles.genreText}>genre: </Lato>
                   {this.props.book.genres.map((item, index) => {
-                    return (
-                      <View
-                        key={'key ' + item.id}
-                        style={{
-                          borderRadius: 30,
-                          borderWidth: 0.7,
-                          borderColor: '#eee',
-                          backgroundColor: '#FFF',
-                          paddingVertical: 1.5,
-                          paddingHorizontal: 12,
-                          marginRight: 5,
-                          marginTop: 5
-                        }}
-                      >
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            color: '#778',
-                            fontFamily: 'Lato-Regular'
-                          }}
-                        >
-                          {item.name}
-                        </Text>
-                      </View>
-                    );
+                    return <GenreBadge key={'key' + item.id} {...item} />;
                   })}
                 </View>
                 <Raleway style={styles.prDesc}>{description}</Raleway>

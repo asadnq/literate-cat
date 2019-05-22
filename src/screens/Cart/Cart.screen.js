@@ -1,26 +1,19 @@
-import React, { Component } from "react";
-import { View, FlatList } from "react-native";
-import {
-  Container,
-  Content,
-  Footer,
-  FooterTab,
-  Text,
-  Icon
-} from "native-base";
-import { NavigationActions, NavigationEvents } from "react-navigation";
+import React, { Component } from 'react';
+import { View, FlatList } from 'react-native';
+import { Container, Content, Footer, FooterTab, Text, Icon } from 'native-base';
+import { NavigationActions, NavigationEvents } from 'react-navigation';
 
-import styles from './Cart.style'
-import ListCart from "../../components/UI/ListCart";
-import BlockContent from "../../components/UI/BlockContent";
-import RupiahFormat from "../../components/UI/texts/RupiahFormat";
-import DefaultButton from "../../components/UI/buttons/DefaultButton";
-import OutlineButton from "../../components/UI/buttons/OutlineButton";
-import Loading from "../../components/UI/loading/Loading";
-import ModalLoading from "../../components/UI/loading/ModalLoading";
-import QuarterModal from "../../components/UI/modals/QuarterModal";
-import HalfBottomModal from "../../components/UI/modals/HalfBottomModal";
-import TransparentButton from "../../components/UI/buttons/TransparentButton";
+import styles from './Cart.style';
+import ListCart from '../../components/UI/ListCart';
+import BlockContent from '../../components/UI/BlockContent';
+import RupiahFormat from '../../components/UI/texts/RupiahFormat';
+import DefaultButton from '../../components/UI/buttons/DefaultButton';
+import OutlineButton from '../../components/UI/buttons/OutlineButton';
+import Loading from '../../components/UI/loading/Loading';
+import ModalLoading from '../../components/UI/loading/ModalLoading';
+import QuarterModal from '../../components/UI/modals/QuarterModal';
+import HalfBottomModal from '../../components/UI/modals/HalfBottomModal';
+import TransparentButton from '../../components/UI/buttons/TransparentButton';
 import HeaderText from '../../components/headers/HeaderText';
 
 export default class Cart extends Component {
@@ -35,10 +28,10 @@ export default class Cart extends Component {
   }
 
   static navigationOptions = {
-    title: "cart",
+    title: 'cart',
     tabBarOptions: {
       showLabel: true,
-      activeTintColor: "#006494"
+      activeTintColor: '#006494'
     }
   };
 
@@ -75,7 +68,7 @@ export default class Cart extends Component {
   };
 
   checkoutHandler = () => {
-    this.props.navigation.navigate('Checkout')
+    this.props.navigation.navigate('Checkout');
   };
 
   componentDidMount() {
@@ -105,7 +98,6 @@ export default class Cart extends Component {
       return <Loading />;
     }
 
-
     if (this.props.carts.length > 0 && this.props.isLoggedIn) {
       return (
         <Container>
@@ -118,27 +110,20 @@ export default class Cart extends Component {
             visible={this.state.modalVisible.deleteCart}
             visibilityHandler={this.setDeleteModalVisibility}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                marginTop: 5,
-                marginBottom: 5
-              }}
-            >
-              <Text style={{ textAlign: "center" }}>delete this item?</Text>
+            <View style={styles.deleteItemModal}>
+              <Text style={{ textAlign: 'center' }}>delete this item?</Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: 'row' }}>
               <TransparentButton
                 onPress={this.onDeleteCart.bind(this, this.state.selectedItem)}
-                style={{ width: "50%" }}
-                titleStyle={{ color: "#D11935" }}
+                style={{ width: '50%' }}
+                titleStyle={{ color: '#D11935' }}
                 title="delete"
               />
               <TransparentButton
                 onPress={this.setDeleteModalVisibility}
-                style={{ width: "50%" }}
-                titleStyle={{ color: "#aaa" }}
+                style={{ width: '50%' }}
+                titleStyle={{ color: '#aaa' }}
                 title="cancel"
               />
             </View>
@@ -153,7 +138,7 @@ export default class Cart extends Component {
           <Content>
             <FlatList
               data={this.props.carts}
-              keyExtractor={(item, index) => "key " + item.id}
+              keyExtractor={(item, index) => 'key ' + item.id}
               renderItem={({ item }) => (
                 <ListCart
                   {...item}
@@ -165,31 +150,23 @@ export default class Cart extends Component {
               )}
             />
           </Content>
-          <Footer>
-            <FooterTab
-              style={{ flexDirection: "row", backgroundColor: "#fff" }}
-            >
-              <Container
-                style={{ width: "35%", alignItems: "center", padding: 10 }}
-              >
-                <Text
-                  style={styles.totalText}
-                >
-                  total :
-                </Text>
+          <Footer style={styles.footer}>
+            <FooterTab style={styles.footerTab}>
+              <View style={styles.footerLeft}>
+                <Text style={styles.totalText}>total :</Text>
                 <RupiahFormat
                   style={{ fontSize: 18 }}
                   text={this.props.total}
                 />
-              </Container>
-              <Container style={{ padding: 8 }}>
+              </View>
+              <View style={styles.footerRight}>
                 <OutlineButton
                   block
                   title="checkout"
-                  style={{ height: 30, marginLeft: 0 }}
+                  style={styles.checkoutButton}
                   onPress={this.checkoutHandler}
                 />
-              </Container>
+              </View>
             </FooterTab>
           </Footer>
         </Container>
@@ -201,9 +178,9 @@ export default class Cart extends Component {
         <Icon type="FontAwesome" name="cart-arrow-down" />
         <Text>Your cart is empty</Text>
         <DefaultButton
-          style={{ alignSelf: "center", marginTop: 5 }}
+          style={{ alignSelf: 'center', marginTop: 5 }}
           title="shop now"
-          onPress={() => this.props.navigation.navigate("Home")}
+          onPress={() => this.props.navigation.navigate('Home')}
         />
       </BlockContent>
     );

@@ -4,7 +4,7 @@ import CheckoutScreen from './Checkout.screen'
 
 const mapState = state => {
   return {
-    cart: state.cart.cart,
+    carts: state.cart.carts,
     total: state.cart.total,
     couriers: state.courier.courier
   };
