@@ -2,6 +2,8 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { ListItem, Text } from 'native-base';
 
+import HeaderText from '../../components/headers/HeaderText'
+
 export default class SettingsScreen extends React.Component {
   _signOut = () => {
     this.props.logout()
@@ -21,6 +23,8 @@ export default class SettingsScreen extends React.Component {
     }
 
     return (
+      <View>
+        <HeaderText text="Settings" />  
       <ScrollView>
         <ListItem noIndent>
           <Text>{user.username}</Text>
@@ -32,6 +36,7 @@ export default class SettingsScreen extends React.Component {
           <Text>sign out</Text>
         </ListItem>
       </ScrollView>
+      </View>
     );
   }
 }

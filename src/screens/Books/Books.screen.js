@@ -8,6 +8,7 @@ import GenreView from '../../components/GenreView';
 import Loading from '../../components/UI/loading/Loading';
 import SearchForm from '../../components/SearchForm';
 import ViewMode from '../../components/UI/buttons/ViewMode';
+import HeaderSearch from '../../components/headers/HeaderSearch';
 
 export default class Books extends Component {
   constructor() {
@@ -68,7 +69,7 @@ export default class Books extends Component {
           if (val === '') {
             this.props.getBooks();
           } else {
-            this.props.searchBook(page,limit,val);
+            this.props.searchBook(page, limit, val);
           }
         }, 500)
       };
@@ -95,7 +96,7 @@ export default class Books extends Component {
     const { search } = this.state.control;
 
     if (search) {
-      this.props.getMoreSearch(page, limit, search)
+      this.props.getMoreSearch(page, limit, search);
     } else {
       this.props.getMoreBooks(page, limit);
     }
@@ -125,14 +126,19 @@ export default class Books extends Component {
     }
 
     return (
-      <View>
+      
         <View style={{ flexDirection: 'column', height: '100%' }}>
-          <SearchForm
+          <HeaderSearch
             onChangeText={this.searchHandler}
             value={this.state.control.search}
           />
+
+          {/*<SearchForm
+            onChangeText={this.searchHandler}
+            value={this.state.control.search}
+          /> */}
           {/* start: genre view */}
-          {genreComponent}
+          { genreComponent }
           {/* end: genre view */}
           <View
             style={{
@@ -171,7 +177,7 @@ export default class Books extends Component {
             />
           )}
         </View>
-      </View>
+      
     );
   }
 }

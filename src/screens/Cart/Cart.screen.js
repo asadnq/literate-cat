@@ -21,6 +21,7 @@ import ModalLoading from "../../components/UI/loading/ModalLoading";
 import QuarterModal from "../../components/UI/modals/QuarterModal";
 import HalfBottomModal from "../../components/UI/modals/HalfBottomModal";
 import TransparentButton from "../../components/UI/buttons/TransparentButton";
+import HeaderText from '../../components/headers/HeaderText';
 
 export default class Cart extends Component {
   constructor(props) {
@@ -108,6 +109,7 @@ export default class Cart extends Component {
     if (this.props.carts.length > 0 && this.props.isLoggedIn) {
       return (
         <Container>
+          <HeaderText text="Cart" />
           <NavigationEvents
             onWillBlur={() => this.props.updateCarts(this.props.carts)}
           />

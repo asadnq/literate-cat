@@ -67,16 +67,8 @@ const MainStack = createStackNavigator(
     Main: {
       screen: MainTab,
       navigationOptions: {
-        header: StackHeader,
-        headerTitleStyle: {
-          fontSize: 24,
-          fontFamily: 'Lato-Regular',
-          color: '#FFF',
-          textAlign: 'center',
-          flex: 1
-        }
-      },
-      headerMode: 'none'
+        header: null
+      }
     },
     BooksDetail: {
       screen: BooksDetail
@@ -99,7 +91,7 @@ const AuthStack = createStackNavigator(
       screen: Register
     },
     AuthLoading: {
-      screen: AuthLoading  
+      screen: AuthLoading
     }
   },
   {
