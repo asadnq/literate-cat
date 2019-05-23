@@ -1,25 +1,17 @@
 const initialState = {
-    courier: [
-        {
-            id: 1,
-            name: 'JNE',
-            charge: 11000
-        },
-        {
-            id: 2,
-            name: 'Tiki',
-            charge: 12000
-        },
-        {
-            id: 3,
-            name: 'J&T',
-            charge: 13000
-        }
-    ]
-}
+  costs: []
+};
 
 const courier = (state = initialState, action) => {
-    return state;
-}
+  switch (action.type) {
+    case 'GET_COSTS_FULFILLED':
+      return {
+        ...state,
+        costs: action.payload.data.data.rajaongkir.results[0].costs
+      };
+    default:
+      return state;
+  }
+};
 
 export default courier;

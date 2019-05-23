@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Icon, Button } from 'native-base';
 import Modal from 'react-native-modal';
 
@@ -15,7 +15,7 @@ const HalfBottomModal = props => {
         backdropTransitionOutTiming={800}
         onBackdropPress={props.visibilityHandler}
         onBackButtonPress={props.visibilityHandler}>
-            <View style={styles.innerModal}>
+            <View style={[styles.innerModal, props.bodyStyle]}>
                 <View style={styles.modalHeader}>
                     <Text style={styles.modalTitle}>
                         {props.title}
@@ -32,6 +32,8 @@ const HalfBottomModal = props => {
     )
 }
 
+const { width, height } = Dimensions.get('window')
+
 const styles = StyleSheet.create({
     modal: {
         margin:0,
@@ -40,7 +42,8 @@ const styles = StyleSheet.create({
     innerModal: {
         backgroundColor: '#fff',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        height: height * .5
     },
     modalHeader: {
         flexDirection: 'row',

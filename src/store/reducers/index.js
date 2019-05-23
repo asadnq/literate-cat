@@ -6,6 +6,7 @@ import courier from './courier';
 import checkout from './checkout';
 import user from './user';
 import genre from './genre';
+import location from './location'
 
 const rootReducer = combineReducers({
     books,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     courier,
     checkout,
     user,
-    genre
+    genre,
+    location
 });
 
 export default rootReducer;

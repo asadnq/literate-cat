@@ -9,7 +9,13 @@ import {
   Input,
   Item
 } from 'native-base';
-import { FlatList, StyleSheet, View, Modal } from 'react-native';
+import {
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  View,
+  Modal
+} from 'react-native';
 
 import styles from './Checkout.style';
 import Lato from '../../components/UI/texts/Lato';
@@ -27,11 +33,17 @@ export default class CheckoutScreen extends Component {
     this.state = {
       modalVisible: {
         address: false,
-        courier: false
+        courier: false,
+        province: false,
+        city: false
       },
       control: {
         address: '',
         courier: {}
+      },
+      location: {
+        province_id: 9,
+        city_id: 0
       },
       address: null,
       courier: null,
@@ -58,6 +70,30 @@ export default class CheckoutScreen extends Component {
         modalVisible: {
           address: prevState.modalVisible.address,
           courier: !this.state.modalVisible.courier
+        }
+      };
+    });
+  };
+
+  setProvinceModalVisibility = () => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        modalVisible: {
+          ...prevState.modalVisible,
+          province: !this.state.modalVisible.province
+        }
+      };
+    });
+  };
+
+  setCityModalVisibility = () => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        modalVisible: {
+          ...prevState.modalVisible,
+          city: !this.state.modalVisible.city
         }
       };
     });
@@ -100,7 +136,31 @@ export default class CheckoutScreen extends Component {
         total: courier.charge + this.props.total
       };
     });
-    console.log(this.state.courier);
+  };
+
+  pickProvinceHandler = id => {
+    this.props.filterCities(id);
+    this.setProvinceModalVisibility()
+  };
+
+  pickCityHandler = city_id => {
+    const checkout = {
+      destination: city_id
+    };
+    this.setState(
+      state => {
+        return {
+          location: { ...state.location, city_id }
+        };
+      },
+      () => this.props.getCosts(checkout)
+    );
+    this.setCityModalVisibility()
+  };
+
+  pickCourierHandler = item => {
+    this.setState({ courier: item });
+    this.setCourierModalVisibility();
   };
 
   render() {
@@ -116,7 +176,7 @@ export default class CheckoutScreen extends Component {
       var courierComp = (
         <CardItem style={{ flexDirection: 'row', padding: 12 }}>
           <Lato style={{ flex: 1 }}>Courier charge</Lato>
-          <RupiahFormat text={this.state.courier.charge} />
+          <RupiahFormat text={this.state.courier.cost[0].value} />
         </CardItem>
       );
     }
@@ -155,13 +215,62 @@ export default class CheckoutScreen extends Component {
           </View>
           <FlatList
             keyExtractor={(item, index) => 'key' + index}
-            data={this.props.couriers}
+            data={this.props.costs}
             renderItem={({ item }) => (
-              <ListCourier
-                data={item}
-                action={this.onCourierListPressed.bind(this, item)}
-              />
+              <TouchableOpacity
+                onPress={this.pickCourierHandler.bind(this, item)}
+              >
+                <Text>{item.service}</Text>
+                <Text>{item.description}</Text>
+                <Text>{item.cost[0].value}</Text>
+              </TouchableOpacity>
             )}
+          />
+        </HalfBottomModal>
+
+        <HalfBottomModal
+          visible={this.state.modalVisible.province}
+          title="Choose a Courier"
+          visibilityHandler={this.setProvinceModalVisibility}
+          bodyStyle={{ padding: 0 }}
+        >
+          <View style={styles.pickCourierModal}>
+            <Lato>courier</Lato>
+          </View>
+          <FlatList
+            keyExtractor={(item, index) => 'key' + index}
+            data={this.props.provinces}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={this.pickProvinceHandler.bind(this, item.province_id)}
+              >
+                <Text>{item.province}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </HalfBottomModal>
+
+        <HalfBottomModal
+          visible={this.state.modalVisible.city}
+          title="Choose a Courier"
+          visibilityHandler={this.setCityModalVisibility}
+          bodyStyle={{ padding: 0 }}
+        >
+          <View style={styles.pickCourierModal}>
+            <Lato>courier</Lato>
+          </View>
+          <FlatList
+            keyExtractor={(item, index) => 'key' + index}
+            data={this.props.cities}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={this.pickCityHandler.bind(this, item.city_id)}
+                >
+                  <Text>{item.city_name}</Text>
+                </TouchableOpacity>
+              );
+            }}
           />
         </HalfBottomModal>
 
@@ -197,10 +306,28 @@ export default class CheckoutScreen extends Component {
               />
             </CardItem>
             <CardItem style={styles.cardSection}>
+              <Lato style={{ flex: 1 }}>choose province</Lato>
+              <OutlineButton
+                style={{ alignSelf: 'flex-end' }}
+                small
+                title={'choose'}
+                onPress={this.setProvinceModalVisibility}
+              />
+            </CardItem>
+            <CardItem>
+              <Lato style={{ flex: 1 }}>choose city</Lato>
+              <OutlineButton
+                style={{ alignSelf: 'flex-end' }}
+                small
+                title={'choose'}
+                onPress={this.setCityModalVisibility}
+              />
+            </CardItem>
+            <CardItem style={styles.cardSection}>
               <Lato style={{ flex: 1 }}>
                 {this.state.courier !== null
-                  ? this.state.courier.name
-                  : 'choose a courier :'}
+                  ? this.state.courier.service
+                  : 'choose a courier'}
               </Lato>
               <OutlineButton
                 style={{ alignSelf: 'flex-end' }}
@@ -232,12 +359,15 @@ export default class CheckoutScreen extends Component {
               <Lato style={{ flex: 1 }}>courier charge </Lato>
               <RupiahFormat
                 text={
-                  this.state.courier === null ? 0 : this.state.courier.charge
+                  this.state.courier === null ? 0 : this.state.courier.cost[0].value
                 }
               />
             </CardItem>
             <CardItem style={styles.cardSectionVertical}>
               <DefaultButton block title="pay now" />
+              {this.props.provinces.map(p => {
+                return <View key={p.province_id} />;
+              })}
             </CardItem>
           </Card>
         </Content>
