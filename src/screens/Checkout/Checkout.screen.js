@@ -31,12 +31,7 @@ export default class CheckoutScreen extends Component {
     super(props);
 
     this.state = {
-      modalVisible: {
-        address: false,
-        courier: false,
-        province: false,
-        city: false
-      },
+      visibleModal: null,
       control: {
         address: '',
         courier: {}
@@ -51,96 +46,38 @@ export default class CheckoutScreen extends Component {
     };
   }
 
-  setAddressModalVisibility = () => {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        modalVisible: {
-          address: !this.state.modalVisible.address,
-          courier: prevState.modalVisible.courier
-        }
-      };
-    });
-  };
-
-  setCourierModalVisibility = () => {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        modalVisible: {
-          address: prevState.modalVisible.address,
-          courier: !this.state.modalVisible.courier
-        }
-      };
-    });
-  };
-
-  setProvinceModalVisibility = () => {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        modalVisible: {
-          ...prevState.modalVisible,
-          province: !this.state.modalVisible.province
-        }
-      };
-    });
-  };
-
-  setCityModalVisibility = () => {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        modalVisible: {
-          ...prevState.modalVisible,
-          city: !this.state.modalVisible.city
-        }
-      };
-    });
+  setVisibleModal = (name = null) => {
+    this.setState({ visibleModal: name });
   };
 
   inputAddressHandler = val => {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        control: {
-          address: val,
-          courier: prevState.courier
-        }
-      };
+    this.setState({
+      address: val
     });
   };
 
   onModalAddressSubmit = () => {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        modalVisible: {
-          address: !this.state.modalVisible.address,
-          courier: prevState.modalVisible.courier
-        },
-        address: this.state.control.address
-      };
+    this.setState({
+      control: { ...this.state.control, address: this.state.address }
     });
-  };
-
-  onCourierListPressed = courier => {
-    this.setState(prevState => {
-      return {
-        ...prevState,
-        modalVisible: {
-          address: prevState.modalVisible.address,
-          courier: !prevState.modalVisible.courier
-        },
-        courier,
-        total: courier.charge + this.props.total
-      };
-    });
+    this.setVisibleModal();
   };
 
   pickProvinceHandler = id => {
     this.props.filterCities(id);
-    this.setProvinceModalVisibility()
+    this.setVisible;
+    setAddressModalVisibility = () => {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          modalVisible: {
+            address: !this.state.modalVisible.address,
+            courier: prevState.modalVisible.courier
+          }
+        };
+      });
+    };
+    this.setVisibleModal();
   };
 
   pickCityHandler = city_id => {
@@ -155,20 +92,20 @@ export default class CheckoutScreen extends Component {
       },
       () => this.props.getCosts(checkout)
     );
-    this.setCityModalVisibility()
+    this.setVisibleModal();
   };
 
   pickCourierHandler = item => {
     this.setState({ courier: item });
-    this.setCourierModalVisibility();
+    this.setVisibleModal();
   };
 
   render() {
-    let address = this.state.address;
+    let address = this.state.control.address;
     if (address === null) {
       address = 'Jl.Elang III no.200';
     } else {
-      address = this.state.address;
+      address = this.state.control.address;
     }
 
     let courier = this.state.courier;
@@ -184,9 +121,9 @@ export default class CheckoutScreen extends Component {
     return (
       <Container>
         <HalfBottomModal
-          visible={this.state.modalVisible.address}
+          visible={this.state.visibleModal === 'address'}
           title="input address"
-          visibilityHandler={this.setAddressModalVisibility}
+          visibilityHandler={this.setVisibleModal}
         >
           <View style={styles.inputAddressModal}>
             <Lato>address</Lato>
@@ -204,9 +141,9 @@ export default class CheckoutScreen extends Component {
         </HalfBottomModal>
 
         <HalfBottomModal
-          visible={this.state.modalVisible.courier}
+          visible={this.state.visibleModal === 'courier'}
           title="Choose a Courier"
-          visibilityHandler={this.setCourierModalVisibility}
+          visibilityHandler={this.setVisibleModal}
           bodyStyle={{ padding: 0 }}
         >
           <View style={styles.pickCourierModal}>
@@ -229,9 +166,9 @@ export default class CheckoutScreen extends Component {
         </HalfBottomModal>
 
         <HalfBottomModal
-          visible={this.state.modalVisible.province}
+          visible={this.state.visibleModal === 'province'}
           title="Choose a Courier"
-          visibilityHandler={this.setProvinceModalVisibility}
+          visibilityHandler={this.setVisibleModal}
           bodyStyle={{ padding: 0 }}
         >
           <View style={styles.pickCourierModal}>
@@ -251,9 +188,9 @@ export default class CheckoutScreen extends Component {
         </HalfBottomModal>
 
         <HalfBottomModal
-          visible={this.state.modalVisible.city}
+          visible={this.state.visibleModal === 'city'}
           title="Choose a Courier"
-          visibilityHandler={this.setCityModalVisibility}
+          visibilityHandler={this.setVisibleModal}
           bodyStyle={{ padding: 0 }}
         >
           <View style={styles.pickCourierModal}>
@@ -289,7 +226,7 @@ export default class CheckoutScreen extends Component {
               <OutlineButton
                 small
                 title="use another address"
-                onPress={this.setAddressModalVisibility}
+                onPress={this.setVisibleModal.bind(this, 'address')}
               />
             </CardItem>
           </Card>
@@ -311,7 +248,7 @@ export default class CheckoutScreen extends Component {
                 style={{ alignSelf: 'flex-end' }}
                 small
                 title={'choose'}
-                onPress={this.setProvinceModalVisibility}
+                onPress={this.setVisibleModal.bind(this, 'province')}
               />
             </CardItem>
             <CardItem>
@@ -320,7 +257,7 @@ export default class CheckoutScreen extends Component {
                 style={{ alignSelf: 'flex-end' }}
                 small
                 title={'choose'}
-                onPress={this.setCityModalVisibility}
+                onPress={this.setVisibleModal.bind(this, 'city')}
               />
             </CardItem>
             <CardItem style={styles.cardSection}>
@@ -335,7 +272,7 @@ export default class CheckoutScreen extends Component {
                 title={
                   this.state.courier !== null ? 'choose another' : 'choose'
                 }
-                onPress={this.setCourierModalVisibility}
+                onPress={this.setVisibleModal.bind(this, 'courier')}
               />
             </CardItem>
 
@@ -359,7 +296,9 @@ export default class CheckoutScreen extends Component {
               <Lato style={{ flex: 1 }}>courier charge </Lato>
               <RupiahFormat
                 text={
-                  this.state.courier === null ? 0 : this.state.courier.cost[0].value
+                  this.state.courier === null
+                    ? 0
+                    : this.state.courier.cost[0].value
                 }
               />
             </CardItem>
