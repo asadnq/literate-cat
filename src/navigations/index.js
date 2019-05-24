@@ -15,7 +15,7 @@ import BooksDetail from '../screens/BooksDetail/BooksDetail.container';
 import CartScreen from '../screens/Cart/Cart.container';
 import CheckoutScreen from '../screens/Checkout/Checkout.container';
 import SettingsScreen from '../screens/Settings/Settings.container';
-import StackHeader from '../components/UI/headers/StackHeader';
+import BooksFilter from '../screens/BooksFilter/BooksFilter.container'; 
 
 const MainTab = createBottomTabNavigator(
   {
@@ -75,6 +75,9 @@ const MainStack = createStackNavigator(
     },
     Checkout: {
       screen: CheckoutScreen
+    },
+    BooksFilter: {
+      screen: BooksFilter
     }
   },
   {

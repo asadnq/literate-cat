@@ -14,6 +14,7 @@ const HeaderSearch = props => (
         placeholderTextColor='#bbd'
       />
     </Item>
+    {props.children}
   </View>
 );
 

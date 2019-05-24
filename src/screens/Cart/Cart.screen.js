@@ -95,7 +95,12 @@ export default class Cart extends Component {
 
   render() {
     if (this.props.isLoading) {
-      return <Loading />;
+      return (
+        <>
+          <HeaderText text="Cart" />
+          <Loading />
+        </>
+      );
     }
 
     if (this.props.carts.length > 0 && this.props.isLoggedIn) {
@@ -109,7 +114,7 @@ export default class Cart extends Component {
           <HalfBottomModal
             visible={this.state.modalVisible.deleteCart}
             visibilityHandler={this.setDeleteModalVisibility}
-            height={.17}
+            height={0.17}
           >
             <View style={styles.deleteItemModal}>
               <Text style={{ textAlign: 'center' }}>delete this item?</Text>

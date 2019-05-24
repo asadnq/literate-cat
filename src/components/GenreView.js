@@ -3,7 +3,7 @@ import { View, Text, FlatList } from 'react-native';
 import { Card, CardItem } from 'native-base';
 
 
-const GenreCard = props => {
+export const GenreCard = props => {
     return(
         <Card transparent style={{borderWidth: .78, borderColor: '#333', backgroundColor: '#bde'}}>
             <CardItem button onPress={() => alert('works')}>

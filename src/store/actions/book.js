@@ -1,5 +1,5 @@
 import { GET_BOOKS, GET_BOOK, GET_MORE_BOOKS } from './types';
-import { API_URL } from '../../config/api.config';
+
 import instance from './axios.config';
 
 export const getBooks = () => {
@@ -16,23 +16,44 @@ export const getBook = id => {
   };
 };
 
-export const searchBook = (page, limit, val) => {
+export const searchBook = (pagination, val) => {
+  const { page, limit } = pagination;  
   return {
     type: GET_BOOKS,
     payload: instance.get(`/books?page=${page}&limit=${limit}&name=${val}`)
   };
 };
 
-export const getMoreSearch = (page, limit, val) => {
+export const getMoreSearch = (pagination, val) => {
+  const { page, limit } = pagination;  
   return {
     type: GET_MORE_BOOKS,
     payload: instance.get(`/books?page=${page}&limit=${limit}&name=${val}`)
   };
 };
 
-export const getMoreBooks = (page, limit) => {
+export const getMoreBooks = pagination => {
+  const { page, limit } = pagination;  
   return {
     type: GET_MORE_BOOKS,
     payload: instance.get(`/books?page=${page}&limit=${limit}`)
   };
 };
+
+export const getMoreFilteredBooks = (pagination, filter) => {
+  const { page, limit } = pagination;
+  const { genres, author} = filter;
+  
+  return {
+    type: GET_MORE_BOOKS,
+    payload: instance.get(`/books?page=${page}&limit=${limit}&genre=${genres}&author=${author}`)  
+  }
+}
+
+export const filterBooks = filter => {
+  const { genres, author } = filter;   
+  return {
+    type: GET_BOOKS,
+    payload: instance.get(`/books?genre=${genres}&author=${author}`)  
+  }
+}

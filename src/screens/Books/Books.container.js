@@ -1,7 +1,14 @@
-import Books from './Books.screen'
+import Books from './Books.screen';
 import { connect } from 'react-redux';
 
-import { getBooks, getBook, searchBook, getMoreBooks, getMoreSearch } from '../../store/actions/book';
+import {
+  getBooks,
+  getBook,
+  searchBook,
+  getMoreBooks,
+  getMoreFilteredBooks,
+  getMoreSearch
+} from '../../store/actions/book';
 import { getGenres } from '../../store/actions/genre';
 
 const mapState = state => {
@@ -15,5 +22,13 @@ const mapState = state => {
 
 export default connect(
   mapState,
-  { getBooks, getBook, searchBook, getGenres, getMoreBooks ,getMoreSearch }
+  {
+    getBooks,
+    getBook,
+    searchBook,
+    getGenres,
+    getMoreBooks,
+    getMoreFilteredBooks,
+    getMoreSearch
+  }
 )(Books);
