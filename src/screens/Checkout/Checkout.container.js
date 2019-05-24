@@ -10,7 +10,8 @@ const mapState = state => {
     total: state.cart.total,
     costs: state.courier.costs,
     provinces: state.location.provinces ,
-    cities: state.location.filteredCities
+    cities: state.location.filteredCities,
+    costsLoading: state.courier.isLoading
   };
 };
 

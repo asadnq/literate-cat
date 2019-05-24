@@ -78,7 +78,7 @@ const MainStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Checkout'
+    initialRouteName: 'Main'
   }
 );
 

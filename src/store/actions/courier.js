@@ -7,6 +7,7 @@ export const getCosts = checkout => dispatch => {
     weight: 478,
     destination: checkout.destination.toString()
   };
+  dispatch({ type: 'GET_COSTS_PENDING'})
   return {
     type: 'GET_COSTS',
     payload: instance
@@ -16,7 +17,7 @@ export const getCosts = checkout => dispatch => {
         dispatch({ type: 'GET_COSTS_FULFILLED', payload: res });
       })
       .catch(err => {
-        console.log('get costs error', err);
+        dispatch({ type: 'GET_COSTS_PENDING'});
       })
   };
 };
