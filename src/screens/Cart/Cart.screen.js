@@ -109,6 +109,7 @@ export default class Cart extends Component {
           <HalfBottomModal
             visible={this.state.modalVisible.deleteCart}
             visibilityHandler={this.setDeleteModalVisibility}
+            height={.17}
           >
             <View style={styles.deleteItemModal}>
               <Text style={{ textAlign: 'center' }}>delete this item?</Text>

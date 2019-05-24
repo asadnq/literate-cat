@@ -92,7 +92,9 @@ class AddToCartModal extends React.Component {
             <HalfBottomModal
                 title='add to cart'
                 visible={this.props.visible}
-                visibilityHandler={this.props.visibilityHandler}>
+                visibilityHandler={this.props.visibilityHandler}
+                height={.35}                
+                >
                 <View style={styles.modalContent}>
                     <View style={styles.modalItem1}>
                         <View style={styles.imgWrapper}>
@@ -124,6 +126,7 @@ class AddToCartModal extends React.Component {
     }
 }
 
+export default AddToCartModal;
 
 const styles = StyleSheet.create({
     modalContent: {
@@ -168,5 +171,3 @@ const styles = StyleSheet.create({
         height: 30
     }
 });
-
-export default AddToCartModal;
